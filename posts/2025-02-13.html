@@ -41,11 +41,15 @@
 <h2 id="reader">Reader</h2>
 <p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致， <code>(setq djvu-image-mode t)</code> 后正常显示。</p>
 <pre class="elisp"><code>(use-package djvu)</code></pre>
-<pre><code>sudo pacman -S djvulibre</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> djvulibre</span></code></pre></div>
+<h3 id="to-pdf">to PDF</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> libtiff</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ddjvu</span> <span class="at">-format</span><span class="op">=</span>tiff name<span class="er">(</span><span class="ex">1</span><span class="kw">)</span><span class="ex">.djvu</span> name<span class="er">(</span><span class="ex">2</span><span class="kw">)</span><span class="ex">.tiff</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tiff2pdf</span> <span class="at">-j</span> <span class="at">-o</span> name<span class="er">(</span><span class="ex">3</span><span class="kw">)</span><span class="ex">.pdf</span> name<span class="er">(</span><span class="ex">2</span><span class="kw">)</span><span class="ex">.tiff</span></span></code></pre></div>
 <h1 id="latex">LaTeX</h1>
 <h2 id="maxima">Maxima</h2>
 <p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的LaTeX形式给出。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode maxima"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tex</span>(<span class="fu">sqrt</span>(<span class="dv">2</span>)-<span class="fu">sqrt</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode maxima"><code class="sourceCode maxima"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tex</span>(<span class="fu">sqrt</span>(<span class="dv">2</span>)-<span class="fu">sqrt</span>(<span class="dv">3</span>))</span></code></pre></div>
 <figure>
 <img src="../images/org-ltximg_7c7491ffb99354df9f129b18182fe27bc21c4331.png" title="预览在Org-Mode下导出" alt="示例" />
 <figcaption aria-hidden="true">示例</figcaption>

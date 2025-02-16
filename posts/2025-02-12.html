@@ -40,20 +40,14 @@
 <p>安装和配置 <em>Stellarium</em> 也算是一件麻烦事，将这一过程简略地记录下来。</p>
 <h3 id="on-arch-linux">On Arch Linux</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://gh.llkk.cc/https://github.com/Stellarium/stellarium-data/releases/download/weekly-snapshot/Stellarium-25.0-003e0c2-qt6-x86_64.AppImage</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage ~/.local/bin/</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/.local/bin/</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage Stellarium</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage ~/.local/bin/</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/.local/bin/</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage Stellarium</span></code></pre></div>
 <h3 id="添加星图">添加星图</h3>
 <p>打开的Stellarium会在家目录下创建一个<code>.stellarium</code>，其内有一个<code>config.ini</code>，在<code>[astro]</code>后添加<code>PATH</code>格式如下：</p>
-<pre><code>de430_path = &quot;dir/de430.eph&quot;
-
-de431_path = &quot;dir/de431.eph&quot;
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">de430_path </span><span class="ot">=</span><span class="st"> &quot;dir/de430.eph&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">de431_path </span><span class="ot">=</span><span class="st"> &quot;dir/de431.eph&quot;</span></span></code></pre></div>
 <p>，在GUI窗口中灰色的待选框就可以选中了。</p>
 <p>但获得<code>.eph</code>文件仍然相当麻烦，各个来源都需要翻墙。</p>
 <h2 id="关于-haskell">关于 Haskell</h2>
