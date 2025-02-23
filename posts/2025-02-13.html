@@ -15,15 +15,15 @@
     <div class="wrapper">
         <header>
             <div class="logo">
-                <a href="../">Iris's Blog</a>
+                <a href="./">Iris's Blog</a>
             </div>
             <nav>
-                <a href="../">Index</a>
-                <a href="../contact.html">Contact</a>
+                <a href="./">Home</a>
+                <a href="./contact.html">Contact</a>
                 <!--
                  <a href="/archive.html">Archive</a>
             -->
-                <a href="../about.html">About</a>
+                <a href="./about.html">About</a>
             </nav>
         </header>
 
@@ -36,10 +36,9 @@
     </section>
     <section>
         <h1 id="emacs">Emacs</h1>
-<p>Distro:
-<a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
+<p>Distro: <a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
 <h2 id="reader">Reader</h2>
-<p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致， <code>(setq djvu-image-mode t)</code> 后正常显示。</p>
+<p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，<code>(setq djvu-image-mode t)</code> 后正常显示。</p>
 <pre class="elisp"><code>(use-package djvu)</code></pre>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> djvulibre</span></code></pre></div>
 <h3 id="to-pdf">to PDF</h3>
