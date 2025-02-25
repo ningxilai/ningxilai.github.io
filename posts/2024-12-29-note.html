@@ -29,15 +29,14 @@
 
         <main role="main">
             <h1>SSL_ERROR_SYSCALL</h1>
-            <article>
+	        <article>
     <section class="header">
         Posted on December 29, 2024
         
     </section>
     <section>
         <p>在提交分支时报出了<code>OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0</code>的错误。</p>
-<p>根据 <em>正宗咸豆花 at CSDN</em>
-的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p>
+<p>根据 <em>正宗咸豆花 at CSDN</em> 的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p>
 <p>另外的，附上当时的最小实例：</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span><span class="op">=</span>1  git@github.com:username/repo.git</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> repo</span>
