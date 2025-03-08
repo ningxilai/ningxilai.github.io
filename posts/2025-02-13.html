@@ -126,7 +126,7 @@
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> agda-stdlib-2.2</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cabal</span> install</span></code></pre></div>
 <h1 id="rust-cargo">Rust &amp;&amp; Cargo</h1>
-<h2 id="typesetting-package">Typesetting Package</h2>
+<h2 id="typesetting-packageemacs">Typesetting Package/Emacs</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install font-manager</span></code></pre></div>
 <p>github:<a href="https://github.com/e-ricus/font-manager-cli">e-ricus/font-manager-cli</a>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--git</span> https://github.com/typst/typst.git <span class="at">--locked</span> typst-cli</span></code></pre></div>
@@ -142,6 +142,22 @@
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> tree-sitter</span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> tree-sitter</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> libtree-sitter-typst ./</span></code></pre></div>
+<h2 id="typesetting-packagevsc">Typesetting Package/VSC</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> code <span class="kw">&amp;&amp;</span> <span class="ex">ext</span> install myriad-dreamin.tinymist</span></code></pre></div>
+<h2 id="apluiua">APL/Uiua</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--git</span> https://github.com/uiua-lang/uiua uiua <span class="at">-F</span> full</span></code></pre></div>
+<h1 id="commonlisp-roswell">CommonLisp &amp;&amp; Roswell</h1>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">-b</span> release https://github.com/roswell/roswell.git</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> roswell</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> bootstrap</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$HOME</span>/.local</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'PATH=$HOME/.local/bin:$PATH'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">ros</span> setup</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ex">ros</span> lisp=sbcl-bin/system setup</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">ros</span> install qlot</span></code></pre></div>
     </section>
 </article>
 
