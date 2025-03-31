@@ -1,0 +1,39 @@
+Posted on February 12, 2025
+
+# Astro
+
+## 关于 Stellarium
+
+昨日，也就是二月十二日，因为多云而没有见到本日的星象以及月相。今日又因为元宵节的烟火，固然在强光下看到的烟云的阴影也非常有意思，但毕竟还是没有看清，念及我一直以来的意向索性打算了解一番天文学。（我的观鸟的爱好的源头某种意义上也催生了观星的趋向，当然，如果为了所谓专业性去说观星的爱好恐怕不太现实，Stellarium的模拟星象功能就能满足我了。）
+
+安装和配置 *Stellarium* 也算是一件麻烦事，将这一过程简略地记录下来。
+
+### On Arch Linux
+
+```bash
+wget https://gh.llkk.cc/https://github.com/Stellarium/stellarium-data/releases/download/weekly-snapshot/Stellarium-25.0-003e0c2-qt6-x86_64.AppImage
+chmod +x ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage
+mv ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage ~/.local/bin/
+cd ~/.local/bin/
+ln -s ./Stellarium-25.0-003e0c2-qt6-x86_64.AppImage Stellarium
+```
+
+### 添加星图
+
+打开的Stellarium会在家目录下创建一个`.stellarium`，其内有一个`config.ini`，在`[astro]`后添加`PATH`格式如下：
+
+```ini
+de430_path = "dir/de430.eph"
+de431_path = "dir/de431.eph"
+```
+
+，在GUI窗口中灰色的待选框就可以选中了。
+
+但获得`.eph`文件仍然相当麻烦，各个来源都需要翻墙。
+
+# Binoculars
+
+- 10x50双筒望远镜一台
+- 镜头转接器一个
+- 三脚架连接器一个
+- 可装把手/支架一个
