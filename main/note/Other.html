@@ -169,10 +169,10 @@ cd repo
 // git push origin master
 git add .
 git commit -m "last commit"
-git push origin master ## git push -u origin master
+git push origin master ## git push -u origin master（设置上游仓库）
 </code></pre>
 <p>对于凭证登陆，选择 <code>cache</code> 则有 <code>git config --global credential.credentialStore cache</code>。（<code>dotnet tool install -g git-credential-manager</code>）</p>
-<p>同步：<code>cp -rp book/* repo</code> or <code>rsync -a ./book/* repo</code> 。</p>
+<p>同步：<code>cp -rp book/* repo</code> or <code>rsync -a ./book/* repo</code> 。（<code>! [rejected]        master -&gt; master (non-fast-forward)</code> 时，可用<code>git push -f</code>）</p>
 <h1 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h1>
 <p>Pandoc转化<code>.md</code>时有<code>html</code>序列化后残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决。</p>
 <h1 id="reader"><a class="header" href="#reader">Reader</a></h1>
