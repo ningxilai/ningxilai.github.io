@@ -318,9 +318,18 @@ mv libtree-sitter-typst ./
 <h2 id="typesetting-on-vsc"><a class="header" href="#typesetting-on-vsc">Typesetting on VSC</a></h2>
 <pre><code class="language-sourceCode">sudo pacman -S code &amp;&amp; ext install myriad-dreamin.tinymist
 </code></pre>
-<h1 id="blogtools"><a class="header" href="#blogtools">BlogTools</a></h1>
+<h1 id="toolsrust--haskell"><a class="header" href="#toolsrust--haskell">Tools(Rust &amp;&amp; Haskell)</a></h1>
 <h2 id="artem"><a class="header" href="#artem">Artem</a></h2>
 <pre><code class="language-bash">cargo install artem
+</code></pre>
+<h2 id="fish"><a class="header" href="#fish">fish</a></h2>
+<pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
+</code></pre>
+<h3 id="fisher"><a class="header" href="#fisher">fisher</a></h3>
+<pre><code class="language-bash">git clone --depth=1 https://github.com/jorgebucaran/fisher.git &amp;&amp; cd fisher/functions
+</code></pre>
+<pre><code class="language-fish">source
+fisher install ../
 </code></pre>
 <h2 id="mdbook"><a class="header" href="#mdbook">mdbook</a></h2>
 <pre><code class="language-bash">cargo install mdbook
