@@ -187,9 +187,7 @@
   :config (setq julia-snail-executable "~/.juliaup/bin/"))
 </code></pre>
 <h4 id="spad--fricas"><a class="header" href="#spad--fricas">SPAD &amp;&amp; FriCAS</a></h4>
-<p>见于
-<a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a>
-。</p>
+<p>见于 <a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a> 。</p>
 <pre><code class="language-sourceCode">sudo pacman -S sbcl
 git clone --depth=1 git@github.com:fricas/fricas.git
 cd fricas
@@ -367,6 +365,25 @@ TYPST_FEATURES=html
 </code></pre>
 <h2 id="hakyll"><a class="header" href="#hakyll">Hakyll</a></h2>
 <pre><code class="language-bash">hakyll-init -f ./
+</code></pre>
+<h2 id="lunarvim"><a class="header" href="#lunarvim">LunarVim</a></h2>
+<pre><code class="language-bash">## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+cargo install neovide
+## Fonts
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh
+</code></pre>
+<h3 id="neovide"><a class="header" href="#neovide">Neovide</a></h3>
+<pre><code class="language-bash">vi .config/neovide/config.toml
+## =&gt; 
+neovim-bin = ".local/bin/lvim"
 </code></pre>
 <h3 id="css"><a class="header" href="#css">CSS</a></h3>
 <pre><code class="language-css">html,body {
