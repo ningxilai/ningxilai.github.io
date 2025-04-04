@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Math - Iris&#x27;s Note Book</title>
+        <title>Programming-Editor - Iris&#x27;s Note Book</title>
 
 
         <!-- Custom HTML head -->
@@ -157,16 +157,60 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h1 id="programming-editor"><a class="header" href="#programming-editor">Programming-Editor</a></h1>
+<p>Posted on February 13, 2025</p>
+<h1 id="emacseditor"><a class="header" href="#emacseditor">Emacs/Editor</a></h1>
+<p>Distro: <a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
+<h2 id="programming"><a class="header" href="#programming">Programming</a></h2>
+<h3 id="haskell"><a class="header" href="#haskell">Haskell</a></h3>
+<pre><code class="language-elisp">(use-package haskell-mode
+  :ensure t
+  :hook
+  (haskell-mode . interactive-haskell-mode)
+  (haskell-mode . haskell-indentation-mode))
+
+(use-package lsp-haskell :ensure t)
+</code></pre>
+<p><code>init.el</code>:</p>
+<pre><code class="language-elisp">(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+</code></pre>
+<h3 id="julia"><a class="header" href="#julia">Julia</a></h3>
+<pre><code class="language-elisp">;; julia-snail
+(use-package julia-snail
+  :ensure t
+  :config (setq julia-snail-executable "~/.juliaup/bin/"))
+</code></pre>
+<h1 id="neovimeditor"><a class="header" href="#neovimeditor">NeoVim/Editor</a></h1>
+<h2 id="lunarvim"><a class="header" href="#lunarvim">LunarVim</a></h2>
+<pre><code class="language-bash">## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+cargo install neovide
+## Fonts
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh
+</code></pre>
+<h3 id="neovide"><a class="header" href="#neovide">Neovide</a></h3>
+<pre><code class="language-bash">vi .config/neovide/config.toml
+## =&gt; 
+neovim-bin = ".local/bin/lvim"
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../main/note/Blog-Tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../main/note/Math.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../main/note/Programming-Editor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../main/note/Programming-OOP.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -176,11 +220,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../main/note/Blog-Tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../main/note/Math.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../main/note/Programming-Editor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../main/note/Programming-OOP.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

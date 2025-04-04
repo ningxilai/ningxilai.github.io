@@ -1,0 +1,98 @@
+# Programming-Editor
+
+Posted on February 13, 2025
+
+# Emacs/Editor
+
+Distro: [seagle0128/CentaurEmacs](https://seagle0128.github.io/.emacs.d)
+
+## Programming
+
+### Haskell
+
+``` elisp
+(use-package haskell-mode
+  :ensure t
+  :hook
+  (haskell-mode . interactive-haskell-mode)
+  (haskell-mode . haskell-indentation-mode))
+
+(use-package lsp-haskell :ensure t)
+```
+
+`init.el`:
+
+``` elisp
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+```
+
+### Julia
+
+``` elisp
+;; julia-snail
+(use-package julia-snail
+  :ensure t
+  :config (setq julia-snail-executable "~/.juliaup/bin/"))
+```
+
+### typst
+
+``` elisp
+(use-package websocket
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t)
+
+(use-package typst-ts-mode
+  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode" :branch "develop")
+  :custom
+  ;; don't add "--open" if you'd like `watch` to be an error detector
+  ;; (typst-ts-watch-options "--open")
+
+  (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
+  (typst-ts-mode-enable-raw-blocks-highlight t)
+  :config
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
+  ;; make sure to install typst-lsp from
+  ;; https://github.com/nvarner/typst-lsp/releases
+  ;; or use tinymist
+  (add-to-list 'lsp-language-id-configuration '(typst-ts-mode . "typst"))
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "tinymist")
+    :major-modes '(typst-ts-mode)
+    :server-id 'tinymist)))
+
+(use-package tip
+  :vc (:url "https://git.sr.ht/~mafty/tip"))
+```
+
+# NeoVim/Editor
+
+## LunarVim
+
+``` bash
+## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+cargo install neovide
+## Fonts
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh
+```
+
+### Neovide
+
+``` bash
+vi .config/neovide/config.toml
+## => 
+neovim-bin = ".local/bin/lvim"
+```
+

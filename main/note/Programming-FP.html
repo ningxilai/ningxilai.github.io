@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Math - Iris&#x27;s Note Book</title>
+        <title>Programming-FP - Iris&#x27;s Note Book</title>
 
 
         <!-- Custom HTML head -->
@@ -157,16 +157,92 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h1 id="programming-fp"><a class="header" href="#programming-fp">Programming-FP</a></h1>
+<h2 id="books"><a class="header" href="#books">Books</a></h2>
+<h3 id="sicpprogramming"><a class="header" href="#sicpprogramming">SICP/Programming</a></h3>
+<pre><code class="language-bash">mkdir -p  ~/.config/emacs/quack/
+cd ./.config/emacs/quack/
+wget2 https://www.neilvandyke.org/quack/quack.el
+</code></pre>
+<h3 id="haskell函数式程序设计category-theory"><a class="header" href="#haskell函数式程序设计category-theory">Haskell函数式程序设计/Category Theory</a></h3>
+<p>关于范畴论的兴趣来源于我的语言学爱好，由于我语言学上最初的启发是乔姆斯基，为了了解他著作中的一些概念，后来又购置了一本数理哲学，始终未曾翻阅，此后不断地了解程序语言设计领域的话题，又打算重新了解一番当代语言学中数学工具发展的脉络。使用haskell也是因为这种语言相较于lisp更贴合范畴论的实践。</p>
+<p>具体配置haskell开发环境的指北见于USTC的mirrors,不再赘述。</p>
+<h2 id="language"><a class="header" href="#language">Language</a></h2>
+<h3 id="symbolic-algebra"><a class="header" href="#symbolic-algebra">Symbolic Algebra</a></h3>
+<h4 id="julia"><a class="header" href="#julia">Julia</a></h4>
+<pre><code class="language-bash">curl -fsSL https://install.julialang.org | sh
+</code></pre>
+<h4 id="spad--fricas"><a class="header" href="#spad--fricas">SPAD &amp;&amp; FriCAS</a></h4>
+<p>见于 <a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a> 。</p>
+<pre><code class="language-bash">sudo pacman -S sbcl
+git clone --depth=1 git@github.com:fricas/fricas.git
+cd fricas
+./configure
+make
+sudo make install
+</code></pre>
+<h4 id="idris2--pack"><a class="header" href="#idris2--pack">Idris2 &amp;&amp; Pack</a></h4>
+<pre><code class="language-bash">git clone --depth=1 git@github.com:racket/ChezScheme.git
+cd ChezScheme
+./configure --threads
+make
+sudo make install
+</code></pre>
+<pre><code class="language-bash">git clone --depth=1 git@github.com:stefan-hoeck/idris2-pack.git
+cd idris2-pack
+./install.sh
+</code></pre>
+<pre><code class="language-bash">export PATH=$PATH:~/.pack/bin
+</code></pre>
+<h4 id="agda"><a class="header" href="#agda">Agda</a></h4>
+<pre><code class="language-bash">cabal update
+cabal install Agda
+
+wget -O agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v2.2.tar.gz
+tar -xvf agda-stdlib.tar.gz
+
+cd agda-stdlib-2.2
+cabal install
+</code></pre>
+<h3 id="lisp"><a class="header" href="#lisp">Lisp</a></h3>
+<h4 id="commonlisp--roswell"><a class="header" href="#commonlisp--roswell">CommonLisp &amp;&amp; Roswell</a></h4>
+<pre><code class="language-bash">sudo pacman -S rlwrap
+
+git clone -b release https://github.com/roswell/roswell.git
+cd roswell
+sh bootstrap
+./configure --prefix=$HOME/.local
+make
+make install
+echo 'PATH=$HOME/.local/bin:$PATH' &gt;&gt; ~/.zshrc
+
+ros setup
+ros lisp=sbcl-bin/system setup
+ros install qlot
+</code></pre>
+<h5 id="lem"><a class="header" href="#lem">lem</a></h5>
+<pre><code class="language-bash">sudo pacman -S sdl2 sdl2_ttf sdl2_image
+
+mkdir $HOME/common-lisp
+cd common-lisp
+git clone --depth=1 https://github.com/lem-project/lem.git
+cd lem
+make sdl2
+</code></pre>
+<h3 id="apl"><a class="header" href="#apl">APL</a></h3>
+<h4 id="uiua"><a class="header" href="#uiua">Uiua</a></h4>
+<pre><code class="language-bash">cargo install --git https://github.com/uiua-lang/uiua uiua -F full
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../main/note/Blog-Tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../main/note/Programming-OOP.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../main/note/Programming-Editor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../main/note/Music_Theory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -176,11 +252,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../main/note/Blog-Tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../main/note/Programming-OOP.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../main/note/Programming-Editor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../main/note/Music_Theory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

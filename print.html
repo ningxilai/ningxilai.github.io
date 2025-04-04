@@ -200,178 +200,7 @@ de431_path = "dir/de431.eph"
 <li>三脚架连接器一个</li>
 <li>可装把手/支架一个</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>Posted on February 13, 2025</p>
-<h1 id="emacs"><a class="header" href="#emacs">Emacs</a></h1>
-<p>Distro: <a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
-<h2 id="programming"><a class="header" href="#programming">Programming</a></h2>
-<h3 id="haskell"><a class="header" href="#haskell">Haskell</a></h3>
-<pre><code class="language-elisp">(use-package haskell-mode
-  :ensure t
-  :hook
-  (haskell-mode . interactive-haskell-mode)
-  (haskell-mode . haskell-indentation-mode)
-  )
-
-(use-package lsp-haskell
-  :ensure t
-)
-</code></pre>
-<p><code>init.el</code>:</p>
-<pre><code class="language-elisp">(add-hook 'haskell-mode-hook #'lsp)
-(add-hook 'haskell-literate-mode-hook #'lsp)
-</code></pre>
-<h3 id="symbolic-algebra"><a class="header" href="#symbolic-algebra">Symbolic Algebra</a></h3>
-<h4 id="julia"><a class="header" href="#julia">Julia</a></h4>
-<pre><code class="language-sourceCode">curl -fsSL https://install.julialang.org | sh
-</code></pre>
-<pre><code class="language-elisp">;; julia-snail
-(use-package julia-snail
-  :ensure t
-  :config (setq julia-snail-executable "~/.juliaup/bin/"))
-</code></pre>
-<h4 id="spad--fricas"><a class="header" href="#spad--fricas">SPAD &amp;&amp; FriCAS</a></h4>
-<p>见于 <a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a> 。</p>
-<pre><code class="language-sourceCode">sudo pacman -S sbcl
-git clone --depth=1 git@github.com:fricas/fricas.git
-cd fricas
-./configure
-make
-sudo make install
-</code></pre>
-<h4 id="idris2--pack"><a class="header" href="#idris2--pack">Idris2 &amp;&amp; Pack</a></h4>
-<pre><code class="language-sourceCode">git clone --depth=1 git@github.com:racket/ChezScheme.git
-cd ChezScheme
-./configure --threads
-make
-sudo make install
-</code></pre>
-<pre><code class="language-sourceCode">git clone --depth=1 git@github.com:stefan-hoeck/idris2-pack.git
-cd idris2-pack
-./install.sh
-</code></pre>
-<pre><code class="language-sourceCode">export PATH=$PATH:~/.pack/bin
-</code></pre>
-<h4 id="agda"><a class="header" href="#agda">Agda</a></h4>
-<pre><code class="language-sourceCode">cabal update
-cabal install Agda
-
-wget -O agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v2.2.tar.gz
-tar -xvf agda-stdlib.tar.gz
-
-cd agda-stdlib-2.2
-cabal install
-</code></pre>
-<h2 id="commonlisp--roswell"><a class="header" href="#commonlisp--roswell">CommonLisp &amp;&amp; Roswell</a></h2>
-<pre><code class="language-sourceCode">sudo pacman -S rlwrap
-
-git clone -b release https://github.com/roswell/roswell.git
-cd roswell
-sh bootstrap
-./configure --prefix=$HOME/.local
-make
-make install
-echo 'PATH=$HOME/.local/bin:$PATH' &gt;&gt; ~/.zshrc
-
-ros setup
-ros lisp=sbcl-bin/system setup
-ros install qlot
-</code></pre>
-<h3 id="lem"><a class="header" href="#lem">lem</a></h3>
-<pre><code class="language-sourceCode">sudo pacman -S sdl2 sdl2_ttf sdl2_image
-
-mkdir $HOME/common-lisp
-cd common-lisp
-git clone --depth=1 https://github.com/lem-project/lem.git
-cd lem
-make sdl2
-</code></pre>
-<h2 id="sicp"><a class="header" href="#sicp">SICP</a></h2>
-<pre><code class="language-sourceCode">mkdir -p  ~/.config/emacs/quack/
-cd ./.config/emacs/quack/
-wget2 https://www.neilvandyke.org/quack/quack.el
-</code></pre>
-<h2 id="范畴论haskell函数式程序设计"><a class="header" href="#范畴论haskell函数式程序设计">范畴论/Haskell函数式程序设计</a></h2>
-<p>关于范畴论的兴趣来源于我的语言学爱好，由于我语言学上最初的启发是乔姆斯基，为了了解他著作中的一些概念，后来又购置了一本数理哲学，始终未曾翻阅，此后不断地了解程序语言设计领域的话题，又打算重新了解一番当代语言学中数学工具发展的脉络。使用haskell也是因为这种语言相较于lisp更贴合范畴论的实践。</p>
-<p>具体配置haskell开发环境的指北见于USTC的mirrors,不再赘述。</p>
-<h2 id="typesetting"><a class="header" href="#typesetting">Typesetting</a></h2>
-<h3 id="typst"><a class="header" href="#typst">typst</a></h3>
-<pre><code class="language-elisp">(use-package websocket
-  :ensure t)
-
-(use-package lsp-mode
-  :ensure t)
-
-(use-package typst-ts-mode
-  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode" :branch "develop")
-  :custom
-  ;; don't add "--open" if you'd like `watch` to be an error detector
-  ;; (typst-ts-watch-options "--open")
-
-  (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
-  (typst-ts-mode-enable-raw-blocks-highlight t)
-  :config
-  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
-  ;; make sure to install typst-lsp from
-  ;; https://github.com/nvarner/typst-lsp/releases
-  ;; or use tinymist
-  (add-to-list 'lsp-language-id-configuration '(typst-ts-mode . "typst"))
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "tinymist")
-    :major-modes '(typst-ts-mode)
-    :server-id 'tinymist)))
-
-(use-package tip
-  :vc (:url "https://git.sr.ht/~mafty/tip"))
-</code></pre>
-<pre><code class="language-sourceCode">git clone --depth 1 https://git.sr.ht/~mafty/tip-server-py
-cd tip-server-py
-pip install -r requirements.txt
-</code></pre>
-<h3 id="latex"><a class="header" href="#latex">LaTeX</a></h3>
-<h4 id="maxima"><a class="header" href="#maxima">Maxima</a></h4>
-<p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的LaTeX形式给出。</p>
-<pre><code class="language-sourceCode">tex(sqrt(2)-sqrt(3))
-</code></pre>
-<h3 id="rust--cargotypesetting-packageemacs"><a class="header" href="#rust--cargotypesetting-packageemacs">Rust &amp;&amp; Cargo:Typesetting Package/Emacs</a></h3>
-<pre><code class="language-sourceCode">cargo install font-manager
-</code></pre>
-<p>github:<a href="https://github.com/e-ricus/font-manager-cli">e-ricus/font-manager-cli</a>.</p>
-<pre><code class="language-sourceCode">cargo install --git https://github.com/typst/typst.git --locked typst-cli
-</code></pre>
-<pre><code class="language-sourceCode">cargo install --git https://github.com/Myriad-Dreamin/tinymist --locked tinymist
-</code></pre>
-<pre><code class="language-sourceCode">git clone --depth 1 https://github.com/uben0/tree-sitter-typst
-cd tree-sitter-typst/src
-
-cc -fPIC -std=c99 -c parser.c
-cc -fPIC -std=c99 -c scanner.c
-cc -shared parser.o scanner.o -o libtree-sitter-typst.so
-
-# to emacs
-mkdir tree-sitter
-cd tree-sitter
-mv libtree-sitter-typst ./
-</code></pre>
-<h2 id="apluiua"><a class="header" href="#apluiua">APL/Uiua</a></h2>
-<pre><code class="language-sourceCode">cargo install --git https://github.com/uiua-lang/uiua uiua -F full
-</code></pre>
-<h2 id="typesetting-on-vsc"><a class="header" href="#typesetting-on-vsc">Typesetting on VSC</a></h2>
-<pre><code class="language-sourceCode">sudo pacman -S code &amp;&amp; ext install myriad-dreamin.tinymist
-</code></pre>
-<h1 id="toolsrust--haskell"><a class="header" href="#toolsrust--haskell">Tools(Rust &amp;&amp; Haskell)</a></h1>
-<h2 id="artem"><a class="header" href="#artem">Artem</a></h2>
-<pre><code class="language-bash">cargo install artem
-</code></pre>
-<h2 id="fish"><a class="header" href="#fish">fish</a></h2>
-<pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
-</code></pre>
-<h3 id="fisher"><a class="header" href="#fisher">fisher</a></h3>
-<pre><code class="language-bash">git clone --depth=1 https://github.com/jorgebucaran/fisher.git &amp;&amp; cd fisher/functions
-</code></pre>
-<pre><code class="language-fish">source
-fisher install ../
-</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="blog-tools"><a class="header" href="#blog-tools">Blog Tools</a></h1>
 <h2 id="mdbook"><a class="header" href="#mdbook">mdbook</a></h2>
 <pre><code class="language-bash">cargo install mdbook
 </code></pre>
@@ -401,32 +230,8 @@ boost-paragraph = 1
 expand = true
 heading-split-level = 2
 </code></pre>
-<h2 id="typst-1"><a class="header" href="#typst-1">Typst</a></h2>
-<pre><code class="language-bash">typst watch --features html
-## or
-TYPST_FEATURES=html
-</code></pre>
 <h2 id="hakyll"><a class="header" href="#hakyll">Hakyll</a></h2>
 <pre><code class="language-bash">hakyll-init -f ./
-</code></pre>
-<h2 id="lunarvim"><a class="header" href="#lunarvim">LunarVim</a></h2>
-<pre><code class="language-bash">## Cargo
-cargo install --git https://github.com/sharkdp/fd
-cargo install ripgrep
-cargo install neovide
-## Fonts
-git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
-## Pacman
-sudo pacman -S nodejs tree-sitter-cli
-## Install
-git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
-cd ~/.local/share/lunarvim/lvim/
-sh utils/installer/install.sh
-</code></pre>
-<h3 id="neovide"><a class="header" href="#neovide">Neovide</a></h3>
-<pre><code class="language-bash">vi .config/neovide/config.toml
-## =&gt; 
-neovim-bin = ".local/bin/lvim"
 </code></pre>
 <h3 id="css"><a class="header" href="#css">CSS</a></h3>
 <pre><code class="language-css">html,body {
@@ -578,6 +383,127 @@ img {
      
     &lt;/body&gt;
 &lt;/html&gt;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="programming-editor"><a class="header" href="#programming-editor">Programming-Editor</a></h1>
+<p>Posted on February 13, 2025</p>
+<h1 id="emacseditor"><a class="header" href="#emacseditor">Emacs/Editor</a></h1>
+<p>Distro: <a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
+<h2 id="programming"><a class="header" href="#programming">Programming</a></h2>
+<h3 id="haskell"><a class="header" href="#haskell">Haskell</a></h3>
+<pre><code class="language-elisp">(use-package haskell-mode
+  :ensure t
+  :hook
+  (haskell-mode . interactive-haskell-mode)
+  (haskell-mode . haskell-indentation-mode))
+
+(use-package lsp-haskell :ensure t)
+</code></pre>
+<p><code>init.el</code>:</p>
+<pre><code class="language-elisp">(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+</code></pre>
+<h3 id="julia"><a class="header" href="#julia">Julia</a></h3>
+<pre><code class="language-elisp">;; julia-snail
+(use-package julia-snail
+  :ensure t
+  :config (setq julia-snail-executable "~/.juliaup/bin/"))
+</code></pre>
+<h1 id="neovimeditor"><a class="header" href="#neovimeditor">NeoVim/Editor</a></h1>
+<h2 id="lunarvim"><a class="header" href="#lunarvim">LunarVim</a></h2>
+<pre><code class="language-bash">## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+cargo install neovide
+## Fonts
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh
+</code></pre>
+<h3 id="neovide"><a class="header" href="#neovide">Neovide</a></h3>
+<pre><code class="language-bash">vi .config/neovide/config.toml
+## =&gt; 
+neovim-bin = ".local/bin/lvim"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="programming-oop"><a class="header" href="#programming-oop">Programming-OOP</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="programming-fp"><a class="header" href="#programming-fp">Programming-FP</a></h1>
+<h2 id="books"><a class="header" href="#books">Books</a></h2>
+<h3 id="sicpprogramming"><a class="header" href="#sicpprogramming">SICP/Programming</a></h3>
+<pre><code class="language-bash">mkdir -p  ~/.config/emacs/quack/
+cd ./.config/emacs/quack/
+wget2 https://www.neilvandyke.org/quack/quack.el
+</code></pre>
+<h3 id="haskell函数式程序设计category-theory"><a class="header" href="#haskell函数式程序设计category-theory">Haskell函数式程序设计/Category Theory</a></h3>
+<p>关于范畴论的兴趣来源于我的语言学爱好，由于我语言学上最初的启发是乔姆斯基，为了了解他著作中的一些概念，后来又购置了一本数理哲学，始终未曾翻阅，此后不断地了解程序语言设计领域的话题，又打算重新了解一番当代语言学中数学工具发展的脉络。使用haskell也是因为这种语言相较于lisp更贴合范畴论的实践。</p>
+<p>具体配置haskell开发环境的指北见于USTC的mirrors,不再赘述。</p>
+<h2 id="language"><a class="header" href="#language">Language</a></h2>
+<h3 id="symbolic-algebra"><a class="header" href="#symbolic-algebra">Symbolic Algebra</a></h3>
+<h4 id="julia-1"><a class="header" href="#julia-1">Julia</a></h4>
+<pre><code class="language-bash">curl -fsSL https://install.julialang.org | sh
+</code></pre>
+<h4 id="spad--fricas"><a class="header" href="#spad--fricas">SPAD &amp;&amp; FriCAS</a></h4>
+<p>见于 <a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a> 。</p>
+<pre><code class="language-bash">sudo pacman -S sbcl
+git clone --depth=1 git@github.com:fricas/fricas.git
+cd fricas
+./configure
+make
+sudo make install
+</code></pre>
+<h4 id="idris2--pack"><a class="header" href="#idris2--pack">Idris2 &amp;&amp; Pack</a></h4>
+<pre><code class="language-bash">git clone --depth=1 git@github.com:racket/ChezScheme.git
+cd ChezScheme
+./configure --threads
+make
+sudo make install
+</code></pre>
+<pre><code class="language-bash">git clone --depth=1 git@github.com:stefan-hoeck/idris2-pack.git
+cd idris2-pack
+./install.sh
+</code></pre>
+<pre><code class="language-bash">export PATH=$PATH:~/.pack/bin
+</code></pre>
+<h4 id="agda"><a class="header" href="#agda">Agda</a></h4>
+<pre><code class="language-bash">cabal update
+cabal install Agda
+
+wget -O agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v2.2.tar.gz
+tar -xvf agda-stdlib.tar.gz
+
+cd agda-stdlib-2.2
+cabal install
+</code></pre>
+<h3 id="lisp"><a class="header" href="#lisp">Lisp</a></h3>
+<h4 id="commonlisp--roswell"><a class="header" href="#commonlisp--roswell">CommonLisp &amp;&amp; Roswell</a></h4>
+<pre><code class="language-bash">sudo pacman -S rlwrap
+
+git clone -b release https://github.com/roswell/roswell.git
+cd roswell
+sh bootstrap
+./configure --prefix=$HOME/.local
+make
+make install
+echo 'PATH=$HOME/.local/bin:$PATH' &gt;&gt; ~/.zshrc
+
+ros setup
+ros lisp=sbcl-bin/system setup
+ros install qlot
+</code></pre>
+<h5 id="lem"><a class="header" href="#lem">lem</a></h5>
+<pre><code class="language-bash">sudo pacman -S sdl2 sdl2_ttf sdl2_image
+
+mkdir $HOME/common-lisp
+cd common-lisp
+git clone --depth=1 https://github.com/lem-project/lem.git
+cd lem
+make sdl2
+</code></pre>
+<h3 id="apl"><a class="header" href="#apl">APL</a></h3>
+<h4 id="uiua"><a class="header" href="#uiua">Uiua</a></h4>
+<pre><code class="language-bash">cargo install --git https://github.com/uiua-lang/uiua uiua -F full
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><p>NewDocument</p>
 <h1 id="about"><a class="header" href="#about">About</a></h1>
@@ -2549,11 +2475,11 @@ Sebastian Doggart</em></p>
 <hr />
 <p>场记：</p>
 <p>虽然这是一场表演，但不要表露出太多表演的痕迹，以简单与自发为原则，不使用任何表露特征的道具——他们应当在没有表演痕迹的情景中表达这个世界（在舞台与布景中应该注意到的），这些作为成年人的角色却表露出青春期末期的特色，他们是一座破落的博物馆中的藏品。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ssl_error_syscall"><a class="header" href="#ssl_error_syscall">SSL_ERROR_SYSCALL</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="git"><a class="header" href="#git">git</a></h1>
 <p>Posted on December 29, 2024</p>
+<h2 id="ssl_error_syscall"><a class="header" href="#ssl_error_syscall">SSL_ERROR_SYSCALL</a></h2>
 <p>在提交分支时报出了<code>OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0</code>的错误。</p>
-<p>根据 <em>正宗咸豆花 at CSDN</em>
-的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p>
+<p>根据 <em>正宗咸豆花 at CSDN</em> 的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p>
 <p>另外的，附上当时的最小实例：</p>
 <pre><code class="language-bash">git clone --depth=1 git@github.com:username/repo.git
 cd repo
@@ -2563,22 +2489,154 @@ git add .
 git commit -m "last commit"
 git push origin master ## git push -u origin master（设置上游仓库）
 </code></pre>
+<h2 id="remote--rsync"><a class="header" href="#remote--rsync">remote &amp;&amp; rsync</a></h2>
 <p>对于凭证登陆，选择 <code>cache</code> 则有 <code>git config --global credential.credentialStore cache</code>。（<code>dotnet tool install -g git-credential-manager</code>）</p>
 <p>同步：<code>cp -rp book/* repo</code> or <code>rsync -a ./book/* repo</code> 。（<code>! [rejected]        master -&gt; master (non-fast-forward)</code> 时，可用<code>git push -f</code>）</p>
-<p>另外，<code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
-<h1 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h1>
+<h2 id="cname-file"><a class="header" href="#cname-file">CNAME file</a></h2>
+<p><code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
+<h1 id="toolshaskell--rust"><a class="header" href="#toolshaskell--rust">Tools/Haskell &amp; Rust</a></h1>
+<h2 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h2>
 <p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决。</p>
-<h1 id="reader"><a class="header" href="#reader">Reader</a></h1>
+<h2 id="reader"><a class="header" href="#reader">Reader</a></h2>
 <p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，<code>(setq djvu-image-mode t)</code> 后正常显示。</p>
 <pre><code class="language-elisp">(use-package djvu)
 </code></pre>
 <pre><code class="language-bash">sudo pacman -S djvulibre
 </code></pre>
-<h2 id="to-pdf"><a class="header" href="#to-pdf">to PDF</a></h2>
+<h3 id="to-pdf"><a class="header" href="#to-pdf">to PDF</a></h3>
 <pre><code class="language-bash">sudo pacman -S libtiff
 </code></pre>
 <pre><code class="language-bash">ddjvu -format=tiff name(1).djvu name(2).tiff
 tiff2pdf -j -o name(3).pdf name(2).tiff
+</code></pre>
+<h2 id="writer"><a class="header" href="#writer">Writer</a></h2>
+<h3 id="typst"><a class="header" href="#typst">Typst</a></h3>
+<pre><code class="language-bash">typst watch --features html
+## or
+TYPST_FEATURES=html
+</code></pre>
+<h4 id="on-vsc"><a class="header" href="#on-vsc">on VSC</a></h4>
+<pre><code class="language-bash">sudo pacman -S code &amp;&amp; ext install myriad-dreamin.tinymist
+</code></pre>
+<h4 id="on-emacs"><a class="header" href="#on-emacs">on Emacs</a></h4>
+<pre><code class="language-bash">git clone --depth 1 https://git.sr.ht/~mafty/tip-server-py
+cd tip-server-py
+pip install -r requirements.txt
+</code></pre>
+<pre><code class="language-bash">cargo install font-manager
+</code></pre>
+<p>github:<a href="https://github.com/e-ricus/font-manager-cli">e-ricus/font-manager-cli</a>.</p>
+<pre><code class="language-bash">cargo install --git https://github.com/typst/typst.git --locked typst-cli
+</code></pre>
+<pre><code class="language-bash">cargo install --git https://github.com/Myriad-Dreamin/tinymist --locked tinymist
+</code></pre>
+<pre><code class="language-bash">git clone --depth 1 https://github.com/uben0/tree-sitter-typst
+cd tree-sitter-typst/src
+
+cc -fPIC -std=c99 -c parser.c
+cc -fPIC -std=c99 -c scanner.c
+cc -shared parser.o scanner.o -o libtree-sitter-typst.so
+
+# to emacs
+mkdir tree-sitter
+cd tree-sitter
+mv libtree-sitter-typst ./
+</code></pre>
+<h5 id="config"><a class="header" href="#config">Config</a></h5>
+<pre><code class="language-elisp">(use-package websocket
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t)
+
+(use-package typst-ts-mode
+  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode" :branch "develop")
+  :custom
+  ;; don't add "--open" if you'd like `watch` to be an error detector
+  ;; (typst-ts-watch-options "--open")
+
+  (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
+  (typst-ts-mode-enable-raw-blocks-highlight t)
+  :config
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
+  ;; make sure to install typst-lsp from
+  ;; https://github.com/nvarner/typst-lsp/releases
+  ;; or use tinymist
+  (add-to-list 'lsp-language-id-configuration '(typst-ts-mode . "typst"))
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "tinymist")
+    :major-modes '(typst-ts-mode)
+    :server-id 'tinymist)))
+
+(use-package tip
+  :vc (:url "https://git.sr.ht/~mafty/tip"))
+</code></pre>
+<h3 id="latex"><a class="header" href="#latex">LaTeX</a></h3>
+<h4 id="maxima"><a class="header" href="#maxima">Maxima</a></h4>
+<p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的LaTeX形式给出。</p>
+<pre><code class="language-bash">tex(sqrt(2)-sqrt(3))
+</code></pre>
+<h2 id="artem"><a class="header" href="#artem">Artem</a></h2>
+<pre><code class="language-bash">cargo install artem
+</code></pre>
+<h2 id="shell"><a class="header" href="#shell">Shell</a></h2>
+<h3 id="fish"><a class="header" href="#fish">fish</a></h3>
+<pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
+</code></pre>
+<h4 id="fisher"><a class="header" href="#fisher">fisher</a></h4>
+<pre><code class="language-bash">git clone --depth=1 https://github.com/jorgebucaran/fisher.git &amp;&amp; cd fisher/functions
+</code></pre>
+<pre><code class="language-fish">source
+fisher install ../
+## 
+fisher install IlanCosman/tide@v6
+</code></pre>
+<h3 id="zsh"><a class="header" href="#zsh">zsh</a></h3>
+<p><code>pacman -S zsh zsh-completions</code></p>
+<h4 id="zshzinitoh-my-zshp10k"><a class="header" href="#zshzinitoh-my-zshp10k">zsh:zinit,oh-my-zsh,p10k</a></h4>
+<pre><code class="language-zsh">git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
+zsh ~/.local/share/zinit/zinit.git/scripts/install.sh
+
+source ~/.zshrc
+
+zinit snippet https://github.com/ohmyzsh/ohmyzsh/raw/master/
+
+#vi .zshrc =&gt;
+
+plugins=(git
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        zsh-completions)
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+#:wq
+
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
+</code></pre>
+<h2 id="terminal"><a class="header" href="#terminal">Terminal</a></h2>
+<p><code>sudo pacman -S kitty</code></p>
+<h3 id="kitty"><a class="header" href="#kitty">Kitty</a></h3>
+<pre><code class="language-bash">git clone --depth 1 https://github.com/dexpota/kitty-themes ~/.config/kitty/kitty-themes/
+
+#vi =&gt; ~/.config/kitty/kitty.conf
+
+# BEGIN_KITTY_THEME
+# Spacemacs
+include current-theme.conf
+# END_KITTY_THEME
+font_family      FiraCode
+
+symbol_map U+4E00-U+9FA5 LxgwWenKai
+
+#:wq
+
+kitty +kitten themes --dump-theme 
+## xor
+cd ~/.config/kitty
+ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="readme"><a class="header" href="#readme">README</a></h1>
 <p>日记，为诊断抑郁以来记载异样表现而录。</p>
