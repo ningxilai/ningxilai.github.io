@@ -158,6 +158,17 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="programming-oop"><a class="header" href="#programming-oop">Programming-OOP</a></h1>
+<h2 id="env"><a class="header" href="#env">Env</a></h2>
+<h3 id="go"><a class="header" href="#go">Go</a></h3>
+<p><code>go env -w GO111MODULE=on</code></p>
+<p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p>
+<h3 id="python"><a class="header" href="#python">Python</a></h3>
+<p><code>python -m venv ~/.local/</code></p>
+<pre><code class="language-bash"># cat .zshrc =&gt; export PATH=$PATH:~/.local/bin
+
+pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
+pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+</code></pre>
 
                     </main>
 

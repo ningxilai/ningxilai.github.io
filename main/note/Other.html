@@ -178,7 +178,7 @@ git push origin master ## git push -u origin master（设置上游仓库）
 <p><code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
 <h1 id="toolshaskell--rust"><a class="header" href="#toolshaskell--rust">Tools/Haskell &amp; Rust</a></h1>
 <h2 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h2>
-<p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决。</p>
+<p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决，对于代码块标记导出后被覆盖的问题，可用<code>find -type f -name "*.md" | xargs sed 's#sourceCode#bash#g' -i</code>替换。</p>
 <h2 id="reader"><a class="header" href="#reader">Reader</a></h2>
 <p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，<code>(setq djvu-image-mode t)</code> 后正常显示。</p>
 <pre><code class="language-elisp">(use-package djvu)
@@ -262,6 +262,7 @@ mv libtree-sitter-typst ./
 <h2 id="artem"><a class="header" href="#artem">Artem</a></h2>
 <pre><code class="language-bash">cargo install artem
 </code></pre>
+<h1 id="dotfile"><a class="header" href="#dotfile">DotFile</a></h1>
 <h2 id="shell"><a class="header" href="#shell">Shell</a></h2>
 <h3 id="fish"><a class="header" href="#fish">fish</a></h3>
 <pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
@@ -324,6 +325,24 @@ ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
 # ...
 # include ./theme.conf
 # ...
+
+</code></pre>
+<h2 id="packagemanager"><a class="header" href="#packagemanager">PackageManager</a></h2>
+<h3 id="aura"><a class="header" href="#aura">aura</a></h3>
+<pre><code class="language-bash">## aura check
+
+sudo pacman -S pacman-contrib graphviz
+pip install shellcheck-py
+
+## install
+
+cargo install aura
+
+## Deps Graph
+
+aura deps [package-name] --open
+
+# cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop
 
 </code></pre>
 

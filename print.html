@@ -429,6 +429,17 @@ sh utils/installer/install.sh
 neovim-bin = ".local/bin/lvim"
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="programming-oop"><a class="header" href="#programming-oop">Programming-OOP</a></h1>
+<h2 id="env"><a class="header" href="#env">Env</a></h2>
+<h3 id="go"><a class="header" href="#go">Go</a></h3>
+<p><code>go env -w GO111MODULE=on</code></p>
+<p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p>
+<h3 id="python"><a class="header" href="#python">Python</a></h3>
+<p><code>python -m venv ~/.local/</code></p>
+<pre><code class="language-bash"># cat .zshrc =&gt; export PATH=$PATH:~/.local/bin
+
+pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
+pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="programming-fp"><a class="header" href="#programming-fp">Programming-FP</a></h1>
 <h2 id="books"><a class="header" href="#books">Books</a></h2>
 <h3 id="sicpprogramming"><a class="header" href="#sicpprogramming">SICP/Programming</a></h3>
@@ -2446,8 +2457,7 @@ BEBA (serious again). All right. Now it's my turn.
 <p>All right. Now it’s my turn.</p>
 </blockquote>
 <blockquote>
-<p><em>Night of The Assassin’s Night, José Triana, English translated by
-Sebastian Doggart</em></p>
+<p><em>Night of The Assassin’s Night</em>, <em>José Triana</em>, English translated by <em>Sebastian Doggart</em></p>
 </blockquote>
 </blockquote>
 <h3 id="part-00"><a class="header" href="#part-00">Part 0.0</a></h3>
@@ -2496,7 +2506,7 @@ git push origin master ## git push -u origin master（设置上游仓库）
 <p><code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
 <h1 id="toolshaskell--rust"><a class="header" href="#toolshaskell--rust">Tools/Haskell &amp; Rust</a></h1>
 <h2 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h2>
-<p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决。</p>
+<p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决，对于代码块标记导出后被覆盖的问题，可用<code>find -type f -name "*.md" | xargs sed 's#sourceCode#bash#g' -i</code>替换。</p>
 <h2 id="reader"><a class="header" href="#reader">Reader</a></h2>
 <p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，<code>(setq djvu-image-mode t)</code> 后正常显示。</p>
 <pre><code class="language-elisp">(use-package djvu)
@@ -2580,6 +2590,7 @@ mv libtree-sitter-typst ./
 <h2 id="artem"><a class="header" href="#artem">Artem</a></h2>
 <pre><code class="language-bash">cargo install artem
 </code></pre>
+<h1 id="dotfile"><a class="header" href="#dotfile">DotFile</a></h1>
 <h2 id="shell"><a class="header" href="#shell">Shell</a></h2>
 <h3 id="fish"><a class="header" href="#fish">fish</a></h3>
 <pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
@@ -2642,6 +2653,24 @@ ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
 # ...
 # include ./theme.conf
 # ...
+
+</code></pre>
+<h2 id="packagemanager"><a class="header" href="#packagemanager">PackageManager</a></h2>
+<h3 id="aura"><a class="header" href="#aura">aura</a></h3>
+<pre><code class="language-bash">## aura check
+
+sudo pacman -S pacman-contrib graphviz
+pip install shellcheck-py
+
+## install
+
+cargo install aura
+
+## Deps Graph
+
+aura deps [package-name] --open
+
+# cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop
 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="readme"><a class="header" href="#readme">README</a></h1>
@@ -2822,6 +2851,8 @@ at 7:42 PM
 <h2 id="3-40425"><a class="header" href="#3-40425">3-4/04/25</a></h2>
 <p>无事发生。</p>
 <h2 id="50425"><a class="header" href="#50425">5/04/25</a></h2>
+<p>无事发生。</p>
+<h2 id="60425"><a class="header" href="#60425">6/04/25</a></h2>
 <p>无事发生。</p>
 
                     </main>
