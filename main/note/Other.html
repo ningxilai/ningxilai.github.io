@@ -22,7 +22,18 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
-
+        
+        <!-- Addons -->
+              
+        <link rel="stylesheet" type="text/css" href="https://www.cdnfonts.com/garamond.font" />
+        <style>
+          body {  
+              font-family: "Garamond","朱雀仿宋";
+              font-weight: normal;
+              font-variant-ligatures: historical-ligatures normal;
+          }
+        </style>
+        
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
         <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
@@ -255,6 +266,22 @@ mv libtree-sitter-typst ./
   :vc (:url "https://git.sr.ht/~mafty/tip"))
 </code></pre>
 <h3 id="latex"><a class="header" href="#latex">LaTeX</a></h3>
+<pre><code class="language-bash">sudo pacman -S perl-tk ## Option
+cd /tmp
+wget2 https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive2025-20250308.iso
+sudo mkdir /mnt/iso
+sudo mount texlive2025-20250308.iso /mnt/iso/
+sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in standard directory.
+
+## Post install
+
+sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+sudo tlmgr update --all # sudo tlmgr update --self --all
+</code></pre>
+<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global Tex Font</a></h4>
+<pre><code class="language-bash">sudo cp /usr/local/texlive/[version]/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-[context].conf
+sudo fc-cache -fv
+</code></pre>
 <h4 id="maxima"><a class="header" href="#maxima">Maxima</a></h4>
 <p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的LaTeX形式给出。</p>
 <pre><code class="language-bash">tex(sqrt(2)-sqrt(3))
@@ -375,6 +402,22 @@ aura deps [package-name] --open
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
         <script>

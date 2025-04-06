@@ -98,3 +98,10 @@
   font-weight: 500;
   src: url('../fonts/source-code-pro-v11-all-charsets-500.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: '朱雀仿宋';
+  font-style: "regular";
+  font-weight: normal;
+  src: url('../fonts/ZhuqueFangsong-Regular.ttf') format('truetype');
+}

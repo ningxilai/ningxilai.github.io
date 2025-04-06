@@ -22,7 +22,18 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
-
+        
+        <!-- Addons -->
+              
+        <link rel="stylesheet" type="text/css" href="https://www.cdnfonts.com/garamond.font" />
+        <style>
+          body {  
+              font-family: "Garamond","朱雀仿宋";
+              font-weight: normal;
+              font-variant-ligatures: historical-ligatures normal;
+          }
+        </style>
+        
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
         <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
@@ -224,6 +235,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
         <script>

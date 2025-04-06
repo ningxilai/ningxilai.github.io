@@ -23,7 +23,18 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
-
+        
+        <!-- Addons -->
+              
+        <link rel="stylesheet" type="text/css" href="https://www.cdnfonts.com/garamond.font" />
+        <style>
+          body {  
+              font-family: "Garamond","朱雀仿宋";
+              font-weight: normal;
+              font-variant-ligatures: historical-ligatures normal;
+          }
+        </style>
+        
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" id="highlight-css" href="highlight.css">
         <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
@@ -204,7 +215,7 @@ de431_path = "dir/de431.eph"
 <h2 id="mdbook"><a class="header" href="#mdbook">mdbook</a></h2>
 <pre><code class="language-bash">cargo install mdbook
 </code></pre>
-<h3 id="booktoml"><a class="header" href="#booktoml">book.toml</a></h3>
+<h3 id="booktoml"><a class="header" href="#booktoml"><code>./book.toml</code></a></h3>
 <pre><code class="language-toml">[book]
 authors = ["ningxilai"]
 language = "zh_CN"
@@ -230,6 +241,35 @@ boost-paragraph = 1
 expand = true
 heading-split-level = 2
 </code></pre>
+<h3 id="themeindexhbs"><a class="header" href="#themeindexhbs"><code>./theme/index.hbs</code></a></h3>
+<pre><code class="language-html">...
+&lt;head&gt;
+...
+&lt;!-- Addons --&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://www.cdnfonts.com/garamond.font" /&gt;
+
+&lt;style&gt; body {  
+            font-family: font-family: "Garamond","朱雀仿宋" ; 
+            font-weight: normal;
+            font-variant-ligatures: historical-ligatures normal;
+        } 
+&lt;/style&gt;
+...
+&lt;/head&gt;
+...
+</code></pre>
+<h3 id="themefontsfontscss"><a class="header" href="#themefontsfontscss"><code>./theme/fonts/fonts.css</code></a></h3>
+<pre><code class="language-css">@font-face {
+    font-family: '朱雀仿宋';
+    font-style: "regular";
+    font-weight: normal;
+    src: url('{{ resource "fonts/ZhuqueFangsong-Regular.ttf" }}') format('truetype');
+    }
+</code></pre>
+<h4 id="font-source--css-copy"><a class="header" href="#font-source--css-copy">Font Source &amp;&amp; CSS copy</a></h4>
+<p><a href="main/note/%22https://github.com/TrionesType/zhuque%22">朱雀仿宋</a></p>
+<p><a href="main/note/%22https://webzhao.me/posts/ligature%22">Ligture</a></p>
 <h2 id="hakyll"><a class="header" href="#hakyll">Hakyll</a></h2>
 <pre><code class="language-bash">hakyll-init -f ./
 </code></pre>
@@ -2583,6 +2623,22 @@ mv libtree-sitter-typst ./
   :vc (:url "https://git.sr.ht/~mafty/tip"))
 </code></pre>
 <h3 id="latex"><a class="header" href="#latex">LaTeX</a></h3>
+<pre><code class="language-bash">sudo pacman -S perl-tk ## Option
+cd /tmp
+wget2 https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive2025-20250308.iso
+sudo mkdir /mnt/iso
+sudo mount texlive2025-20250308.iso /mnt/iso/
+sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in standard directory.
+
+## Post install
+
+sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+sudo tlmgr update --all # sudo tlmgr update --self --all
+</code></pre>
+<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global Tex Font</a></h4>
+<pre><code class="language-bash">sudo cp /usr/local/texlive/[version]/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-[context].conf
+sudo fc-cache -fv
+</code></pre>
 <h4 id="maxima"><a class="header" href="#maxima">Maxima</a></h4>
 <p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的LaTeX形式给出。</p>
 <pre><code class="language-bash">tex(sqrt(2)-sqrt(3))
@@ -2872,6 +2928,22 @@ at 7:42 PM
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
         <script>
