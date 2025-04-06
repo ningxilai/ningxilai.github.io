@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Blog-Tools - Iris&#x27;s Note Book</title>
+        <title>Poet Translate - Iris&#x27;s Note Book</title>
 
 
         <!-- Custom HTML head -->
@@ -168,230 +168,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="blog-tools"><a class="header" href="#blog-tools">Blog Tools</a></h1>
-<h2 id="mdbook"><a class="header" href="#mdbook">mdbook</a></h2>
-<pre><code class="language-bash">cargo install mdbook
-</code></pre>
-<h3 id="booktoml"><a class="header" href="#booktoml"><code>./book.toml</code></a></h3>
-<pre><code class="language-toml">[book]
-authors = ["ningxilai"]
-language = "zh_CN"
-multilingual = false
-src = "src"
-title = "Iris's Note Book"
-
-[output.html]
-mathjax-support = true
-git-repository-url = "https://github.com/ningxilai/ningxilai.github.io"
-git-repository-icon = "fa-github"
-no-section-label = true
-
-[output.html.playground]
-editable = true
-line-numbers = true
-
-[output.html.search]
-limit-results = 20
-use-boolean-and = true
-boost-title = 2
-boost-hierarchy = 2
-boost-paragraph = 1
-expand = true
-heading-split-level = 2
-</code></pre>
-<h3 id="themeindexhbs"><a class="header" href="#themeindexhbs"><code>./theme/index.hbs</code></a></h3>
-<pre><code class="language-html">...
-&lt;head&gt;
-...
-&lt;!-- Addons --&gt;
-
-&lt;link rel="stylesheet" type="text/css" href="https://www.cdnfonts.com/garamond.font" /&gt;
-
-&lt;style&gt; body {  
-            font-family: font-family: "Garamond","朱雀仿宋" ; 
-            font-weight: normal;
-            font-variant-ligatures: historical-ligatures normal;
-        } 
-&lt;/style&gt;
-...
-&lt;/head&gt;
-...
-</code></pre>
-<h3 id="themefontsfontscss"><a class="header" href="#themefontsfontscss"><code>./theme/fonts/fonts.css</code></a></h3>
-<pre><code class="language-css">@font-face {
-    font-family: '朱雀仿宋';
-    font-style: "regular";
-    font-weight: normal;
-    src: url('{{ resource "fonts/ZhuqueFangsong-Regular.ttf" }}') format('truetype');
-    }
-</code></pre>
-<h4 id="font-source--css-copy"><a class="header" href="#font-source--css-copy">Font Source &amp;&amp; CSS copy</a></h4>
-<p><a href="%22https://github.com/TrionesType/zhuque%22">朱雀仿宋</a></p>
-<p><a href="%22https://webzhao.me/posts/ligature%22">Ligture</a></p>
-<h2 id="hakyll"><a class="header" href="#hakyll">Hakyll</a></h2>
-<pre><code class="language-bash">hakyll-init -f ./
-</code></pre>
-<h3 id="css"><a class="header" href="#css">CSS</a></h3>
-<pre><code class="language-css">html,body {
-	background: white;
-	scroll-behavior: smooth;
-	color: black;
-	font-family: monospace;
-	font-size: 16px;
-	line-height: 1.4;
-	min-height: 100%;
-	overflow-wrap: break-word;
-	font-family: "Fira Code","LXGW WenKai",sans-serif
-}
-
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 45%;
-	margin: 0;
-	padding: 0;
-	text-align: left
-}
-
-.post-meta {
-	text-align: right
-}
-
-h1,h2,h3,h4,h5,h6 {
-	font-weight: normal
-}
-
-h2,h3 {
-	margin-top: 3rem
-}
-
-h4,h5 {
-	margin-top: 1.8rem
-}
-
-h6 {
-	margin-top: 0.8rem
-}
-
-hr {
-	margin: 2rem 0
-}
-
-p {
-	margin: 1rem 0
-}
-
-li {
-	margin: 0.4rem 0
-}
-
-*:target {
-	background: yellow
-}
-
-.w {
-	max-width: 640px;
-	margin: 0 auto;
-	padding: 4rem 2rem
-}
-
-hr {
-	text-align: center;
-	border: 0
-}
-
-hr:before {
-	content: "/////"
-}
-
-hr:after {
-	content: attr(data-content) "/////"
-}
-
-table {
-	width: 40%;
-	border: 0px
-}
-
-table,th,td {
-	border-collapse: collapse;
-	padding: 0.4rem
-}
-
-code {
-	color: white;
-	background: black
-}
-
-div.highlighter-rouge code {
-	display: block;
-	overflow-x: auto;
-	white-space: pre-wrap;
-	padding: 1rem
-}
-
-blockquote {
-	font-style: italic;
-	border: thin solid black;
-	padding: 1rem
-}
-
-blockquote p {
-	margin: 0
-}
-
-img {
-	max-width: 100%;
-	display: block;
-	margin: 0 auto
-}
-</code></pre>
-<pre><code class="language-html">
-&lt;!doctype html&gt;
-&lt;html lang="en"&gt;
-    &lt;head&gt;
-        &lt;meta charset="utf-8"&gt;
-        &lt;meta http-equiv="x-ua-compatible" content="ie=edge"&gt;
-        &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-        &lt;title&gt;Home&lt;/title&gt;        
-        &lt;link rel="stylesheet" href="./css/default.css" /&gt;
-        &lt;link href="https://cdn.bootcdn.net/ajax/libs/firacode/6.2.0/ttf/FiraCode-Bold.ttf" rel="stylesheet"&gt;
-        &lt;link href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/files/lxgwwenkai-bold-subset-100.woff2" rel="stylesheet"&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-
-        &lt;main role="main"&gt;
-            &lt;h1&gt;Home&lt;/h1&gt;
-            &lt;header&gt;
-  &lt;div class="logo"&gt;
-    &lt;a href="./"&gt;Iris's Blog&lt;/a&gt;
-  &lt;/div&gt;
-&lt;/header&gt;
-
-&lt;body&gt; body  &lt;/body&gt;
-
-&lt;footer&gt;
-  Site proudly generated by
-  &lt;a href="http://jaspervdj.be/hakyll"&gt;Hakyll&lt;/a&gt;,
-  Site &lt;code&gt;.css&lt;/code&gt; file generated from the &lt;code&gt;.sass&lt;/code&gt; files of &lt;a href="https://github.com/riggraz/no-style-please"&gt;riggraz/no-style-please&lt;/a&gt;.
-&lt;/footer&gt;
-
-        &lt;/main&gt;
-     
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+                        <h1 id="poet-translater"><a class="header" href="#poet-translater">Poet Translater</a></h1>
+<p>Posted on December 30, 2024</p>
+<h3 id="part-0-intro"><a class="header" href="#part-0-intro">Part 0 intro</a></h3>
+<p>某朋友曾说要看我写一部关于南极雪鸮的故事，尽管南极只有企鹅没有雪鸮，不过我想，大概中文世界也没有这部剧的翻译。给它翻译成中文比把雪鸮搬到南极大概容易多了。</p>
+<blockquote>
+<blockquote>
+<p>All right. Now it’s my turn.</p>
+</blockquote>
+<blockquote>
+<p><em>Night of The Assassin’s Night</em>, <em>José Triana</em>, English translated by <em>Sebastian Doggart</em></p>
+</blockquote>
+</blockquote>
+<h3 id="part-00"><a class="header" href="#part-00">Part 0.0</a></h3>
+<p>多么大，多么小，多么奇异。</p>
+<p><em>Cesar Vallejo</em></p>
+<p>…我们梦中的奇异，正发生自我们自己。</p>
+<p><em>Andre Malraux</em></p>
+<p>…在我们的时代，当神也加入舞蹈，此时别再回头！当你回头，顷刻化为盐柱。</p>
+<p><em>Antonin Artaud</em></p>
+<p>我们只是爱，</p>
+<p>所有那些在幻象中的</p>
+<p>如果我们不懂爱，也同样不明白如何寻求爱</p>
+<p>当他于孤独中，</p>
+<p>那么爱与被爱，都一样虚幻</p>
+<p>与梦一同作伪</p>
+<p><em>The Cocktail Party (1949)</em> <em>T.S.Eliot</em></p>
+<hr />
+<p>角色表：</p>
+<p>LALO（拉罗）</p>
+<p>CUCA（苦柯）</p>
+<p>BEBA（贝伯）</p>
+<hr />
+<p>设定：</p>
+<p>在1950年代，一间地下室或者阁楼內。一张桌子、三支椅子、滚起来的毯子、打满补丁的脏窗帘、花瓶、一柄法槌，一把匕首和其他东西堆在放扫帚和掸子的角落。</p>
+<hr />
+<p>场记：</p>
+<p>虽然这是一场表演，但不要表露出太多表演的痕迹，以简单与自发为原则，不使用任何表露特征的道具——他们应当在没有表演痕迹的情景中表达这个世界（在舞台与布景中应该注意到的），这些作为成年人的角色却表露出青春期末期的特色，他们是一座破落的博物馆中的藏品。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../main/note/Astro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../main/literate/Poet.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../main/note/Math.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../main/daily/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -401,11 +224,11 @@ img {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../main/note/Astro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../main/literate/Poet.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../main/note/Math.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../main/daily/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
