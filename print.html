@@ -453,6 +453,15 @@ neovim-bin = ".local/bin/lvim"
 
 pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+
+</code></pre>
+<h4 id="easyocr"><a class="header" href="#easyocr">EasyOCR</a></h4>
+<pre><code class="language-bash">pip install -U huggingface_hub
+pip install easyocr
+
+## export HF_ENDPOINT=https://hf-mirror.com
+
+easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="programming-fp"><a class="header" href="#programming-fp">Programming-FP</a></h1>
 <h2 id="books"><a class="header" href="#books">Books</a></h2>
@@ -653,6 +662,10 @@ sudo fc-cache -fv
 </code></pre>
 <h1 id="dotfile"><a class="header" href="#dotfile">DotFile</a></h1>
 <h2 id="shell"><a class="header" href="#shell">Shell</a></h2>
+<h3 id="imageview"><a class="header" href="#imageview">ImageView</a></h3>
+<pre><code class="language-bash">cargo install viu
+## viu $PATH/$NAME
+</code></pre>
 <h3 id="fish"><a class="header" href="#fish">fish</a></h3>
 <pre><code class="language-bash">cargo install --git https://github.com/fish-shell/fish-shell --locked
 </code></pre>
@@ -661,7 +674,6 @@ sudo fc-cache -fv
 </code></pre>
 <pre><code class="language-fish">source
 fisher install ../
-## 
 fisher install IlanCosman/tide@v6
 </code></pre>
 <h3 id="zsh"><a class="header" href="#zsh">zsh</a></h3>

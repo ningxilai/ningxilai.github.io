@@ -179,6 +179,15 @@
 
 pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+
+</code></pre>
+<h4 id="easyocr"><a class="header" href="#easyocr">EasyOCR</a></h4>
+<pre><code class="language-bash">pip install -U huggingface_hub
+pip install easyocr
+
+## export HF_ENDPOINT=https://hf-mirror.com
+
+easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard
 </code></pre>
 
                     </main>
