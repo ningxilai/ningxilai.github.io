@@ -189,6 +189,20 @@ pip install easyocr
 
 easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard
 </code></pre>
+<h3 id="perllatex"><a class="header" href="#perllatex">Perl/Latex</a></h3>
+<p><code>latex-git-log</code> =&gt;</p>
+<pre><code>-- Can't locate IPC/System/Simple.pm in @INC (you may need to install the IPC::System::Simple module) (@INC entries checked: /usr/lib/perl5/5.40/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.40/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.40/core_perl /usr/share/perl5/core_perl) at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
+-- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
+</code></pre>
+<pre><code class="language-bash">sudo perl -MCPAN -e shell 
+## xor cpan shell 
+# &lt;= o conf urllist unshift https://mirrors.tuna.tsinghua.edu.cn/CPAN/ 
+# &lt;= o conf pushy_https 0 
+# &lt;= o conf commit 
+# &lt;= quit
+</code></pre>
+<pre><code class="language-perl">install IPC/System/Simple.pm
+</code></pre>
 
                     </main>
 
