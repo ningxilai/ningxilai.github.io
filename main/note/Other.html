@@ -278,7 +278,7 @@ sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in stan
 sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
 sudo tlmgr update --all # sudo tlmgr update --self --all
 </code></pre>
-<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global Tex Font</a></h4>
+<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global TeX Font</a></h4>
 <pre><code class="language-bash">sudo cp /usr/local/texlive/[version]/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-[context].conf
 sudo fc-cache -fv
 </code></pre>
@@ -375,6 +375,24 @@ aura deps [package-name] --open
 # cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop
 
 </code></pre>
+<h3 id="reflector"><a class="header" href="#reflector">Reflector</a></h3>
+<pre><code class="language-bash">sudo pacman -S reflector
+sudo systemctl [enable/start] reflector.[timer/service]
+
+sudo vim /etc/xdg/reflector/reflector.conf 
+# -- --country France,Germany
+# -- --protocol https
+# ...
+# ++ --country China
+# ++ --protocol rsync
+
+sudo vim /etc/pacman.conf
+# -- #NoExtract   =
+# ++ NoExtract   = true
+
+</code></pre>
+<h2 id="fonts"><a class="header" href="#fonts">Fonts</a></h2>
+<p>Global TeX Font and <code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/</code>.</p>
 
                     </main>
 

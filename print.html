@@ -466,7 +466,7 @@ pip install easyocr
 
 easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard
 </code></pre>
-<h3 id="perllatex"><a class="header" href="#perllatex">Perl/Latex</a></h3>
+<h3 id="perllatex"><a class="header" href="#perllatex">Perl/LaTeX</a></h3>
 <p><code>latex-git-log</code> =&gt;</p>
 <pre><code>-- Can't locate IPC/System/Simple.pm in @INC (you may need to install the IPC::System::Simple module) (@INC entries checked: /usr/lib/perl5/5.40/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.40/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.40/core_perl /usr/share/perl5/core_perl) at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
 -- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
@@ -666,7 +666,7 @@ sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in stan
 sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
 sudo tlmgr update --all # sudo tlmgr update --self --all
 </code></pre>
-<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global Tex Font</a></h4>
+<h4 id="global-tex-font"><a class="header" href="#global-tex-font">Global TeX Font</a></h4>
 <pre><code class="language-bash">sudo cp /usr/local/texlive/[version]/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-[context].conf
 sudo fc-cache -fv
 </code></pre>
@@ -763,6 +763,24 @@ aura deps [package-name] --open
 # cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop
 
 </code></pre>
+<h3 id="reflector"><a class="header" href="#reflector">Reflector</a></h3>
+<pre><code class="language-bash">sudo pacman -S reflector
+sudo systemctl [enable/start] reflector.[timer/service]
+
+sudo vim /etc/xdg/reflector/reflector.conf 
+# -- --country France,Germany
+# -- --protocol https
+# ...
+# ++ --country China
+# ++ --protocol rsync
+
+sudo vim /etc/pacman.conf
+# -- #NoExtract   =
+# ++ NoExtract   = true
+
+</code></pre>
+<h2 id="fonts"><a class="header" href="#fonts">Fonts</a></h2>
+<p>Global TeX Font and <code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-literate"><a class="header" href="#chapter-2-literate">Chapter 2 Literate</a></h1>
 <p>维鹊有巢，维鸠居之。之子于归，百两御之。
 <br />
@@ -1056,8 +1074,8 @@ colorless.</em></p>
 <a href="http://www.penbbs.com/forum.php?mod=viewthread&amp;tid=66186">转来的------各种墨水的配方及制作</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="neuro-science"><a class="header" href="#neuro-science">Neuro Science</a></h1>
 <h2 id="religious-psychology"><a class="header" href="#religious-psychology">Religious Psychology</a></h2>
-<p>9/4/25，购置思高本圣经（<em>Bible</em>）一部，威廉·詹姆斯_宗教经验之种种_一部。</p>
-<p>11/4/25，购置_基督教释经学_一部。</p>
+<p>9/4/25，购置思高本圣经（<em>Bible</em>）一部，威廉·詹姆斯 <em>宗教经验之种种</em> 一部。</p>
+<p>11/4/25，购置 <em>基督教释经学</em> 一部。</p>
 <h3 id="reading"><a class="header" href="#reading">Reading</a></h3>
 <h3 id="holy-minimalism--religious-music"><a class="header" href="#holy-minimalism--religious-music">Holy Minimalism / Religious Music</a></h3>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="night-of-the-assasins"><a class="header" href="#night-of-the-assasins">Night Of The Assasins</a></h1>
@@ -2944,6 +2962,8 @@ at 7:42 PM
 疏肝解郁：16.5</p>
 <h2 id="14425"><a class="header" href="#14425">14/4/25</a></h2>
 <p>今日无事可做。</p>
+<h2 id="15425"><a class="header" href="#15425">15/4/25</a></h2>
+<p>无事发生，明日复诊。</p>
 
                     </main>
 
