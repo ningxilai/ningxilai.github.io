@@ -718,6 +718,7 @@ zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 </code></pre>
 <h2 id="terminal"><a class="header" href="#terminal">Terminal</a></h2>
+<p><a href="https://sw.kovidgoyal.net/kitty/overview/#overview">hotkey</a></p>
 <p><code>sudo pacman -S kitty</code></p>
 <h3 id="kitty"><a class="header" href="#kitty">Kitty</a></h3>
 <pre><code class="language-bash">git clone --depth 1 https://github.com/dexpota/kitty-themes ~/.config/kitty/kitty-themes/
@@ -744,6 +745,27 @@ ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
 # include ./theme.conf
 # ...
 
+</code></pre>
+<h3 id="fetch"><a class="header" href="#fetch">Fetch</a></h3>
+<p><code>cargo install --git "https://github.com/kamui-fin/rfetch" --features=battery</code></p>
+<h4 id="config-1"><a class="header" href="#config-1">Config</a></h4>
+<pre><code class="language-toml"># cat .config/rfetch/config.toml
+
+modules = ["user_host", "shell", "distro", "packages", "uptime", "memory", "kernel", "ip", "cpu", "disk_usage", "process_num", "arch", "temp", "locale", "device_name", "time", "date", "battery"]
+delimiter = "~&gt;"
+title_color = "pink"
+
+[user_host]
+line = true
+line_symbol = "━"
+line_color = "magenta"
+
+[colors]
+enabled = true
+show_bg_colors = false
+
+[ip]
+public = true
 </code></pre>
 <h2 id="packagemanager"><a class="header" href="#packagemanager">PackageManager</a></h2>
 <h3 id="aura"><a class="header" href="#aura">aura</a></h3>
@@ -781,6 +803,14 @@ sudo vim /etc/pacman.conf
 </code></pre>
 <h2 id="fonts"><a class="header" href="#fonts">Fonts</a></h2>
 <p>Global TeX Font and <code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/</code>.</p>
+<h2 id="linuxtools"><a class="header" href="#linuxtools">LinuxTools</a></h2>
+<h3 id="oom"><a class="header" href="#oom">OOM</a></h3>
+<pre><code class="language-bash">sudo pacman -S earlyoom
+sudo systemctl enable --now earlyoom
+</code></pre>
+<h3 id="trashfilecheck"><a class="header" href="#trashfilecheck">TrashFileCheck</a></h3>
+<pre><code class="language-bash">cargo install cargo install czkawka_[gui/cli]
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-literate"><a class="header" href="#chapter-2-literate">Chapter 2 Literate</a></h1>
 <p>维鹊有巢，维鸠居之。之子于归，百两御之。
 <br />
@@ -1075,8 +1105,10 @@ colorless.</em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="neuro-science"><a class="header" href="#neuro-science">Neuro Science</a></h1>
 <h2 id="religious-psychology"><a class="header" href="#religious-psychology">Religious Psychology</a></h2>
 <p>9/4/25，购置思高本圣经（<em>Bible</em>）一部，威廉·詹姆斯 <em>宗教经验之种种</em> 一部。</p>
+<p>.. <em>祈祷手册</em> 一部。</p>
 <p>11/4/25，购置 <em>基督教释经学</em> 一部。</p>
 <h3 id="reading"><a class="header" href="#reading">Reading</a></h3>
+<p><em>宗教经验种种</em> <em>1/6</em></p>
 <h3 id="holy-minimalism--religious-music"><a class="header" href="#holy-minimalism--religious-music">Holy Minimalism / Religious Music</a></h3>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="night-of-the-assasins"><a class="header" href="#night-of-the-assasins">Night Of The Assasins</a></h1>
 <p>Posted on December 30, 2024</p>
@@ -2957,13 +2989,13 @@ at 7:42 PM
 <h2 id="11-12425"><a class="header" href="#11-12425">11-12/4/25</a></h2>
 <p>未见好转。</p>
 <h2 id="13425"><a class="header" href="#13425">13/4/25</a></h2>
-<p>氟伏沙明：22.5
-喹硫平：34
-疏肝解郁：16.5</p>
+<p>=&gt; NIL</p>
 <h2 id="14425"><a class="header" href="#14425">14/4/25</a></h2>
 <p>今日无事可做。</p>
 <h2 id="15425"><a class="header" href="#15425">15/4/25</a></h2>
 <p>无事发生，明日复诊。</p>
+<h2 id="16425"><a class="header" href="#16425">16/4/25</a></h2>
+<p>氟伏沙明 =&gt; 3片/日</p>
 
                     </main>
 

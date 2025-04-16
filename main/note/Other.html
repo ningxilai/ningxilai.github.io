@@ -330,6 +330,7 @@ zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 </code></pre>
 <h2 id="terminal"><a class="header" href="#terminal">Terminal</a></h2>
+<p><a href="https://sw.kovidgoyal.net/kitty/overview/#overview">hotkey</a></p>
 <p><code>sudo pacman -S kitty</code></p>
 <h3 id="kitty"><a class="header" href="#kitty">Kitty</a></h3>
 <pre><code class="language-bash">git clone --depth 1 https://github.com/dexpota/kitty-themes ~/.config/kitty/kitty-themes/
@@ -356,6 +357,27 @@ ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
 # include ./theme.conf
 # ...
 
+</code></pre>
+<h3 id="fetch"><a class="header" href="#fetch">Fetch</a></h3>
+<p><code>cargo install --git "https://github.com/kamui-fin/rfetch" --features=battery</code></p>
+<h4 id="config-1"><a class="header" href="#config-1">Config</a></h4>
+<pre><code class="language-toml"># cat .config/rfetch/config.toml
+
+modules = ["user_host", "shell", "distro", "packages", "uptime", "memory", "kernel", "ip", "cpu", "disk_usage", "process_num", "arch", "temp", "locale", "device_name", "time", "date", "battery"]
+delimiter = "~&gt;"
+title_color = "pink"
+
+[user_host]
+line = true
+line_symbol = "━"
+line_color = "magenta"
+
+[colors]
+enabled = true
+show_bg_colors = false
+
+[ip]
+public = true
 </code></pre>
 <h2 id="packagemanager"><a class="header" href="#packagemanager">PackageManager</a></h2>
 <h3 id="aura"><a class="header" href="#aura">aura</a></h3>
@@ -393,6 +415,14 @@ sudo vim /etc/pacman.conf
 </code></pre>
 <h2 id="fonts"><a class="header" href="#fonts">Fonts</a></h2>
 <p>Global TeX Font and <code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/</code>.</p>
+<h2 id="linuxtools"><a class="header" href="#linuxtools">LinuxTools</a></h2>
+<h3 id="oom"><a class="header" href="#oom">OOM</a></h3>
+<pre><code class="language-bash">sudo pacman -S earlyoom
+sudo systemctl enable --now earlyoom
+</code></pre>
+<h3 id="trashfilecheck"><a class="header" href="#trashfilecheck">TrashFileCheck</a></h3>
+<pre><code class="language-bash">cargo install cargo install czkawka_[gui/cli]
+</code></pre>
 
                     </main>
 
