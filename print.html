@@ -695,15 +695,29 @@ fisher install IlanCosman/tide@v6
 </code></pre>
 <h3 id="zsh"><a class="header" href="#zsh">zsh</a></h3>
 <p><code>pacman -S zsh zsh-completions</code></p>
-<h4 id="zshzinitoh-my-zshp10k"><a class="header" href="#zshzinitoh-my-zshp10k">zsh:zinit,oh-my-zsh,p10k</a></h4>
+<p><code>cargo install starship</code></p>
+<h4 id="zshrc-packagemanager-and-p10kstarship"><a class="header" href="#zshrc-packagemanager-and-p10kstarship"><code>.zshrc</code> PackageManager and p10k/starship</a></h4>
 <pre><code class="language-zsh">git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
 zsh ~/.local/share/zinit/zinit.git/scripts/install.sh
-
 source ~/.zshrc
+</code></pre>
+<pre><code class="language-zsh">
+zinit ice depth"1" # git clone depth
+zinit snippet OMZ::* # use OMZ
 
-zinit snippet https://github.com/ohmyzsh/ohmyzsh/raw/master/
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-history-substring-search
+zinit light zdharma-continuum/fast-syntax-highlighting
 
-#vi .zshrc =&gt;
+#starship Scheme
+
+starship preset nerd-font-symbols -o ~/.config/starship.toml
+eval "$(starship init zsh)"
+
+#OMZ Scheme
+
+zinit light romkatv/powerlevel10k #p10k
 
 plugins=(git
         zsh-syntax-highlighting
@@ -712,10 +726,6 @@ plugins=(git
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-#:wq
-
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
 </code></pre>
 <h2 id="terminal"><a class="header" href="#terminal">Terminal</a></h2>
 <p><a href="https://sw.kovidgoyal.net/kitty/overview/#overview">hotkey</a></p>
@@ -3014,6 +3024,22 @@ at 7:42 PM
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
         <script>
