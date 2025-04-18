@@ -244,6 +244,8 @@ make sdl2
 <h4 id="uiua"><a class="header" href="#uiua">Uiua</a></h4>
 <pre><code class="language-bash">cargo install --git https://github.com/uiua-lang/uiua uiua -F full
 </code></pre>
+<h3 id="rust"><a class="header" href="#rust">Rust</a></h3>
+<p>xor <code>rustup toolchain uninstall stable &amp;&amp; rustup toolchain install stable</code>.</p>
 
                     </main>
 
@@ -274,22 +276,6 @@ make sdl2
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
         <script>

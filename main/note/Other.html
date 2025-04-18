@@ -308,8 +308,14 @@ fisher install IlanCosman/tide@v6
 <h3 id="zsh"><a class="header" href="#zsh">zsh</a></h3>
 <p><code>pacman -S zsh zsh-completions</code></p>
 <p><code>cargo install starship</code></p>
-<h4 id="zshrc-packagemanager-and-p10kstarship"><a class="header" href="#zshrc-packagemanager-and-p10kstarship"><code>.zshrc</code> PackageManager and p10k/starship</a></h4>
-<pre><code class="language-zsh">git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
+<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting/issues/812">zsh-syntax-higtlighting/issue/812</a> <em>Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.<strong>zsh_highlight</strong></em></p>
+<h4 id="zshrcpackagemanager-and-p10kstarship"><a class="header" href="#zshrcpackagemanager-and-p10kstarship"><code>.zshrc</code>:PackageManager and p10k/starship</a></h4>
+<pre><code class="language-zsh">HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+
+git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
 zsh ~/.local/share/zinit/zinit.git/scripts/install.sh
 source ~/.zshrc
 </code></pre>
@@ -318,8 +324,9 @@ zinit ice depth"1" # git clone depth
 zinit snippet OMZ::* # use OMZ
 
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
+zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 #starship Scheme
@@ -463,22 +470,6 @@ sudo systemctl enable --now earlyoom
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
         <script>
