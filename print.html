@@ -451,12 +451,17 @@ neovim-bin = ".local/bin/lvim"
 <p><code>go env -w GO111MODULE=on</code></p>
 <p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p>
 <h3 id="python"><a class="header" href="#python">Python</a></h3>
-<p><code>python -m venv ~/.local/</code></p>
+<p><code>python -m venv ~/.local/</code> xor <code>uv venv ~/uv/</code></p>
 <pre><code class="language-bash"># cat .zshrc =&gt; export PATH=$PATH:~/.local/bin
 
 pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
 
+</code></pre>
+<p><code>uv</code> config <code>~/.config/uv/uv.toml</code></p>
+<pre><code class="language-toml">[[index]]
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
+default = true
 </code></pre>
 <h4 id="easyocr"><a class="header" href="#easyocr">EasyOCR</a></h4>
 <pre><code class="language-bash">pip install -U huggingface_hub
@@ -3017,6 +3022,8 @@ at 7:42 PM
 <p>氟伏沙明 =&gt; 3片/日</p>
 <h2 id="18425"><a class="header" href="#18425">18/4/25</a></h2>
 <p>疲惫，其余完好。</p>
+<h2 id="20425-1"><a class="header" href="#20425-1">20/4/25</a></h2>
+<p>无事发生。</p>
 
                     </main>
 
