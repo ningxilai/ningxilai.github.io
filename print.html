@@ -657,6 +657,18 @@ mv libtree-sitter-typst ./
     :major-modes '(typst-ts-mode)
     :server-id 'tinymist)))
 
+;; Eglot
+
+(with-eval-after-load 'eglot
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
+(setq-default eglot-workspace-configuration
+            '(:tinymist (:exportPdf "onSave")))
+
 (use-package tip
   :vc (:url "https://git.sr.ht/~mafty/tip"))
 </code></pre>
@@ -3029,6 +3041,8 @@ at 7:42 PM
 <h2 id="20425-1"><a class="header" href="#20425-1">20/4/25</a></h2>
 <p>无事发生。</p>
 <h2 id="22425"><a class="header" href="#22425">22/4/25</a></h2>
+<p>无事发生。</p>
+<h2 id="24425"><a class="header" href="#24425">24/4/25</a></h2>
 <p>无事发生。</p>
 
                     </main>
