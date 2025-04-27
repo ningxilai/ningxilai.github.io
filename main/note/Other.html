@@ -216,6 +216,7 @@ TYPST_FEATURES=html
 cd tip-server-py
 pip install -r requirements.txt
 </code></pre>
+<p><em># Option</em></p>
 <pre><code class="language-bash">cargo install font-manager
 </code></pre>
 <p>github:<a href="https://github.com/e-ricus/font-manager-cli">e-ricus/font-manager-cli</a>.</p>
@@ -239,28 +240,22 @@ mv libtree-sitter-typst ./
 <pre><code class="language-elisp">(use-package websocket
   :ensure t)
 
-(use-package lsp-mode
-  :ensure t)
-
 (use-package typst-ts-mode
   :vc (:url "https://codeberg.org/meow_king/typst-ts-mode" :branch "develop")
   :custom
   ;; don't add "--open" if you'd like `watch` to be an error detector
-  ;; (typst-ts-watch-options "--open")
-
-  (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
+  (typst-ts-watch-options "--open")
   (typst-ts-mode-enable-raw-blocks-highlight t)
   :config
-  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
-  ;; make sure to install typst-lsp from
-  ;; https://github.com/nvarner/typst-lsp/releases
-  ;; or use tinymist
-  (add-to-list 'lsp-language-id-configuration '(typst-ts-mode . "typst"))
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "tinymist")
-    :major-modes '(typst-ts-mode)
-    :server-id 'tinymist)))
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
+
+(use-package typst-preview
+  :vc (typst-preview :url "https://github.com/havarddj/typst-preview.el"
+                     :rev :last-release)
+  :config
+  (setq typst-preview-executable "tinymist preview")
+  (setq typst-preview-browser "default")
+  )
 
 ;; Eglot
 
@@ -271,11 +266,9 @@ mv libtree-sitter-typst ./
                    ,(eglot-alternatives `(,typst-ts-lsp-download-path
                                           "tinymist"
                                           "typst-lsp"))))))
+
 (setq-default eglot-workspace-configuration
             '(:tinymist (:exportPdf "onSave")))
-
-(use-package tip
-  :vc (:url "https://git.sr.ht/~mafty/tip"))
 </code></pre>
 <h3 id="latex"><a class="header" href="#latex">LaTeX</a></h3>
 <pre><code class="language-bash">sudo pacman -S perl-tk ## Option
@@ -453,8 +446,21 @@ sudo vim /etc/pacman.conf
 <pre><code class="language-bash">sudo pacman -S earlyoom
 sudo systemctl enable --now earlyoom
 </code></pre>
-<h3 id="trashfilecheck"><a class="header" href="#trashfilecheck">TrashFileCheck</a></h3>
+<h3 id="trash"><a class="header" href="#trash">Trash</a></h3>
 <pre><code class="language-bash">cargo install cargo install czkawka_[gui/cli]
+</code></pre>
+<h3 id="browser"><a class="header" href="#browser">Browser</a></h3>
+<pre><code class="language-bash">sudo pacman -S nyxt
+</code></pre>
+<h4 id="clipboard"><a class="header" href="#clipboard">Clipboard</a></h4>
+<pre><code class="language-bash">sudo pacman -S wl-clipboard
+</code></pre>
+<h4 id="config-file"><a class="header" href="#config-file"><code>config file</code></a></h4>
+<p>=&gt; <code>.config/nyxt/config.lisp</code></p>
+<pre><code class="language-CommonLisp">;; emacs keybinds
+(define-configuration buffer
+  ((default-modes
+    (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))
 </code></pre>
 
                     </main>
