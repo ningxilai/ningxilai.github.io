@@ -185,6 +185,7 @@ git push origin master ## git push -u origin master（设置上游仓库）
 <h2 id="remote--rsync"><a class="header" href="#remote--rsync">remote &amp;&amp; rsync</a></h2>
 <p>对于凭证登陆，选择 <code>cache</code> 则有 <code>git config --global credential.credentialStore cache</code>。（<code>dotnet tool install -g git-credential-manager</code>）</p>
 <p>同步：<code>cp -rp book/* repo</code> or <code>rsync -a ./book/* repo</code> 。（<code>! [rejected]        master -&gt; master (non-fast-forward)</code> 时，可用<code>git push -f</code>）</p>
+<p>在本地创建副本：<code>git init</code> &amp;&amp; <code>git remote add upstream [URL]</code>。</p>
 <h2 id="cname-file"><a class="header" href="#cname-file">CNAME file</a></h2>
 <p><code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
 <h1 id="toolshaskell--rust"><a class="header" href="#toolshaskell--rust">Tools/Haskell &amp; Rust</a></h1>
@@ -283,6 +284,8 @@ sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in stan
 sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
 sudo tlmgr update --all # sudo tlmgr update --self --all
 </code></pre>
+<h4 id="tlmgr"><a class="header" href="#tlmgr">tlmgr</a></h4>
+<p>使用<code>tlmgr install [package]</code>时，如果给出<code>tlmgr install: package [package] not present in repository.</code>，则应当考虑<code>package</code>为一子包的可能，应安装其父包。</p>
 <h4 id="texmacs"><a class="header" href="#texmacs">TeXmacs</a></h4>
 <p><code>flatpak install org.texmacs.TeXmacs</code></p>
 <h5 id="fonts"><a class="header" href="#fonts">fonts</a></h5>

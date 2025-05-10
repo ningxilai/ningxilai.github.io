@@ -168,7 +168,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h1 id="mpsolve"><a class="header" href="#mpsolve">MPSolve</a></h1>
+<h2 id="build"><a class="header" href="#build">Build</a></h2>
+<p><code>$PATH</code>:<code>$HOME/.local</code></p>
+<pre><code class="language-bash">./autogen.sh &amp;&amp; ./configure &amp;&amp; make prefix=$HOME/.local install
+
+</code></pre>
+<p>编译时发生报错，可能是由于缺省<code>/usr/local/</code>/<code>$PREFIX</code>错误所致，make clean并指定编译后路径可以正常运行。</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
