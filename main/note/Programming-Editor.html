@@ -171,15 +171,24 @@
                         <h1 id="programming-editor"><a class="header" href="#programming-editor">Programming-Editor</a></h1>
 <p>Posted on February 13, 2025</p>
 <h1 id="emacseditor"><a class="header" href="#emacseditor">Emacs/Editor</a></h1>
-<blockquote>
-<p>CC=clang ./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk</p>
-</blockquote>
-<pre><code>-- Distro: [seagle0128/CentaurEmacs](https://seagle0128.github.io/.emacs.d)
-
-++ MyDistro: [ningxilai/IndigoEmacs](https://github.com/ningxilai/IndigoEmacs) / [NanoSimple](https://gist.github.com/rougier/8d5a712aa43e3cc69e7b0e325c84eab4)
-
--- `git clone https://gist.github.com/rougier/8d5a712aa43e3cc69e7b0e325c84eab4`
+<p><em>master</em></p>
+<pre><code class="language-bash">./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk
 </code></pre>
+<p><em>igc</em></p>
+<pre><code class="language-bash">git clone --depth=1 https://github.com/Ravenbrook/mps
+
+cd mps/code &amp;&amp; clang -O2 -c mps.c &amp;&amp; make -f lii6ll.gmk &amp;&amp; make install DESTDIR=/home/iris/.local/lib/mps/
+</code></pre>
+<pre><code class="language-bash">git clone -b feature/igc --depth=1 'https://github.com/emacs-mirror/emacs.git' emacs-igc
+
+CC=clang CXX=clang++ CPP="clang -E" LD=mold ./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk
+</code></pre>
+<blockquote>
+<p>-- Distro: <a href="https://seagle0128.github.io/.emacs.d">seagle0128/CentaurEmacs</a></p>
+</blockquote>
+<blockquote>
+<p>++ MyDistro: <a href="https://github.com/ningxilai/IndigoEmacs">ningxilai/IndigoEmacs</a></p>
+</blockquote>
 <h2 id="programming"><a class="header" href="#programming">Programming</a></h2>
 <h3 id="haskell"><a class="header" href="#haskell">Haskell</a></h3>
 <pre><code class="language-elisp">(use-package haskell-mode

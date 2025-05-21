@@ -1,0 +1,85 @@
+# Programming-Editor
+
+Posted on February 13, 2025
+
+# Emacs/Editor
+
+_master_
+
+```bash 
+./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk
+```
+
+_igc_
+
+```bash
+git clone --depth=1 https://github.com/Ravenbrook/mps
+
+cd mps/code && clang -O2 -c mps.c && make -f lii6ll.gmk && make install DESTDIR=/home/iris/.local/lib/mps/
+```
+
+```bash
+git clone -b feature/igc --depth=1 'https://github.com/emacs-mirror/emacs.git' emacs-igc
+
+CC=clang CXX=clang++ CPP="clang -E" LD=mold ./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk
+```
+
+>  -- Distro: [seagle0128/CentaurEmacs](https://seagle0128.github.io/.emacs.d)
+    
+>  ++ MyDistro: [ningxilai/IndigoEmacs](https://github.com/ningxilai/IndigoEmacs)
+
+## Programming
+### Haskell
+
+``` elisp
+(use-package haskell-mode
+  :ensure t
+  :hook
+  (haskell-mode . interactive-haskell-mode)
+  (haskell-mode . haskell-indentation-mode))
+
+(use-package lsp-haskell :ensure t)
+```
+
+`init.el`:
+
+``` elisp
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+```
+
+### Julia
+
+``` elisp
+;; julia-snail
+(use-package julia-snail
+  :ensure t
+  :config (setq julia-snail-executable "~/.juliaup/bin/"))
+```
+
+# NeoVim/Editor
+
+## LunarVim
+
+``` bash
+## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+cargo install neovide
+## Fonts
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh
+```
+
+### Neovide
+
+``` bash
+vi .config/neovide/config.toml
+## => 
+neovim-bin = ".local/bin/lvim"
+```
