@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Iris Lennon">
+<meta name="dcterms.date" content="2025-06-02">
+<meta name="description" content="how I handle the configuration details of these tools">
 
-<title>Iris’s Blog</title>
+<title>Typst and LaTeX. – Iris’s Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,33 +23,66 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-09b140d2d032adf2aedb8b099be3ee13.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-26de2546b5e3740ec1b2731ec027ff26.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-09b140d2d032adf2aedb8b099be3ee13.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-78810e1e6432e7ba6bb6f8250697ccaf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-fd333ad575316830b6de81cb34625f9a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-78810e1e6432e7ba6bb6f8250697ccaf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-09b140d2d032adf2aedb8b099be3ee13.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-26de2546b5e3740ec1b2731ec027ff26.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-09b140d2d032adf2aedb8b099be3ee13.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-78810e1e6432e7ba6bb6f8250697ccaf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fd333ad575316830b6de81cb34625f9a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-78810e1e6432e7ba6bb6f8250697ccaf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,35 +109,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -133,13 +140,15 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Iris’s Blog">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Typst and LaTeX. – Iris’s Blog">
+<meta property="og:description" content="how I handle the configuration details of these tools">
+<meta property="og:image" content="maxima.png">
 <meta property="og:site_name" content="Iris's Blog">
 <meta property="og:locale" content="zh_CN">
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -308,7 +317,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Iris’s Blog</span>
     </a>
   </div>
@@ -319,7 +328,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About this Blog and Other.</span></a>
   </li>  
   <li class="nav-item compact">
@@ -338,489 +347,134 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Iris’s Blog</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Typst and LaTeX.</h1>
+                  <div>
+        <div class="description">
+          how I handle the configuration details of these tools
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Note</div>
+                <div class="quarto-category">Editor</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Iris Lennon </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 2, 2025</p>
+      </div>
+    </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">June 2, 2025</p>
+      </div>
+    </div>
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(14)</span></div><div class="category" data-category="QW5vdGhlcg==">Another <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXN0cm8=">Astro <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29kZQ==">Code <span class="quarto-category-count">(4)</span></div><div class="category" data-category="RGFpbHk=">Daily <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWRpdG9y">Editor <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RW1hY3M=">Emacs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFuZ3VhZ2Vz">Languages <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGludXg=">Linux <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGlzcA==">Lisp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWF0aA==">Math <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TXVzaWM=">Music <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tm90ZQ==">Note <span class="quarto-category-count">(2)</span></div><div class="category" data-category="T3RoZXI=">Other <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b3RoZXI=">other <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHN5Y2hvbG9neQ==">Psychology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2NyaXB0">Script <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3ltYm9saWMlMjBBbGdlYnJh">Symbolic Algebra <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGhlJTIwbGFzdA==">the last <span class="quarto-category-count">(3)</span></div><div class="category" data-category="VG9vbHM=">Tools <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="U2NyaXB0JTJDT3RoZXI=" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748846489131" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="46">
-<div class="thumbnail"><a href="./posts/awesome_tools/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/awesome_tools/index.html" class="no-external">Awesome Tools.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('U2NyaXB0'); return false;">Script</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('T3RoZXI='); return false;">Other</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/awesome_tools/index.html" class="no-external">
-<p>Haskell &amp; Rust</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/awesome_tools/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TGludXglMkNDb2RlJTJDRWRpdG9y" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748873886586" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="2" data-listing-word-count-sort="378">
-<div class="thumbnail"><a href="./posts/on_the_linux/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/on_the_linux/index.html" class="no-external">the Linux.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29kZQ=='); return false;">Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWRpdG9y'); return false;">Editor</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/on_the_linux/index.html" class="no-external">
-<p>linux dotfile,try not to use system-level configurations.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/on_the_linux/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="VG9vbHM=" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748872804486" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="20">
-<div class="thumbnail"><a href="./posts/another_tools/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/another_tools/index.html" class="no-external">Another Tools.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VG9vbHM='); return false;">Tools</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/another_tools/index.html" class="no-external">
-<p>Rust and Python</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/another_tools/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="QXN0cm8lMkNNYXRoJTJDTGFuZ3VhZ2VzJTJDTXVzaWMlMkNQc3ljaG9sb2d5" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748873557405" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="102">
-<div class="thumbnail"><a href="./posts/reader/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/reader/index.html" class="no-external">Reading.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QXN0cm8='); return false;">Astro</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWF0aA=='); return false;">Math</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGFuZ3VhZ2Vz'); return false;">Languages</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TXVzaWM='); return false;">Music</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHN5Y2hvbG9neQ=='); return false;">Psychology</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/reader/index.html" class="no-external">
-<p>ToDo,and build/install of tools</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/reader/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Q29kZSUyQ0Fub3RoZXI=" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748850021470" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="3" data-listing-word-count-sort="413">
-<div class="thumbnail"><a href="./posts/blog_tools/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/blog_tools/index.html" class="no-external">Blog Tools.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29kZQ=='); return false;">Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QW5vdGhlcg=='); return false;">Another</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/blog_tools/index.html" class="no-external">
-<p>Rust/mdbook and Haskell/Hakyll</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/blog_tools/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="TGlzcCUyQ1N5bWJvbGljJTIwQWxnZWJyYQ==" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748859340312" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="117">
-<div class="thumbnail"><a href="./posts/prog_languages/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/prog_languages/index.html" class="no-external">Haskell,and CommonLisp.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlzcA=='); return false;">Lisp</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3ltYm9saWMlMjBBbGdlYnJh'); return false;">Symbolic Algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/prog_languages/index.html" class="no-external">
-<p>FP.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/prog_languages/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="Tm90ZSUyQ0VkaXRvcg==" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748874204501" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="174">
-<div class="thumbnail"><a href="./posts/two_typer_language/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/two_typer_language/maxima.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/two_typer_language/index.html" class="no-external">Typst and LaTeX.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Tm90ZQ=='); return false;">Note</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWRpdG9y'); return false;">Editor</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/two_typer_language/index.html" class="no-external">
-<p>how I handle the configuration details of these tools</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/two_typer_language/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="b3RoZXI=" data-listing-date-sort="1748793600000" data-listing-file-modified-sort="1748874454461" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="47">
-<div class="thumbnail"><a href="./posts/other_text/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/other_text/index.html" class="no-external">Pika.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('b3RoZXI='); return false;">other</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/other_text/index.html" class="no-external">
-<p>PikaPikaHome</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/other_text/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="RW1hY3MlMkNDb2RlJTJDRWRpdG9y" data-listing-date-sort="1748707200000" data-listing-file-modified-sort="1748873734326" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="2" data-listing-word-count-sort="371">
-<div class="thumbnail"><a href="./posts/all_the_emacs/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/all_the_emacs/index.html" class="no-external">All the emacs.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW1hY3M='); return false;">Emacs</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29kZQ=='); return false;">Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWRpdG9y'); return false;">Editor</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/all_the_emacs/index.html" class="no-external">
-<p>Emacs configure,but using lsp-mode/eglot</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/all_the_emacs/index.html" class="no-external">
-<div class="listing-date">
-Jun 1, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="dGhlJTIwbGFzdA==" data-listing-date-sort="1748707200000" data-listing-file-modified-sort="1748883066914" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="35">
-<div class="thumbnail"><a href="./posts/poet/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/poet/index.html" class="no-external">Poet and Trans.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dGhlJTIwbGFzdA=='); return false;">the last</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/poet/index.html" class="no-external">
-<p>ToDo</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/poet/index.html" class="no-external">
-<div class="listing-date">
-Jun 1, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="dGhlJTIwbGFzdA==" data-listing-date-sort="1748707200000" data-listing-file-modified-sort="1748863866788" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="65">
-<div class="thumbnail"><a href="./posts/last_archive/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/last_archive/index.html" class="no-external">Last Archive.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dGhlJTIwbGFzdA=='); return false;">the last</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/last_archive/index.html" class="no-external">
-<p>Coffee and Ink</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/last_archive/index.html" class="no-external">
-<div class="listing-date">
-Jun 1, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="RGFpbHk=" data-listing-date-sort="1737302400000" data-listing-file-modified-sort="1748862903682" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="2" data-listing-word-count-sort="342">
-<div class="thumbnail"><a href="./posts/daily/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/daily/index.html" class="no-external">Daily.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGFpbHk='); return false;">Daily</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/daily/index.html" class="no-external">
-<p>Here Come the Sun</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/daily/index.html" class="no-external">
-<div class="listing-date">
-Jan 20, 2025
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-categories="dGhlJTIwbGFzdA==" data-listing-date-sort="1735488000000" data-listing-file-modified-sort="1748883129276" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="78" data-listing-word-count-sort="15553">
-<div class="thumbnail"><a href="./posts/poet/poet.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/poet/poet.html" class="no-external">Night of The Assasins</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dGhlJTIwbGFzdA=='); return false;">the last</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/poet/poet.html" class="no-external">
-<p>last change</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/poet/poet.html" class="no-external">
-<div class="listing-date">
-Dec 30, 2024
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="13" data-categories="Q29kZSUyQ05vdGU=" data-listing-date-sort="1735401600000" data-listing-file-modified-sort="1748845956988" data-listing-date-modified-sort="1748793600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
-<div class="thumbnail"><a href="./posts/git_and_blog/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/git_and_blog/index.html" class="no-external">Git and Other Tools.</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29kZQ=='); return false;">Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Tm90ZQ=='); return false;">Note</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/git_and_blog/index.html" class="no-external">
-<p>About GIT</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/git_and_blog/index.html" class="no-external">
-<div class="listing-date">
-Dec 29, 2024
-</div>
-<div class="listing-author">
-Iris Lennon
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div><hr><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p><em>Writer</em></p>
+<section id="typst" class="level2">
+<h2 class="anchored" data-anchor-id="typst">Typst</h2>
+<p><em>HTML</em></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">typst</span> watch <span class="at">--features</span> html</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">## or</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">TYPST_FEATURES</span><span class="op">=</span>html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="install" class="level3">
+<h3 class="anchored" data-anchor-id="install">Install</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--git</span> https://github.com/typst/typst.git <span class="at">--locked</span> typst-cli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="on-vsc" class="level3">
+<h3 class="anchored" data-anchor-id="on-vsc">on VSC</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> code <span class="kw">&amp;&amp;</span> <span class="ex">ext</span> install myriad-dreamin.tinymist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="latex" class="level2">
+<h2 class="anchored" data-anchor-id="latex">LaTeX</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> perl-tk <span class="co">## Option</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">wget2</span> https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive2025-20250308.iso</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir /mnt/iso</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount texlive2025-20250308.iso /mnt/iso/</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> perl ./install-tl <span class="at">--gui</span> <span class="co">## Advanced =&gt; checkmake Create symlinks in standard directory.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Post install</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tlmgr update <span class="at">--all</span> <span class="co"># sudo tlmgr update --self --all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tlmgr" class="level3">
+<h3 class="anchored" data-anchor-id="tlmgr">tlmgr</h3>
+<p>使用<code>tlmgr install [package]</code>时，如果给出<code>tlmgr install: package [package] not present in repository.</code>，则应当考虑<code>package</code>为一子包的可能，应安装其父包。</p>
+</section>
+<section id="texmacs" class="level3">
+<h3 class="anchored" data-anchor-id="texmacs">TeXmacs</h3>
+<p><code>flatpak install org.texmacs.TeXmacs</code></p>
+<section id="fonts" class="level4">
+<h4 class="anchored" data-anchor-id="fonts">fonts</h4>
+<p>=&gt; <code>$PATH=$HOME/Documents/*</code></p>
+</section>
+</section>
+<section id="global-tex-font" class="level3">
+<h3 class="anchored" data-anchor-id="global-tex-font">Global TeX Font</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /usr/local/texlive/<span class="pp">[</span><span class="ss">version</span><span class="pp">]</span>/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-<span class="pp">[</span><span class="ss">context</span><span class="pp">]</span>.conf</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fc-cache <span class="at">-fv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="debug" class="level3">
+<h3 class="anchored" data-anchor-id="debug">Debug</h3>
+<p><em>Perl/LaTeX</em></p>
+<hr>
+<p><code>latex-git-log</code> =&gt;</p>
+<pre><code>-- Can't locate IPC/System/Simple.pm in @INC (you may need to install the IPC::System::Simple module) (@INC entries checked: /usr/lib/perl5/5.40/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.40/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.40/core_perl /usr/share/perl5/core_perl) at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
+-- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> perl <span class="at">-MCPAN</span> <span class="at">-e</span> shell </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">## xor cpan shell </span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;= o conf urllist unshift https://mirrors.tuna.tsinghua.edu.cn/CPAN/ </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;= o conf pushy_https 0 </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;= o conf commit </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;= quit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode perl code-with-copy"><code class="sourceCode perl"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>install IPC/System/Simple.pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="maxima" class="level2">
+<h2 class="anchored" data-anchor-id="maxima">Maxima</h2>
+<p><em>Option</em></p>
+<hr>
+<p><code>maxima</code>内有<code>tex</code>函数，可将在其内部的表达式转化为合法的<span class="math inline">\(\LaTeX\)</span>形式给出。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tex</span>(<span class="fu">sqrt</span>(<span class="dv">2</span>)-<span class="fu">sqrt</span>(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>=&gt; <span class="math inline">\(\sqrt{2}-\sqrt{3}\)</span></p>
+<p><img src="maxima.png" class="img-fluid"></p>
+
+
+</section>
+
+<hr><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <p style="text-align:center;">
 CC BY-NC-SA 4.0 International
 </p>
