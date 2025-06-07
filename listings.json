@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/project/index.html",
       "/posts/awesome_tools/index.html",
       "/posts/on_the_linux/index.html",
       "/posts/another_tools/index.html",

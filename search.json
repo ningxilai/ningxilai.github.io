@@ -690,7 +690,7 @@
     "href": "posts/on_the_linux/index.html#shell",
     "title": "the Linux.",
     "section": "Shell",
-    "text": "Shell\n\nImageView\ncargo install viu\n## viu $PATH/$NAME\n\n\nfish\ncargo install --git https://github.com/fish-shell/fish-shell --locked\n\nfisher\ngit clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions\nsource\nfisher install ../\nfisher install IlanCosman/tide@v6\n\n\n\nzsh\npacman -S zsh zsh-completions\ncargo install starship\nzsh-syntax-higtlighting/issue/812 Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.zsh_highlight\n\n.zshrc:PackageManager and p10k/starship\nHISTFILE=\"$HOME/.zsh_history\"\nHISTSIZE=10000\nSAVEHIST=10000\nsetopt SHARE_HISTORY\n\ngit clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git\nzsh ~/.local/share/zinit/zinit.git/scripts/install.sh\nsource ~/.zshrc\n\nzinit ice depth\"1\" # git clone depth\nzinit snippet OMZ::* # use OMZ\n\nzinit light zsh-users/zsh-completions\nzinit light zsh-users/zsh-syntax-highlighting\nzinit light zsh-users/zsh-history-substring-search\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\n\n#starship Scheme\n\nstarship preset nerd-font-symbols -o ~/.config/starship.toml\neval \"$(starship init zsh)\"\n\n#OMZ Scheme\n\nzinit light romkatv/powerlevel10k #p10k\n\nplugins=(git\n        zsh-syntax-highlighting\n        zsh-autosuggestions\n        zsh-completions)\n\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
+    "text": "Shell\n\nImageView\ncargo install viu\n## viu $PATH/$NAME\n\n\nfish\ncargo install --git https://github.com/fish-shell/fish-shell --locked\n\nfisher\ngit clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions\nsource\nfisher install ../\nfisher install IlanCosman/tide@v6\ncat $__fish_config_dir/config.fish =&gt;\nalias cat=bat\nalias ls=eza\nalias grep=rg\nalias vi=lvim\n\n\n\nzsh\npacman -S zsh zsh-completions\ncargo install starship\nzsh-syntax-higtlighting/issue/812 Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.zsh_highlight\n\n.zshrc:PackageManager and p10k/starship\nHISTFILE=\"$HOME/.zsh_history\"\nHISTSIZE=10000\nSAVEHIST=10000\nsetopt SHARE_HISTORY\n\ngit clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git\nzsh ~/.local/share/zinit/zinit.git/scripts/install.sh\nsource ~/.zshrc\n\nzinit ice depth\"1\" # git clone depth\nzinit snippet OMZ::* # use OMZ\n\nzinit light zsh-users/zsh-completions\nzinit light zsh-users/zsh-syntax-highlighting\nzinit light zsh-users/zsh-history-substring-search\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\n\n#starship Scheme\n\nstarship preset nerd-font-symbols -o ~/.config/starship.toml\neval \"$(starship init zsh)\"\n\n#OMZ Scheme\n\nzinit light romkatv/powerlevel10k #p10k\n\nplugins=(git\n        zsh-syntax-highlighting\n        zsh-autosuggestions\n        zsh-completions)\n\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
   },
   {
     "objectID": "posts/on_the_linux/index.html#terminal",
@@ -753,7 +753,7 @@
     "href": "index.html",
     "title": "Iris’s Blog",
     "section": "",
-    "text": "Awesome Tools.\n\n\n\nScript\n\nOther\n\n\n\nHaskell & Rust\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nthe Linux.\n\n\n\nLinux\n\nCode\n\nEditor\n\n\n\nlinux dotfile,try not to use system-level configurations.\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nAnother Tools.\n\n\n\nTools\n\n\n\nRust and Python\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nReading.\n\n\n\nAstro\n\nMath\n\nLanguages\n\nMusic\n\nPsychology\n\n\n\nToDo,and build/install of tools\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nBlog Tools.\n\n\n\nCode\n\nAnother\n\n\n\nRust/mdbook and Haskell/Hakyll\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nHaskell,and CommonLisp.\n\n\n\nLisp\n\nSymbolic Algebra\n\n\n\nFP.\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nTypst and LaTeX.\n\n\n\nNote\n\nEditor\n\n\n\nhow I handle the configuration details of these tools\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nPika.\n\n\n\nother\n\n\n\nPikaPika Home\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nAll the emacs.\n\n\n\nEmacs\n\nCode\n\nEditor\n\n\n\nEmacs configure,but using lsp-mode/eglot\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nPoet and Trans.\n\n\n\nthe last\n\n\n\nToDo\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nLast Archive.\n\n\n\nthe last\n\n\n\nCoffee and Ink\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nDaily.\n\n\n\nDaily\n\n\n\nHere Come the Sun\n\n\n\n\n\nJan 20, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nNight of The Assasins\n\n\n\nthe last\n\n\n\nlast change\n\n\n\n\n\nDec 30, 2024\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nGit and Other Tools.\n\n\n\nCode\n\nNote\n\n\n\nAbout GIT\n\n\n\n\n\nDec 29, 2024\n\n\nIris Lennon\n\n\n\n\n\nNo matching items\n\n\nCC BY-NC-SA 4.0 International"
+    "text": "Desktop.\n\n\n\nDaily\n\nCode\n\n\n\nAll project\n\n\n\n\n\nJun 7, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nAwesome Tools.\n\n\n\nScript\n\nOther\n\n\n\nHaskell & Rust\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nthe Linux.\n\n\n\nLinux\n\nCode\n\nEditor\n\n\n\nlinux dotfile,try not to use system-level configurations.\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nAnother Tools.\n\n\n\nTools\n\n\n\nRust and Python\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nReading.\n\n\n\nAstro\n\nMath\n\nLanguages\n\nMusic\n\nPsychology\n\n\n\nToDo,and build/install of tools\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nBlog Tools.\n\n\n\nCode\n\nAnother\n\n\n\nRust/mdbook and Haskell/Hakyll\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nHaskell,and CommonLisp.\n\n\n\nLisp\n\nSymbolic Algebra\n\n\n\nFP.\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nTypst and LaTeX.\n\n\n\nNote\n\nEditor\n\n\n\nhow I handle the configuration details of these tools\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nPika.\n\n\n\nother\n\n\n\nPikaPika Home\n\n\n\n\n\nJun 2, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nAll the emacs.\n\n\n\nEmacs\n\nCode\n\nEditor\n\n\n\nEmacs configure,but using lsp-mode/eglot\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nPoet and Trans.\n\n\n\nthe last\n\n\n\nToDo\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nLast Archive.\n\n\n\nthe last\n\n\n\nCoffee and Ink\n\n\n\n\n\nJun 1, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nDaily.\n\n\n\nDaily\n\n\n\nHere Come the Sun\n\n\n\n\n\nJan 20, 2025\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nNight of The Assasins\n\n\n\nthe last\n\n\n\nlast change\n\n\n\n\n\nDec 30, 2024\n\n\nIris Lennon\n\n\n\n\n\n\n\n\n\n\n\n\nGit and Other Tools.\n\n\n\nCode\n\nNote\n\n\n\nAbout GIT\n\n\n\n\n\nDec 29, 2024\n\n\nIris Lennon\n\n\n\n\n\nNo matching items\n\n\nCC BY-NC-SA 4.0 International"
   },
   {
     "objectID": "posts/all_the_emacs/index.html",
@@ -964,5 +964,40 @@
     "title": "Daily.",
     "section": "02-05/06/25",
     "text": "02-05/06/25\n今日无事可做。"
+  },
+  {
+    "objectID": "posts/project/index.html",
+    "href": "posts/project/index.html",
+    "title": "Desktop.",
+    "section": "",
+    "text": "git clone --recursive git://git.ghostscript.com/mupdf.git\n # use by mesa\n make && cp ./build/release/mutool ~/.local/bin/mutool ##  make prefix=$HOME/.local install"
+  },
+  {
+    "objectID": "posts/project/index.html#mupdf",
+    "href": "posts/project/index.html#mupdf",
+    "title": "Desktop.",
+    "section": "",
+    "text": "git clone --recursive git://git.ghostscript.com/mupdf.git\n # use by mesa\n make && cp ./build/release/mutool ~/.local/bin/mutool ##  make prefix=$HOME/.local install"
+  },
+  {
+    "objectID": "posts/project/index.html#fisher",
+    "href": "posts/project/index.html#fisher",
+    "title": "Desktop.",
+    "section": "fisher",
+    "text": "fisher\nold version\n\nfisher list | fisher remove\nnow\n\nsource (/home/iris/.cargo/bin/starship init fish --print-full-init | psub)"
+  },
+  {
+    "objectID": "posts/project/index.html#quarto",
+    "href": "posts/project/index.html#quarto",
+    "title": "Desktop.",
+    "section": "Quarto",
+    "text": "Quarto\ngist\n\nwget https://github.com/quarto-dev/quarto-cli/releases/download/v[version]/quarto-[version]-linux-[arch].tar.gz\nmkdir $QUARTO_PATH\ntar -C $QUARTO_PATH/v[version]/ -xvzf quarto-[version]-linux-[arch].tar.gz\ncat .zshrc =&gt;\nexport PATH=\"$QUARTO_PATH/v[version]/bin:$PATH\""
+  },
+  {
+    "objectID": "posts/project/index.html#oneko",
+    "href": "posts/project/index.html#oneko",
+    "title": "Desktop.",
+    "section": "oneko",
+    "text": "oneko\nx11 C11 HACK FSF\n\ncat BUILDING.md =&gt;\ncmake -G 'Unix Makefiles' && make"
   }
 ]
