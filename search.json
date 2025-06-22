@@ -669,7 +669,7 @@
     "href": "posts/reader/index.html#neuro-science",
     "title": "Reading.",
     "section": "Neuro Science",
-    "text": "Neuro Science\n\nReligious Psychology\n9/4/25，购置思高本圣经（Bible）一部，威廉·詹姆斯 宗教经验之种种 一部。\n.. 祈祷手册 一部。\n11/4/25，购置 基督教释经学 一部。\n\nReading\n宗教经验种种 1/6"
+    "text": "Neuro Science\n\nReligious Psychology\n9/4/25，购置思高本圣经（Bible）一部，威廉·詹姆斯 宗教经验之种种 一部。\n.. 祈祷手册 一部。\n11/4/25，购置 基督教释经学 一部。\n\nmain\n荣格的著作中有一种奇特的似乎是侧重于现象学的观点，我想这和19世纪末盛行的社会思潮有关，迥异于我们所处的时代的解构的模式（或者说_反本质的_）。我想到另一个比喻，也就是伯恩斯坦对于乔姆斯基的解读，与其是相似的。不过此时的讨论不怎么关于这点：一个intro.\n\n\nReading\n宗教经验种种 6/6\n荣格节选 4+1/5\n尼采：悲剧的诞生/查…如是说 2/2\n-22年余下的ToDo，古小说以及东京梦华录，all right-\n人类学：金枝 right，阿赞德人的巫术、神谕和魔法 1/5"
   },
   {
     "objectID": "posts/on_the_linux/index.html",
@@ -690,7 +690,7 @@
     "href": "posts/on_the_linux/index.html#shell",
     "title": "the Linux.",
     "section": "Shell",
-    "text": "Shell\n\nImageView\ncargo install viu\n## viu $PATH/$NAME\n\n\nfish\ncargo install --git https://github.com/fish-shell/fish-shell --locked\n\nfisher\ngit clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions\nsource\nfisher install ../\nfisher install IlanCosman/tide@v6\ncat $__fish_config_dir/config.fish =&gt;\nalias cat=bat\nalias ls=eza\nalias grep=rg\nalias vi=lvim\n\n\n\nzsh\npacman -S zsh zsh-completions\ncargo install starship\nzsh-syntax-higtlighting/issue/812 Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.zsh_highlight\n\n.zshrc:PackageManager and p10k/starship\nHISTFILE=\"$HOME/.zsh_history\"\nHISTSIZE=10000\nSAVEHIST=10000\nsetopt SHARE_HISTORY\n\ngit clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git\nzsh ~/.local/share/zinit/zinit.git/scripts/install.sh\nsource ~/.zshrc\n\nzinit ice depth\"1\" # git clone depth\nzinit snippet OMZ::* # use OMZ\n\nzinit light zsh-users/zsh-completions\nzinit light zsh-users/zsh-syntax-highlighting\nzinit light zsh-users/zsh-history-substring-search\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\n\n#starship Scheme\n\nstarship preset nerd-font-symbols -o ~/.config/starship.toml\neval \"$(starship init zsh)\"\n\n#OMZ Scheme\n\nzinit light romkatv/powerlevel10k #p10k\n\nplugins=(git\n        zsh-syntax-highlighting\n        zsh-autosuggestions\n        zsh-completions)\n\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
+    "text": "Shell\n\nImageView\ncargo install viu\n## viu $PATH/$NAME\n\n\nfish\ncargo install --git https://github.com/fish-shell/fish-shell --locked\n\nfisher\ngit clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions\nsource\nfisher install ../\nfisher install IlanCosman/tide@v6\n\n\nstarship\nstarship init fish | source\n\ncat $__fish_config_dir/config.fish =&gt;\nalias cat=bat\nalias ls=eza\nalias grep=rg\nalias vi=lvim\n\n\n\nzsh\npacman -S zsh zsh-completions\ncargo install starship\nzsh-syntax-higtlighting/issue/812 Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.zsh_highlight\n\n.zshrc:PackageManager and p10k/starship\nHISTFILE=\"$HOME/.zsh_history\"\nHISTSIZE=10000\nSAVEHIST=10000\nsetopt SHARE_HISTORY\n\ngit clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git\nzsh ~/.local/share/zinit/zinit.git/scripts/install.sh\nsource ~/.zshrc\n\nzinit ice depth\"1\" # git clone depth\nzinit snippet OMZ::* # use OMZ\n\nzinit light zsh-users/zsh-completions\nzinit light zsh-users/zsh-syntax-highlighting\nzinit light zsh-users/zsh-history-substring-search\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\n\n#starship Scheme\n\nstarship preset nerd-font-symbols -o ~/.config/starship.toml\neval \"$(starship init zsh)\"\n\n#OMZ Scheme\n\nzinit light romkatv/powerlevel10k #p10k\n\nplugins=(git\n        zsh-syntax-highlighting\n        zsh-autosuggestions\n        zsh-completions)\n\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
   },
   {
     "objectID": "posts/on_the_linux/index.html#terminal",
@@ -704,7 +704,7 @@
     "href": "posts/on_the_linux/index.html#packagemanager",
     "title": "the Linux.",
     "section": "PackageManager",
-    "text": "PackageManager\n\naura\n## aura check\n\nsudo pacman -S pacman-contrib graphviz\npip install shellcheck-py\n\n## install\n\ncargo install aura\n\n## Deps Graph\n\naura deps [package-name] --open\n\n# cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop\n\n\nReflector\nsudo pacman -S reflector\nsudo systemctl [enable/start] reflector.[timer/service]\n\nsudo vim /etc/xdg/reflector/reflector.conf \n# -- --country France,Germany\n# -- --protocol https\n# ...\n# ++ --country China\n# ++ --protocol https\n\nsudo vim /etc/pacman.conf\n# -- #NoExtract   =\n# ++ NoExtract   = true"
+    "text": "PackageManager\n\npacman\n_sudo pacman -Qo /usr/lib/firmware/nvidia/ad103 =&gt; /usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2__\n\nerror: failed to commit transaction (conflicting files) linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad103 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad104 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad106 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad107 exists in filesystem\n\nFailed_to_commit_transaction_(conflicting_files)\ncd lib/firmware/nvidia\n sudo mv ad103 ad103.bak                         \n sudo mv ad104 ad104.bak\n sudo mv ad106 ad106.bak\n sudo mv ad107 ad107.bak\nsudo pacman -Syu\nsudo rm -r *.bak # nil!\n\n\naura\n## aura check\n\nsudo pacman -S pacman-contrib graphviz\npip install shellcheck-py\n\n## install\n\ncargo install aura\n\n## Deps Graph\n\naura deps [package-name] --open\n\n# cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop\n\n\nReflector\nsudo pacman -S reflector\nsudo systemctl [enable/start] reflector.[timer/service]\n\nsudo vim /etc/xdg/reflector/reflector.conf \n# -- --country France,Germany\n# -- --protocol https\n# ...\n# ++ --country China\n# ++ --protocol https\n\nsudo vim /etc/pacman.conf\n# -- #NoExtract   =\n# ++ NoExtract   = true"
   },
   {
     "objectID": "posts/on_the_linux/index.html#fonts",
@@ -956,7 +956,7 @@
     "href": "about.html#license",
     "title": "About this Blog and Other.",
     "section": "License",
-    "text": "License\nIris’s Blog © 2025 by Iris Lennon is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International\n   \nhappy evil\n:q!"
+    "text": "License\nIris’s Blog © 2025 by Iris Lennon is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International\n   \nhappy evil\n(if u using vanilla emacs)\nHappy Hacking\n:q!"
   },
   {
     "objectID": "posts/daily/index.html#section-75",
@@ -999,5 +999,33 @@
     "title": "Desktop.",
     "section": "oneko",
     "text": "oneko\nx11 C11 HACK FSF\n\ncat BUILDING.md =&gt;\ncmake -G 'Unix Makefiles' && make"
+  },
+  {
+    "objectID": "posts/on_the_linux/index.html#shelltools",
+    "href": "posts/on_the_linux/index.html#shelltools",
+    "title": "the Linux.",
+    "section": "ShellTools",
+    "text": "ShellTools\ncargo install starship\nissue 5985:timeout setting =&gt;\nstarship config command_timeout &lt;some value&gt;\n\nImageView\ncargo install viu\n## viu $PATH/$NAME\n\n\nfish\ncargo install --git https://github.com/fish-shell/fish-shell --locked\n\nfisher\ngit clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions\nsource\nfisher install ../\nfisher install IlanCosman/tide@v6\n\n\nstarship\nstarship init fish | source =&gt; config.fish\n\ncat $__fish_config_dir/config.fish =&gt;\nalias cat=bat\nalias ls=eza\nalias grep=rg\nalias vi=lvim\n\n\n\nzsh\npacman -S zsh zsh-completions\nzsh-syntax-higtlighting/issue/812 Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.zsh_highlight\n\n.zshrc:PackageManager and p10k/starship\nHISTFILE=\"$HOME/.zsh_history\"\nHISTSIZE=10000\nSAVEHIST=10000\nsetopt SHARE_HISTORY\n\ngit clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git\nzsh ~/.local/share/zinit/zinit.git/scripts/install.sh\nsource ~/.zshrc\n\nzinit ice depth\"1\" # git clone depth\nzinit snippet OMZ::* # use OMZ\n\nzinit light zsh-users/zsh-completions\nzinit light zsh-users/zsh-syntax-highlighting\nzinit light zsh-users/zsh-history-substring-search\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\n\n#starship Scheme\n\nstarship preset nerd-font-symbols -o ~/.config/starship.toml\neval \"$(starship init zsh)\"\n\n#OMZ Scheme\n\nzinit light romkatv/powerlevel10k #p10k\n\nplugins=(git\n        zsh-syntax-highlighting\n        zsh-autosuggestions\n        zsh-completions)\n\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
+  },
+  {
+    "objectID": "posts/git_and_blog/index.html#add-submodule",
+    "href": "posts/git_and_blog/index.html#add-submodule",
+    "title": "Git and Other Tools.",
+    "section": "add submodule",
+    "text": "add submodule\nlike this\n\ngit submodule add \"https://github.com/manateelazycat/lsp-bridge\" site-lisp/lsp-bridge"
+  },
+  {
+    "objectID": "posts/daily/index.html#section-76",
+    "href": "posts/daily/index.html#section-76",
+    "title": "Daily.",
+    "section": "06-11/06/25",
+    "text": "06-11/06/25\n减去中药，其余用量不变，一月后复查。"
+  },
+  {
+    "objectID": "posts/daily/index.html#section-77",
+    "href": "posts/daily/index.html#section-77",
+    "title": "Daily.",
+    "section": "12-25/06/25",
+    "text": "12-25/06/25\n今日无事可做。"
   }
 ]

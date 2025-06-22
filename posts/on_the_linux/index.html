@@ -396,8 +396,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>npm config set prefix '$PATH'</code> =&gt; <code>.zshrc</code>:<code>export PATH="$HOME/node_global/bin:$PATH"</code></p>
 </section>
 </section>
-<section id="shell" class="level2">
-<h2 class="anchored" data-anchor-id="shell">Shell</h2>
+<section id="shelltools" class="level2">
+<h2 class="anchored" data-anchor-id="shelltools">ShellTools</h2>
+<p><code>cargo install starship</code></p>
+<p><a href="&quot;https://github.com/starship/starship/issues/5985#issuecomment-2126457753&quot;">issue 5985:timeout setting</a> =&gt;</p>
+<p><code>starship config command_timeout &lt;some value&gt;</code></p>
 <section id="imageview" class="level3">
 <h3 class="anchored" data-anchor-id="imageview">ImageView</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install viu</span>
@@ -412,6 +415,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre class="fish"><code>source
 fisher install ../
 fisher install IlanCosman/tide@v6</code></pre>
+</section>
+<section id="starship" class="level4">
+<h4 class="anchored" data-anchor-id="starship">starship</h4>
+<p><code>starship init fish | source</code> =&gt; <code>config.fish</code></p>
+<hr>
 <p><code>cat $__fish_config_dir/config.fish</code> =&gt;</p>
 <pre class="fish"><code>alias cat=bat
 alias ls=eza
@@ -422,7 +430,6 @@ alias vi=lvim</code></pre>
 <section id="zsh" class="level3">
 <h3 class="anchored" data-anchor-id="zsh">zsh</h3>
 <p><code>pacman -S zsh zsh-completions</code></p>
-<p><code>cargo install starship</code></p>
 <p><a href="https://github.com/zsh-users/zsh-syntax-highlighting/issues/812">zsh-syntax-higtlighting/issue/812</a> <em>Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.<strong>zsh_highlight</strong></em></p>
 <section id="zshrcpackagemanager-and-p10kstarship" class="level4">
 <h4 class="anchored" data-anchor-id="zshrcpackagemanager-and-p10kstarship"><code>.zshrc</code>:PackageManager and p10k/starship</h4>
@@ -517,38 +524,53 @@ alias vi=lvim</code></pre>
 </section>
 <section id="packagemanager" class="level2">
 <h2 class="anchored" data-anchor-id="packagemanager">PackageManager</h2>
+<section id="pacman" class="level3">
+<h3 class="anchored" data-anchor-id="pacman">pacman</h3>
+<p>_<code>sudo pacman -Qo /usr/lib/firmware/nvidia/ad103</code> =&gt; <code>/usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2</code>__</p>
+<blockquote class="blockquote">
+<p>error: failed to commit transaction (conflicting files) linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad103 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad104 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad106 exists in filesystem linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad107 exists in filesystem</p>
+</blockquote>
+<p><a href="&quot;https://wiki.archlinux.org/title/Pacman#&quot;Failed_to_commit_transaction_(conflicting_files)&quot;_error&quot;">Failed_to_commit_transaction_(conflicting_files)</a></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lib/firmware/nvidia</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">sudo</span> mv ad103 ad103.bak                         </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">sudo</span> mv ad104 ad104.bak</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">sudo</span> mv ad106 ad106.bak</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">sudo</span> mv ad107 ad107.bak</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syu</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-r</span> <span class="pp">*</span>.bak <span class="co"># nil!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="aura" class="level3">
 <h3 class="anchored" data-anchor-id="aura">aura</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">## aura check</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> pacman-contrib graphviz</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install shellcheck-py</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">## install</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install aura</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Deps Graph</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="ex">aura</span> deps <span class="pp">[</span><span class="ss">package</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span> <span class="at">--open</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">## aura check</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> pacman-contrib graphviz</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install shellcheck-py</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">## install</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install aura</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Deps Graph</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="ex">aura</span> deps <span class="pp">[</span><span class="ss">package</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span> <span class="at">--open</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reflector" class="level3">
 <h3 class="anchored" data-anchor-id="reflector">Reflector</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> reflector</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl <span class="pp">[</span><span class="ss">enable/start</span><span class="pp">]</span> reflector.<span class="pp">[</span><span class="ss">timer/service</span><span class="pp">]</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/xdg/reflector/reflector.conf </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -- --country France,Germany</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># -- --protocol https</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ --country China</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ --protocol https</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/pacman.conf</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># -- #NoExtract   =</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ NoExtract   = true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> reflector</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl <span class="pp">[</span><span class="ss">enable/start</span><span class="pp">]</span> reflector.<span class="pp">[</span><span class="ss">timer/service</span><span class="pp">]</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/xdg/reflector/reflector.conf </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -- --country France,Germany</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># -- --protocol https</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ --country China</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ --protocol https</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/pacman.conf</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># -- #NoExtract   =</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ++ NoExtract   = true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="fonts" class="level2">
@@ -559,35 +581,35 @@ alias vi=lvim</code></pre>
 <h2 class="anchored" data-anchor-id="linuxtools">LinuxTools</h2>
 <section id="oom" class="level3">
 <h3 class="anchored" data-anchor-id="oom">OOM</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> earlyoom</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> earlyoom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> earlyoom</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> earlyoom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="trash" class="level3">
 <h3 class="anchored" data-anchor-id="trash">Trash</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install cargo install czkawka_<span class="pp">[</span><span class="ss">gui/cli</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install cargo install czkawka_<span class="pp">[</span><span class="ss">gui/cli</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="browser" class="level3">
 <h3 class="anchored" data-anchor-id="browser">Browser</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> nyxt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> nyxt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="clipboard" class="level4">
 <h4 class="anchored" data-anchor-id="clipboard">Clipboard</h4>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> wl-clipboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> wl-clipboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="config-file" class="level4">
 <h4 class="anchored" data-anchor-id="config-file"><code>config file</code></h4>
 <p>=&gt; <code>.config/nyxt/config.lisp</code></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode commonlisp code-with-copy"><code class="sourceCode commonlisp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">;; emacs keybinds</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>(define-configuration buffer</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  ((default-modes</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">pushnew</span> <span class="dt">'nyxt/mode/emacs</span>:emacs-mode %<span class="kw">slot-value</span>%))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode commonlisp code-with-copy"><code class="sourceCode commonlisp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">;; emacs keybinds</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>(define-configuration buffer</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  ((default-modes</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">pushnew</span> <span class="dt">'nyxt/mode/emacs</span>:emacs-mode %<span class="kw">slot-value</span>%))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="filemanager" class="level3">
 <h3 class="anchored" data-anchor-id="filemanager">FileManager</h3>
 <p>install</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> resvg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--locked</span> <span class="at">--git</span> https://github.com/sxyazi/yazi.git yazi-fm yazi-cli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> resvg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--locked</span> <span class="at">--git</span> https://github.com/sxyazi/yazi.git yazi-fm yazi-cli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
