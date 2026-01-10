@@ -22,7 +22,7 @@ mv libtree-sitter-typst ./</code></pre><h3>Programming \deprecated\</h3><p>Code 
   &#40;haskell-literate-mode . lsp-mode&#41;&#41;</code></pre><h4>Julia</h4><p><code>curl -fsSL https://install.julialang.org | sh</code></p><pre><code>;;julia-snail
 &#40;use-package julia-snail
   :ensure t
-  :config &#40;setq julia-snail-executable &quot;&#126;/.juliaup/bin/&quot;&#41;&#41;</code></pre><h3>LunarVim</h3><blockquote><p> Have <code>git</code>, <code>make</code>, <code>pip</code>, <code>python</code>, <code>npm</code>, <code>node</code>, <code>cargo</code> and <code>ripgrep</code> installed on your system.<br /><br>  <em>Optional</em> : <code>lazygit</code> </p></blockquote><pre><code>## Cargo
+  :config &#40;setq julia-snail-executable &quot;&#126;/.juliaup/bin/&quot;&#41;&#41;</code></pre><h3>LunarVim</h3><blockquote><p> Have <code>git</code>, <code>make</code>, <code>pip</code>, <code>python</code>, <code>npm</code>, <code>node</code>, <code>cargo</code> and <code>ripgrep</code> installed on your system. <br>  <em>Optional</em> : <code>lazygit</code> </p></blockquote><pre><code>## Cargo
 cargo install --git https://github.com/sharkdp/fd
 cargo install ripgrep
 ## Pacman
@@ -57,11 +57,11 @@ heading-split-level = 2</code></pre><h3><code>./theme/index.hbs</code></h3><pre>
 ...
 &lt;!-- Addons --&gt;
 &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://www.cdnfonts.com/garamond.font&quot; /&gt;
-&lt;style&gt; body {  
-            font-family: font-family: &quot;Garamond&quot;,&quot;朱雀仿宋&quot; ; 
+&lt;style&gt; body {
+            font-family: font-family: &quot;Garamond&quot;,&quot;朱雀仿宋&quot; ;
             font-weight: normal;
             font-variant-ligatures: historical-ligatures normal;
-        } 
+        }
 &lt;/style&gt;
 ...
 &lt;/head&gt;
@@ -168,7 +168,7 @@ img {
         &lt;meta charset=&quot;utf-8&quot;&gt;
         &lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;
         &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-        &lt;title&gt;Home&lt;/title&gt;        
+        &lt;title&gt;Home&lt;/title&gt;
         &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/default.css&quot; /&gt;
         &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/firacode/6.2.0/ttf/FiraCode-Bold.ttf&quot; rel=&quot;stylesheet&quot;&gt;
         &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/files/lxgwwenkai-bold-subset-100.woff2&quot; rel=&quot;stylesheet&quot;&gt;
@@ -188,7 +188,6 @@ img {
   Site &lt;code&gt;.css&lt;/code&gt; file generated from the &lt;code&gt;.sass&lt;/code&gt; files of &lt;a href=&quot;https://github.com/riggraz/no-style-please&quot;&gt;riggraz/no-style-please&lt;/a&gt;.
 &lt;/footer&gt;
         &lt;/main&gt;
-     
     &lt;/body&gt;
 &lt;/html&gt;</code></pre><h2><code>SSG</code> and <code>git</code></h2><h3><code>SSL&#95;ERROR&#95;SYSCALL</code></h3><p>在提交分支时报出了 <code>OpenSSL SSL&#95;read: SSL&#95;ERROR&#95;SYSCALL, errno 0</code> 的错误。</p><p>根据 <em>正宗咸豆花 at CSDN</em> 的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p><p>另外的，附上当时的最小实例：</p><pre><code>git clone --depth=1 git@github.com:username/repo.git
 cd repo
@@ -211,19 +210,18 @@ sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in stan
 sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
 sudo tlmgr update --all # sudo tlmgr update --self --all</code></pre><h3>tlmgr</h3><p>使用<code>tlmgr install &#91;package&#93;</code>时，如果给出<code>tlmgr install: package &#91;package&#93; not present in repository.</code>，则应当考虑<code>package</code>为一子包的可能，应安装其父包。</p><h3>Global TeX Font</h3><pre><code>sudo cp /usr/local/texlive/&#91;version&#93;/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-&#91;context&#93;.conf
 sudo fc-cache -fv</code></pre><h3>Debug</h3><p><code>latex-git-log</code> =></p><pre><code>-- Can't locate IPC/System/Simple.pm in @INC &#40;you may need to install the IPC::System::Simple module&#41; &#40;@INC entries checked: /usr/lib/perl5/5.40/site&#95;perl /usr/share/perl5/site&#95;perl /usr/lib/perl5/5.40/vendor&#95;perl /usr/share/perl5/vendor&#95;perl /usr/lib/perl5/5.40/core&#95;perl /usr/share/perl5/core&#95;perl&#41; at /usr/local/texlive/2025/bin/x86&#95;64-linux/latex-git-log line 15.
--- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86&#95;64-linux/latex-git-log line 15.</code></pre><p>in terminal:</p><pre><code>sudo perl -MCPAN -e shell 
-## xor cpan shell 
-# &lt;= o conf urllist unshift https://mirrors.tuna.tsinghua.edu.cn/CPAN/ 
-# &lt;= o conf pushy&#95;https 0 
-# &lt;= o conf commit 
+-- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86&#95;64-linux/latex-git-log line 15.</code></pre><p>in terminal:</p><pre><code>sudo perl -MCPAN -e shell
+## xor cpan shell
+# &lt;= o conf urllist unshift https://mirrors.tuna.tsinghua.edu.cn/CPAN/
+# &lt;= o conf pushy&#95;https 0
+# &lt;= o conf commit
 # &lt;= quit
-install IPC/System/Simple.pm</code></pre><h2>Typst</h2><p>至少在2025年早期，typst官方版本中，导出<code>.typ</code>到<code>.html</code>还仍是一项实验性功能：</p><pre><code>typst watch --features html
+install IPC/System/Simple.pm</code></pre><h2>Typst</h2><p>至少在2026年早期，typst官方版本中，导出<code>.typ</code>到<code>.html</code>还仍是一项实验性功能：</p><pre><code>typst watch --features html
 ## or
 TYPST&#95;FEATURES=html</code></pre><h3>Install</h3><pre><code>cargo install --git https://github.com/typst/typst.git --locked typst-cli</code></pre><h3>on VSC</h3><pre><code>sudo pacman -S code &amp;&amp; ext install myriad-dreamin.tinymist</code></pre><h3><em>Option</em></h3><pre><code>cargo install font-manager</code></pre><blockquote><p> github:<a href='https://github.com/e-ricus/font-manager-cli'>e-ricus/font-manager-cli</a>. </p></blockquote><h2>Quarto</h2><pre><code>wget https://github.com/quarto-dev/quarto-cli/releases/download/v&#91;version&#93;/quarto-&#91;version&#93;-linux-&#91;arch&#93;.tar.gz
 mkdir $QUARTO&#95;PATH
 tar -C $QUARTO&#95;PATH/v&#91;version&#93;/ -xvzf quarto-&#91;version&#93;-linux-&#91;arch&#93;.tar.gz</code></pre><p><code>cat .zshrc</code> =></p><pre><code>export PATH=&quot;$QUARTO&#95;PATH/v&#91;version&#93;/bin:$PATH&quot;</code></pre><h2>GNU APL \deprecated\</h2><p><a href='https://www.metalevel.at/unicapl/asciiapl.pdf' title="asciiapl.pdf">asciiapl.pdf</a></p><pre><code>&#40;require 'apl&#41;
-&#40;set-input-method &quot;apl-ascii&quot;&#41; ;; https://www.metalevel.at/unicapl/
-;;; apl.el --- APL input method for Emacs  -&#42;- lexical-binding: t; -&#42;-
+&#40;set-input-method &quot;apl-ascii&quot;&#41; ;; https://www.metalevel.at/unicapl/</code></pre><p><code>apl.el</code>:</p><pre><code>;;; apl.el --- APL input method for Emacs  -&#42;- lexical-binding: t; -&#42;-
 ;; Author: Markus Triska &lt;triska@metalevel.at&gt;
 ;; Homepage: https://www.metalevel.at/unicapl/
 ;; Keywords: languages
@@ -652,18 +650,119 @@ pip install easyocr
 easyocr -l en -f $PATH --gpu=True --detail=0 --output&#95;format=standard</code></pre><h2>mupdf</h2><pre><code>git clone --recursive git://git.ghostscript.com/mupdf.git &amp;&amp; cd mupdf &amp;&amp;  make &amp;&amp; cp ./build/release/mutool &#126;/.local/bin/mutool
  # install to .local
  vi Makefile
- profile ?= /usr/local/ =&gt; profile ?= /home/iris/.local/ </code></pre><blockquote><p> 关于<code>mupdf</code>库，可以使用<code>pacman</code>也可以如此安装，最终通过<code>emacs</code>的<code>reader</code>工作。 </p></blockquote><h2>Env</h2><h3>Go</h3><p><code>go env -w GO111MODULE=on</code></p><p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p><h3>Python</h3><p><code>python -m venv &#126;/.local/</code> xor <code>uv venv &#126;/uv/</code></p><pre><code># cat .zshrc =&gt; export PATH=$PATH:&#126;/.local/bin
+ profile ?= /usr/local/ =&gt; profile ?= /home/iris/.local/</code></pre><blockquote><p> 关于<code>mupdf</code>库，可以使用<code>pacman</code>也可以如此安装，最终通过<code>emacs</code>的<code>reader</code>工作。 </p></blockquote><h2>Env</h2><h3>Go</h3><p><code>go env -w GO111MODULE=on</code></p><p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p><h3>Python</h3><p><code>python -m venv &#126;/.local/</code> xor <code>uv venv &#126;/uv/</code></p><pre><code># cat .zshrc =&gt; export PATH=$PATH:&#126;/.local/bin
 pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple</code></pre><p><code>uv</code> config <code>&#126;/.config/uv/uv.toml</code></p><pre><code>&#91;&#91;index&#93;&#93;
 url = &quot;https://mirrors.ustc.edu.cn/pypi/simple&quot;
-default = true</code></pre><h3>TS/JS</h3><p><code>npm config set prefix '$PATH'</code> =&gt; <code>.zshrc</code>:<code>export PATH=&quot;$HOME/node&#95;global/bin:$PATH&quot;</code></p><h2>ShellTools</h2><p><code>cargo install starship</code></p><p><a href='https://github.com/starship/starship/issues/5985#issuecomment-2126457753'>issue 5985:timeout setting</a> =></p><p><code>starship config command&#95;timeout &lt;some value&gt;</code></p><h3>ImageView</h3><pre><code>cargo install viu
+default = true</code></pre><h3>TS/JS</h3><p><code>npm config set prefix '$PATH'</code> => <code>.zshrc</code>:<code>export PATH=&quot;$HOME/node&#95;global/bin:$PATH&quot;</code></p><pre><code>npm install -g nrm
+nrm ls
+nrm use taobao
+nrm test</code></pre><h2>ShellTools</h2><p><code>cargo install starship</code></p><p><a href='https://github.com/starship/starship/issues/5985#issuecomment-2126457753'>issue 5985:timeout setting</a> =></p><p><code>starship config command&#95;timeout &lt;some value&gt;</code></p><h3>tmux</h3><pre><code>set -g base-index         0
+set -g display-panes-time 10000
+set -g mouse              on
+set -g pane-base-index    0
+set -g renumber-windows   on
+
+setw -g allow-rename      off
+setw -g automatic-rename  off
+setw -g mode-keys         vi
+
+set -g @resurrect-dir '&#126;/.tmux/resurrect'
+
+set -g status-right '#{prefix&#95;highlight} #H | %a %Y-%m-%d %H:%M'
+set -g @prefix&#95;highlight&#95;show&#95;copy&#95;mode 'on'
+
+
+setenv -g TMUX&#95;PLUGIN&#95;MANAGER&#95;PATH '&#126;/.tmux/plugins'
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin &quot;nordtheme/tmux&quot;
+
+is&#95;vim=&quot;ps -o state= -o comm= -t '#{pane&#95;tty}' | grep -iqE '&#94;&#91;&#94;TXZ &#93;+ +&#40;\\S+\\/&#41;?g?\.?&#40;view|n?vim?x?&#41;&#40;-wrapped&#41;?&#40;diff&#41;?$'&quot;
+
+bind-key -n 'C-h' if-shell &quot;$is&#95;vim&quot; 'send-keys C-h' 'select-pane -L'
+bind-key -n 'C-j' if-shell &quot;$is&#95;vim&quot; 'send-keys C-j' 'select-pane -D'
+bind-key -n 'C-k' if-shell &quot;$is&#95;vim&quot; 'send-keys C-k' 'select-pane -U'
+bind-key -n 'C-l' if-shell &quot;$is&#95;vim&quot; 'send-keys C-l' 'select-pane -R'
+
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+
+is&#95;vim=&quot;ps -o state= -o comm= -t '#{pane&#95;tty}' | grep -iqE '&#94;&#91;&#94;TXZ &#93;+ +&#40;\\S+\\/&#41;?g?&#40;view|n?vim?x?&#41;&#40;diff&#41;?$'&quot;
+
+bind -n 'M-h' if-shell &quot;$is&#95;vim&quot; 'send-keys M-h' 'resize-pane -L 1'
+bind -n 'M-j' if-shell &quot;$is&#95;vim&quot; 'send-keys M-j' 'resize-pane -D 1'
+bind -n 'M-k' if-shell &quot;$is&#95;vim&quot; 'send-keys M-k' 'resize-pane -U 1'
+bind -n 'M-l' if-shell &quot;$is&#95;vim&quot; 'send-keys M-l' 'resize-pane -R 1'
+
+bind-key -T copy-mode-vi M-h resize-pane -L 1
+bind-key -T copy-mode-vi M-j resize-pane -D 1
+bind-key -T copy-mode-vi M-k resize-pane -U 1
+bind-key -T copy-mode-vi M-l resize-pane -R 1
+
+run '&#126;/.tmux/plugins/tpm/tpm'
+
+</code></pre><pre><code>git clone https://github.com/tmux-plugins/tpm &#126;/.tmux/plugins/tpm
+sh &#126;/.tmux/plugins/tpm/bin/install&#95;plugins
+</code></pre><p><code>C-b :source-file &#126;/.tmux.conf</code></p><h4>lvim <code>config.lua</code></h4><pre><code>vim.api.nvim&#95;set&#95;keymap&#40;
+  &quot;n&quot;,
+  &quot;&lt;C-h&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.move&#95;left&#40;&#41;&lt;CR&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;
+  &quot;n&quot;,
+  &quot;&lt;C-j&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.move&#95;bottom&#40;&#41;&lt;CR&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;
+  &quot;n&quot;,
+  &quot;&lt;C-k&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.move&#95;top&#40;&#41;&lt;CR&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;&quot;n&quot;,
+  &quot;&lt;C-l&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.move&#95;right&#40;&#41;&lt;CR&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+
+vim.api.nvim&#95;set&#95;keymap&#40;&quot;n&quot;,
+  &quot;&lt;M-h&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.resize&#95;left&#40;&#41;&lt;cr&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;
+	&quot;n&quot;,
+	&quot;&lt;M-j&gt;&quot;,
+	&#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.resize&#95;bottom&#40;&#41;&lt;cr&gt;&#93;&#93;,
+	{ noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;
+  &quot;n&quot;,
+  &quot;&lt;M-k&gt;&quot;,
+  &#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.resize&#95;top&#40;&#41;&lt;cr&gt;&#93;&#93;,
+  { noremap = true, silent = true }
+&#41;
+vim.api.nvim&#95;set&#95;keymap&#40;
+	&quot;n&quot;,
+	&quot;&lt;M-l&gt;&quot;,
+	&#91;&#91;&lt;cmd&gt;lua require&#40;&quot;tmux&quot;&#41;.resize&#95;right&#40;&#41;&lt;cr&gt;&#93;&#93;,
+	{ noremap = true, silent = true }
+&#41;
+</code></pre><h3>ImageView</h3><pre><code>cargo install viu
 ## viu $PATH/$NAME</code></pre><h3>fish</h3><pre><code>cargo install --git https://github.com/fish-shell/fish-shell --locked</code></pre><h4>fisher</h4><pre><code>git clone --depth=1 https://github.com/jorgebucaran/fisher.git &amp;&amp; cd fisher/functions
 source
 fisher install ../
 fisher install IlanCosman/tide@v6</code></pre><h4>starship</h4><p><code>starship init fish | source</code> => <code>config.fish</code></p><p><code>cat $&#95;&#95;fish&#95;config&#95;dir/config.fish</code> =></p><pre><code>alias cat=bat
 alias ls=eza
 alias grep=rg
-alias vi=lvim</code></pre><h3>zsh</h3><p><code>pacman -S zsh zsh-completions</code></p><p><a href='https://github.com/zsh-users/zsh-syntax-highlighting/issues/812'>zsh-syntax-higtlighting/issue/812</a></p><p>*Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation.**zsh highlight***</p><h4><code>.zshrc</code>:PackageManager and p10k/starship</h4><pre><code>HISTFILE=&quot;$HOME/.zsh&#95;history&quot;
+alias vi=lvim</code></pre><h3>zsh</h3><p><code>pacman -S zsh zsh-completions</code></p><p><a href='https://github.com/zsh-users/zsh-syntax-highlighting/issues/812'>zsh-syntax-higtlighting/issue/812</a></p><p><em>Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation. <strong>zsh highlight</strong> </em></p><h4><code>.zshrc</code>:PackageManager and p10k/starship</h4><pre><code>HISTFILE=&quot;$HOME/.zsh&#95;history&quot;
 HISTSIZE=10000
 SAVEHIST=10000
 setopt SHARE&#95;HISTORY
@@ -686,9 +785,9 @@ plugins=&#40;git
         zsh-syntax-highlighting
         zsh-autosuggestions
         zsh-completions&#41;
-ZSH&#95;THEME=&quot;powerlevel10k/powerlevel10k&quot;</code></pre><h4>zim</h4><p><code>wget2 -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh</code></p><p><code>.zimrc</code> =></p><pre><code>++ zmodule zdharma-continuum/fast-syntax-highlighting 
+ZSH&#95;THEME=&quot;powerlevel10k/powerlevel10k&quot;</code></pre><h4>zim</h4><p><code>wget2 -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh</code></p><p><code>.zimrc</code> =></p><pre><code>++ zmodule zdharma-continuum/fast-syntax-highlighting
 -- zmodule asciiship
-++ zmodule romkatv/powerlevel10k</code></pre><p><code>.zshrc</code> =></p><pre><code># Promat 
+++ zmodule romkatv/powerlevel10k</code></pre><p><code>.zshrc</code> =></p><pre><code># Promat
 ## Copy by https://emacs-china.org/u/blindingdark/summary
 autoload -Uz vcs&#95;info
 precmd&#40;&#41; { vcs&#95;info }
@@ -700,7 +799,7 @@ PROMPT='%F{blue}%&#126;%f %F{red}${vcs&#95;info&#95;msg&#95;0&#95;}%f${NEWLINE}%
 include current-theme.conf
 # END&#95;KITTY&#95;THEME
 font&#95;family      FiraCode Nerd Font
-symbol&#95;map U+4E00-U+9FA5 LxgwWenKai</code></pre><p><em>deprecated</em></p><pre><code>kitty +kitten themes --dump-theme 
+symbol&#95;map U+4E00-U+9FA5 LxgwWenKai</code></pre><p><em>deprecated</em></p><pre><code>kitty +kitten themes --dump-theme
 ## xor
 cd &#126;/.config/kitty
 ln -s ./kitty-themes/themes/&#91;name&#93;.conf &#126;/.config/kitty/theme.conf</code></pre><p><code>cat &#126;/.config/kitty/kitty.conf</code> =></p><pre><code># ...
@@ -717,17 +816,17 @@ line&#95;color = &quot;magenta&quot;
 enabled = true
 show&#95;bg&#95;colors = false
 &#91;ip&#93;
-public = true</code></pre><h2>PackageManager</h2><h3>pacman</h3><p><a href='https://www.archlinuxcn.org/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/'>upgrade-requires-manual-intervention</a></p><p><code>sudo pacman -Qo /usr/lib/firmware/nvidia/ad103</code> => <code>/usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2</code></p><pre><code>&gt; error: failed to commit transaction &#40;conflicting files&#41;  
+public = true</code></pre><h2>PackageManager</h2><h3>pacman</h3><p><a href='https://www.archlinuxcn.org/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/'>upgrade-requires-manual-intervention</a></p><p><code>sudo pacman -Qo /usr/lib/firmware/nvidia/ad103</code> => <code>/usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2</code></p><pre><code>&gt; error: failed to commit transaction &#40;conflicting files&#41;
 &gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad103 exists in
-&gt; filesystem  
+&gt; filesystem
 &gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad104 exists in
-&gt; filesystem  
+&gt; filesystem
 &gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad106 exists in
-&gt; filesystem  
+&gt; filesystem
 &gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad107 exists in
 &gt; filesystem
 </code></pre><p><a href='https://archlinux.org/news/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/'>break change</a></p><pre><code>cd lib/firmware/nvidia
- sudo mv ad103 ad103.bak                         
+ sudo mv ad103 ad103.bak
  sudo mv ad104 ad104.bak
  sudo mv ad106 ad106.bak
  sudo mv ad107 ad107.bak
@@ -741,7 +840,7 @@ cargo install aura
 aura deps &#91;package-name&#93; --open
 # cat &#126;/.config/mimeapps.list =&gt; image/png=emacs.desktop</code></pre><h3>Reflector</h3><pre><code>sudo pacman -S reflector
 sudo systemctl &#91;enable/start&#93; reflector.&#91;timer/service&#93;
-sudo vim /etc/xdg/reflector/reflector.conf 
+sudo vim /etc/xdg/reflector/reflector.conf
 # -- --country France,Germany
 # -- --protocol https
 # ...
@@ -755,4 +854,4 @@ sudo systemctl enable --now earlyoom</code></pre><h3>Trash</h3><pre><code>cargo 
   &#40;&#40;default-modes
     &#40;pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%&#41;&#41;&#41;&#41;</code></pre><h3>FileManager</h3><p><em>install</em></p><pre><code>sudo pacman -S yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick
 paru -S resvg
-cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli</code></pre><h3><code>iwctl</code></h3><p><em>退出时使用<code>exit</code>会断开连接状态，使用<code>C-d</code>则不会断联。</em></p><p><div style="display:none"></p><p>「なにって……なんで？」</p><p>『え？』<br> 「なんでなの、あの子はだれ？　なんであの子と行くの？　どうして教えてくれなかったの？　確かにその子とは友達じゃないけど、私はしまむらのこと知りたいもの。しまむらのこと一番知りたいの、しまむらの側にいたいの、それも一番がいいし一番以外だと嫌なの。仲良くなりたいのにどうして？」<br> 『ちょっと、安達、』<br> 「私は！　しまむらが知らないとこで笑っているとか！　嫌で、他の子と手を繫ぐのも！　私だけがよくて！　私と一緒にいてほしくて！　祭りだって、行きたかったし！　しまむらが楽しそうにしていると、笑っていると、その側に私がいて！　そういうのがよくて！　頭が痛いの、苦しいの！　しまむらのことばっかり考えて、どうかしそうに、なって……しまむらが電話してくれるのも待っているの！　たまには話してよ、私に話しかけてよ、私ばっかりじゃやだ、しまむらも、少しぐらい……少しは私のこと気にならない？　ちょっとも？　まったく？　なんでもないの？　友達だけ？　普通の友達なの？　普通じゃなくなりたいの、普通より一個でもいいから、普通じゃないのが、いい……ねぇ、しまむら、どうすればいいかな、ねぇ。しまむら聞いてる？　聞いて。私の声を聞いてなにか思う？　思ってくれる？　安心でもいいよなんでもいい、なにか思って。そういうのがほしい、そういうの求めちゃだめ？　しまむら！　しまむらなんだよぉ、私ね、しまむらがいいの。しまむら以外いらないし、いらない……しまむらだけでいいから。わがまま言ってないよ、一個だから、一個じゃん。みんななんてどうでもいいしいらないしあっちいっててほしいのになんでしまむらはそっちいくの、こっち来て、こっちに来て、側にいて、離れないで。嫌だ、しまむらの隣にいるのは私、私がいい、私がいたい、いさせて……だれあの子、私知らないよ。知らないしまむらになるのはやだ、しまむらのこと全部知っていたいし、知りたくないことあるのも嫌だし、でも知らないのはもっと嫌だし苦しいの。苦しい、痛い、痛い……しまむらぁ。しまむらと遊びに行こうって、言いたいのにお祭りだって行こうと思ってたんだよ、行きたいよ、でもしまむらあの子と行くの、遊んでいるの？　今どこにいるのしまむら、誰かといるの、しまむら、しまむらぁ……ねぇ聞いてる？　さっきから私ばっかりだよ喋ってるの。いつものしまむらはもっと喋ってくれるよね、ねぇなんで？　いつもみたいじゃない？　私おかしい？　おかしいよね、それは分かるんだよでも、知りたくて、しまむらのこと知りたくて、変になるの。しまむらと離れたくないのいつも一緒にいたいのどこでもいいの一緒ならどこでもいいから、しまむらと会ってないよ、会いたいよでも今会ったら泣きそうだし、泣いてるし、あの子とどうなんだろうなんなんだろうってそればかり気になっているしねぇ聞いてる？　私と一緒にいるよりあの子の方がいいの？　私だめ？　どこがだめ？　直すから言ってよ、直す絶対に直すだからお願い教えて、聞きたいの。しまむらはね、私、しまむらだから……しまむらだからっていうのがあるの、他の人がしまむらそっくりでも関係ないのいるはずないけど、ねぇそういうのじゃなくて、しまむらじゃないとダメなの。だから仲良くなりたいのに、なんか……こういうのじゃなくてもっと違う話したいけど、気になって……だってしまむら、笑顔だったよ？　私以外に笑うの、嫌だよ。嫌じゃない？　そうじゃない？　しまむらそういうのない？　しまむらって誰が好き？　好きな人いる？　好きになれる？　好きってなにか分かる？　時々ね、怖いの。しまむらはなんで隣にいてくれるんだろうって。しまむらと私ってそもそも友達だよね？　友達ぐらいにはなっているよね。友達と思ってくれてる？　しまむらは、そういうの……うぅう、ぇえ、しまむら、声聞かせて。声聞きたい、私のこと話して。しまむらが一番、私のこと分かって……分かってほしい。分かりたいし分かってほしい。一番になってほしい、なりたいの。なって、でも……ちょっと嫌なことがあるとくじけそうで……だってしまむらは、なんか、私を大事にしている感じがないから……大事、大事って変だけど、でも大事にしてほしい。大事がいいの！　他のと一緒にされるのやなの、本当に少しで、いいから……しまむら私のこと考えたことある？　夏休みに、ずっと会ってないけど、一回ぐらいは考えてくれた？　私ね、ずっと考えてた。しまむらのことしか考えてなかったよ。全部しまむら。だから、しまむらも！　私のこと、けっこう、考えて……しまむらと私は違うよ？　違うよね、分かってる、でも！　期待はするし、しちゃうし、こうしてうらぎ、られても……しまむらに電話したいって思うの。でも電話したってこうなって、どうにもならなくて、どうすればいいかな。ねぇ、しまむら、しまむら？　電話、繫がってるよね？　しまむらと繫がってるよね？　でも遠い、遠くて、会いたい。しまむらに直接会いたいの。笑ってほしいの、しまむらに頭を撫でてね、大丈夫って言ってほしいの。今どこにいるの？　どこ？　誰かといる？　あの子？　あの子だれ？　さっきから何回も聞いたよね、答えられないような相手なの？　どんな仲？　私より？　やだ、そんなのやだ、私よりなんて、やだって。やだ……違うって、違うって言って！　私、しまむらのこといっぱい考えてるよ！　足りない？　それじゃだめ？　もっと？　なにすればいい？　分かんないし、いつも考えても失敗するし、どういう私がいいのか教えて、教えてくれたら、私がんばるよ。絶対がんばるよ、だから、そんな子ほんとは、どっちでもいい。私が会いたいしまむらはもっと、別で、私が変わればいいだけって、わかってるけど……しまむら、ねぇ、しまむら。今なに考えてる？　私おかしい？　私へん？　しまむらの話をして。しまむらから私に声をかけて、しまむらから近づいて。いつも私ばっかり、ばっかり、ばっかり……一方通行じゃあ、こうなっちゃうよ！　こういうふうになっちゃうから、しまむらもこっち、に来て。しまむらは私嫌い？　違うよね？　やだよ、嫌いにならないで。嫌いいやだ。嫌いなのいやだ……好きに、好きになってほしい。だれか、好きになって。違うしまむらが好きに……嫌いなの？　お母さんみたいに私のこと嫌いなの？　声かけなくなるの？　知らない顔されるの？　私なんて言えばいいの？　なにすればいいの、飛べばいいの、跳ねればいいの、手を繫げばいいの、みんなやろうとしてでもやったら見てなくて……どうすればよかったの。どうすれば、誰も……しまむら、声、聞きたい……なにか言って、安心させて、でも他の人に笑うのやだ、私に笑って、笑って……頭痛い、お腹も、痛い……気になってたのになんで連絡、してくれなかったの。私に教えてよ、私知りたいの。しまむらのこと知りたいの、さっきからなんか、もう、気持ちぐるぐるで……同じこと言ってるけど、仕方ないよ、仕方ないじゃん、しまむらのことしか考えてないんだから……しまむらのことだけだから、ずっと、しまむらになっても……しまむらが、大事で、大事にしたくて、大事じゃないとやで、だから、私を見て。しまむら、見てないとやだ……他の子、なんてやだぁ……やなの。また行くの？　どこか行くの？　一緒に町行くの？　私と遊んだとこに、他の子と！　そんなの、やだよ。上書きしないでよ！　私、ずっと覚えてるのに、上書きされて……また行ったら、今度は違うの？　同じとこ見て違うもの見るの？　そんなのやだ、やだ、やだ。しまむらと一緒に、一緒のもの、分けて、分かって……おかしいよそんなの。違うよね私おかしいの、おかしいの分かるよ、でもおかしくなって……しまむらのこと、頭から離れなくて……今も……しまむら、しまむら、しま、むら……うぇう、う、うううう、しまむら、しまむら……っほ、げ、うぅ……しまむらの、しまむら？　しまむら、しまむら、しまむら……しまむらがいい、私は、いいから、だからしまむらも……ねぇお願い、しまむら……しまむらも、しまむら……」<br> 　止まらなかった。自然と流れる涙が口に入らなかったら、いつまでも喋り続けていそうだった。坂を転げ落ちたらもう止まれない。上でしまむらが待っていたとしても、戻れない。<br> 　逆恨みだって、頭のどこかで諫める声を聞いた。<br> 　分かっている、ただの嫉妬だって。<br> 　そう私は嫉妬しているんだ。ヤキモチ妬いているんだ。<br> 　しまむらに怒るのはお門違いで、でもじゃあ、この気持ちをどこにぶつければいいのか。<br> 　整理のつかない混乱に陥り、むせび泣く。<br> 　だって、だってだって、だって。<br> 『………………………………………はぁ』<br> 　溜息が、聞こえた。<br>   顔を静かに、縦に両断してくるような深々とした吐息。<br> 　そして。</p><p>『……めんどくさいなぁ……』</p><p>「………………………………………え」</p><p></div></p></div></main></body><footer><p style="font-size: 0.8em; color:#A0AFB7">Built with Mimas,Powered by Clojure.<br>Copyright © 2025 IrisLennon,All Rights Reserved.</p><br><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="44"><br>CC BY-NC-SA 4.0 International</a></footer></html>
+cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli</code></pre><h3><code>iwctl</code></h3><p>退出时使用<code>exit</code>会断开连接状态，使用<code>C-d</code>则不会断联。</p><p><div style="display:none"></p><p>「なにって……なんで？」</p><p>『え？』<br> 「なんでなの、あの子はだれ？　なんであの子と行くの？　どうして教えてくれなかったの？　確かにその子とは友達じゃないけど、私はしまむらのこと知りたいもの。しまむらのこと一番知りたいの、しまむらの側にいたいの、それも一番がいいし一番以外だと嫌なの。仲良くなりたいのにどうして？」<br> 『ちょっと、安達、』<br> 「私は！　しまむらが知らないとこで笑っているとか！　嫌で、他の子と手を繫ぐのも！　私だけがよくて！　私と一緒にいてほしくて！　祭りだって、行きたかったし！　しまむらが楽しそうにしていると、笑っていると、その側に私がいて！　そういうのがよくて！　頭が痛いの、苦しいの！　しまむらのことばっかり考えて、どうかしそうに、なって……しまむらが電話してくれるのも待っているの！　たまには話してよ、私に話しかけてよ、私ばっかりじゃやだ、しまむらも、少しぐらい……少しは私のこと気にならない？　ちょっとも？　まったく？　なんでもないの？　友達だけ？　普通の友達なの？　普通じゃなくなりたいの、普通より一個でもいいから、普通じゃないのが、いい……ねぇ、しまむら、どうすればいいかな、ねぇ。しまむら聞いてる？　聞いて。私の声を聞いてなにか思う？　思ってくれる？　安心でもいいよなんでもいい、なにか思って。そういうのがほしい、そういうの求めちゃだめ？　しまむら！　しまむらなんだよぉ、私ね、しまむらがいいの。しまむら以外いらないし、いらない……しまむらだけでいいから。わがまま言ってないよ、一個だから、一個じゃん。みんななんてどうでもいいしいらないしあっちいっててほしいのになんでしまむらはそっちいくの、こっち来て、こっちに来て、側にいて、離れないで。嫌だ、しまむらの隣にいるのは私、私がいい、私がいたい、いさせて……だれあの子、私知らないよ。知らないしまむらになるのはやだ、しまむらのこと全部知っていたいし、知りたくないことあるのも嫌だし、でも知らないのはもっと嫌だし苦しいの。苦しい、痛い、痛い……しまむらぁ。しまむらと遊びに行こうって、言いたいのにお祭りだって行こうと思ってたんだよ、行きたいよ、でもしまむらあの子と行くの、遊んでいるの？　今どこにいるのしまむら、誰かといるの、しまむら、しまむらぁ……ねぇ聞いてる？　さっきから私ばっかりだよ喋ってるの。いつものしまむらはもっと喋ってくれるよね、ねぇなんで？　いつもみたいじゃない？　私おかしい？　おかしいよね、それは分かるんだよでも、知りたくて、しまむらのこと知りたくて、変になるの。しまむらと離れたくないのいつも一緒にいたいのどこでもいいの一緒ならどこでもいいから、しまむらと会ってないよ、会いたいよでも今会ったら泣きそうだし、泣いてるし、あの子とどうなんだろうなんなんだろうってそればかり気になっているしねぇ聞いてる？　私と一緒にいるよりあの子の方がいいの？　私だめ？　どこがだめ？　直すから言ってよ、直す絶対に直すだからお願い教えて、聞きたいの。しまむらはね、私、しまむらだから……しまむらだからっていうのがあるの、他の人がしまむらそっくりでも関係ないのいるはずないけど、ねぇそういうのじゃなくて、しまむらじゃないとダメなの。だから仲良くなりたいのに、なんか……こういうのじゃなくてもっと違う話したいけど、気になって……だってしまむら、笑顔だったよ？　私以外に笑うの、嫌だよ。嫌じゃない？　そうじゃない？　しまむらそういうのない？　しまむらって誰が好き？　好きな人いる？　好きになれる？　好きってなにか分かる？　時々ね、怖いの。しまむらはなんで隣にいてくれるんだろうって。しまむらと私ってそもそも友達だよね？　友達ぐらいにはなっているよね。友達と思ってくれてる？　しまむらは、そういうの……うぅう、ぇえ、しまむら、声聞かせて。声聞きたい、私のこと話して。しまむらが一番、私のこと分かって……分かってほしい。分かりたいし分かってほしい。一番になってほしい、なりたいの。なって、でも……ちょっと嫌なことがあるとくじけそうで……だってしまむらは、なんか、私を大事にしている感じがないから……大事、大事って変だけど、でも大事にしてほしい。大事がいいの！　他のと一緒にされるのやなの、本当に少しで、いいから……しまむら私のこと考えたことある？　夏休みに、ずっと会ってないけど、一回ぐらいは考えてくれた？　私ね、ずっと考えてた。しまむらのことしか考えてなかったよ。全部しまむら。だから、しまむらも！　私のこと、けっこう、考えて……しまむらと私は違うよ？　違うよね、分かってる、でも！　期待はするし、しちゃうし、こうしてうらぎ、られても……しまむらに電話したいって思うの。でも電話したってこうなって、どうにもならなくて、どうすればいいかな。ねぇ、しまむら、しまむら？　電話、繫がってるよね？　しまむらと繫がってるよね？　でも遠い、遠くて、会いたい。しまむらに直接会いたいの。笑ってほしいの、しまむらに頭を撫でてね、大丈夫って言ってほしいの。今どこにいるの？　どこ？　誰かといる？　あの子？　あの子だれ？　さっきから何回も聞いたよね、答えられないような相手なの？　どんな仲？　私より？　やだ、そんなのやだ、私よりなんて、やだって。やだ……違うって、違うって言って！　私、しまむらのこといっぱい考えてるよ！　足りない？　それじゃだめ？　もっと？　なにすればいい？　分かんないし、いつも考えても失敗するし、どういう私がいいのか教えて、教えてくれたら、私がんばるよ。絶対がんばるよ、だから、そんな子ほんとは、どっちでもいい。私が会いたいしまむらはもっと、別で、私が変わればいいだけって、わかってるけど……しまむら、ねぇ、しまむら。今なに考えてる？　私おかしい？　私へん？　しまむらの話をして。しまむらから私に声をかけて、しまむらから近づいて。いつも私ばっかり、ばっかり、ばっかり……一方通行じゃあ、こうなっちゃうよ！　こういうふうになっちゃうから、しまむらもこっち、に来て。しまむらは私嫌い？　違うよね？　やだよ、嫌いにならないで。嫌いいやだ。嫌いなのいやだ……好きに、好きになってほしい。だれか、好きになって。違うしまむらが好きに……嫌いなの？　お母さんみたいに私のこと嫌いなの？　声かけなくなるの？　知らない顔されるの？　私なんて言えばいいの？　なにすればいいの、飛べばいいの、跳ねればいいの、手を繫げばいいの、みんなやろうとしてでもやったら見てなくて……どうすればよかったの。どうすれば、誰も……しまむら、声、聞きたい……なにか言って、安心させて、でも他の人に笑うのやだ、私に笑って、笑って……頭痛い、お腹も、痛い……気になってたのになんで連絡、してくれなかったの。私に教えてよ、私知りたいの。しまむらのこと知りたいの、さっきからなんか、もう、気持ちぐるぐるで……同じこと言ってるけど、仕方ないよ、仕方ないじゃん、しまむらのことしか考えてないんだから……しまむらのことだけだから、ずっと、しまむらになっても……しまむらが、大事で、大事にしたくて、大事じゃないとやで、だから、私を見て。しまむら、見てないとやだ……他の子、なんてやだぁ……やなの。また行くの？　どこか行くの？　一緒に町行くの？　私と遊んだとこに、他の子と！　そんなの、やだよ。上書きしないでよ！　私、ずっと覚えてるのに、上書きされて……また行ったら、今度は違うの？　同じとこ見て違うもの見るの？　そんなのやだ、やだ、やだ。しまむらと一緒に、一緒のもの、分けて、分かって……おかしいよそんなの。違うよね私おかしいの、おかしいの分かるよ、でもおかしくなって……しまむらのこと、頭から離れなくて……今も……しまむら、しまむら、しま、むら……うぇう、う、うううう、しまむら、しまむら……っほ、げ、うぅ……しまむらの、しまむら？　しまむら、しまむら、しまむら……しまむらがいい、私は、いいから、だからしまむらも……ねぇお願い、しまむら……しまむらも、しまむら……」<br> 　止まらなかった。自然と流れる涙が口に入らなかったら、いつまでも喋り続けていそうだった。坂を転げ落ちたらもう止まれない。上でしまむらが待っていたとしても、戻れない。<br> 　逆恨みだって、頭のどこかで諫める声を聞いた。<br> 　分かっている、ただの嫉妬だって。<br> 　そう私は嫉妬しているんだ。ヤキモチ妬いているんだ。<br> 　しまむらに怒るのはお門違いで、でもじゃあ、この気持ちをどこにぶつければいいのか。<br> 　整理のつかない混乱に陥り、むせび泣く。<br> 　だって、だってだって、だって。<br> 『………………………………………はぁ』<br> 　溜息が、聞こえた。<br>   顔を静かに、縦に両断してくるような深々とした吐息。<br> 　そして。</p><p>『……めんどくさいなぁ……』</p><p>「………………………………………え」</p><p></div></p></div></main></body><footer><p style="font-size: 0.8em; color:#A0AFB7">Built with Mimas,Powered by Clojure.<br>Copyright © 2025 IrisLennon,All Rights Reserved.</p><br><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="44"><br>CC BY-NC-SA 4.0 International</a></footer></html>
