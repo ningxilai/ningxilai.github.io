@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light dark" name="color-scheme">
+    <title>Languages - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="../images/favicon.svg">
+    <article data-theme="light"></article>
+    <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
+    <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
+    <link href="../js/MathJax.js" />
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+    // Apply Zhuque Fangsong font only to Chinese characters in headings
+    // and fix heading counter logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function isChinese(char) {
+            const code = char.charCodeAt(0);
+            // CJK Unified Ideographs
+            return (code >= 0x4E00 && code <= 0x9FFF) ||
+                   // CJK Unified Ideographs Extension A
+                   (code >= 0x3400 && code <= 0x4DBF) ||
+                   // CJK Unified Ideographs Extension B
+                   (code >= 0x20000 && code <= 0x2A6DF) ||
+                   // CJK Unified Ideographs Extension C
+                   (code >= 0x2A700 && code <= 0x2B73F) ||
+                   // CJK Unified Ideographs Extension D
+                   (code >= 0x2B740 && code <= 0x2B81F) ||
+                   // CJK Compatibility Ideographs
+                   (code >= 0xF900 && code <= 0xFAFF) ||
+                   // CJK Compatibility Ideographs Supplement
+                   (code >= 0x2F800 && code <= 0x2FA1F) ||
+                   // Full-width ASCII and half-width Katakana
+                   (code >= 0xFF01 && code <= 0xFF5E) ||
+                   // CJK Symbols and Punctuation
+                   (code >= 0x3000 && code <= 0x303F) ||
+                   // Hiragana
+                   (code >= 0x3040 && code <= 0x309F) ||
+                   // Katakana
+                   (code >= 0x30A0 && code <= 0x30FF);
+        }
+
+        function processTextNode(node) {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+
+            const text = node.textContent;
+            if (!text) return;
+
+            const fragment = document.createDocumentFragment();
+            let currentText = '';
+            let isCurrentChinese = null;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charIsChinese = isChinese(char);
+
+                if (isCurrentChinese !== charIsChinese && currentText !== '') {
+                    // Create span for previous segment
+                    const span = document.createElement('span');
+                    span.textContent = currentText;
+                    if (isCurrentChinese) {
+                        span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                    }
+                    fragment.appendChild(span);
+                    currentText = '';
+                }
+
+                isCurrentChinese = charIsChinese;
+                currentText += char;
+            }
+
+            // Process remaining text
+            if (currentText !== '') {
+                const span = document.createElement('span');
+                span.textContent = currentText;
+                if (isCurrentChinese) {
+                    span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                }
+                fragment.appendChild(span);
+            }
+
+            node.parentNode.replaceChild(fragment, node);
+        }
+
+        // Fix heading counters - hierarchical counting
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        // Array to store counters for each level [h1, h2, h3, h4, h5, h6]
+        const counters = [0, 0, 0, 0, 0, 0];
+
+        headings.forEach(function(heading) {
+            const level = parseInt(heading.tagName.charAt(1));
+            const index = level - 1; // Convert to 0-based index
+
+            // Increment current level counter
+            counters[index]++;
+
+            // Reset all lower level counters to 0
+            for (let i = index + 1; i < 6; i++) {
+                counters[i] = 0;
+            }
+
+            // Build counter display
+            let counterText = '';
+            if (level === 1) {
+                counterText = 'Chapter ' + counters[0] + ': ';
+            } else {
+                // Build hierarchical counter from h1 to current level
+                const parts = [];
+                for (let i = 0; i <= index; i++) {
+                    if (counters[i] > 0) {
+                        parts.push(counters[i]);
+                    }
+                }
+                counterText = parts.join('.') + ' ';
+            }
+
+            // Insert counter before heading content
+            const counterSpan = document.createElement('span');
+            counterSpan.className = 'heading-counter';
+            counterSpan.textContent = counterText;
+            counterSpan.style.color = level === 1 ? '#708080' :
+                                      level === 2 ? '#507080' :
+                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.fontSize = level === 1 ? '100%' :
+                                         level === 2 ? '80%' :
+                                         level === 3 ? '60%' : '50%';
+
+            heading.insertBefore(counterSpan, heading.firstChild);
+
+            // Process text nodes for Chinese font
+            const walker = document.createTreeWalker(
+                heading,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Process in reverse order to avoid index issues
+            textNodes.reverse().forEach(processTextNode);
+        });
+    });
+    </script>
+    <style>
+     /* Basic styles for Mimas site */
+
+     * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+     }
+
+      body {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          color: #333;
+          background: #f5f5f5;
+      }
+
+     div {
+         font-family:
+             "Times New Roman",
+             "LXGW WenKai GB Screen",
+             "Noto Serif SC",
+             sans-serif;
+         font-variant-ligatures: common-ligatures;
+     }
+
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 2rem;
+     }
+
+     /* Header */
+     .site-header {
+         background: #fff;
+         border-bottom: 1px solid #e0e0e0;
+         padding: 1rem 0;
+         margin-bottom: 2rem;
+     }
+
+     .site-header nav {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 0 2rem;
+         display: flex;
+         gap: 2rem;
+     }
+
+     .site-header a {
+         color: #333;
+         text-decoration: none;
+         font-weight: 500;
+     }
+
+     .site-header a:hover {
+         color: #0066cc;
+     }
+
+     /* Main content */
+     main {
+         background: #fff;
+         border-radius: 8px;
+         padding: 2rem;
+         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     }
+
+     /* Typography */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: #708080;
+          margin-top: 1.2rem;
+          margin-bottom: 0.3rem;
+          line-height: 1.15;
+      }
+
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+     p {
+         margin-bottom: 1.1rem;
+         color: #7080A3;
+         word-wrap:break-word;
+         white-space:pre-wrap;
+         word-break:break-all;
+     }
+
+     li::marker {
+         color: #609090;
+     }
+
+     li {
+         color: #6060A3
+     }
+
+     strong {
+         color: #705081;
+     }
+
+     code {
+         background: #f0f0f0;
+         padding: 0.2rem 0.4rem;
+         border-radius: 3px;
+         font-family: 'IBM Plex Mono', sans-serif;
+         font-size: 0.9em;
+     }
+
+     pre code {
+         display: block;
+         padding: 0.9rem;
+         overflow-x: auto;
+     }
+
+     footer {
+         text-align: center;
+         padding: 5px;
+     }
+
+     /* Card component */
+     .card {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         padding: 1.5rem;
+         margin-bottom: 1rem;
+     }
+
+     .card-header {
+         margin-bottom: 1rem;
+     }
+
+     .card-title {
+         margin: 0 0 0.5rem 0;
+     }
+
+     .card-description {
+         color: #666;
+         margin: 0;
+     }
+
+     .card-body {
+         margin-bottom: 1rem;
+     }
+
+     .card-footer {
+         border-top: 1px solid #e0e0e0;
+         padding-top: 1rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+
+     /* Footer */
+     .site-footer {
+         text-align: center;
+         padding: 2rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+    </style>
+  </head>
+  <body>
+     <main class="container" style="flex: 1;">
+       <div class="content">
+
+        <header>
+          <div style="text-align:right">
+            <a href="../archive.html">Archives</a>
+            <a href="../">SiteMap</a>
+          </div>
+        </header>
+        <br>
+          <hr>
+        <p style="font-size: 1.6m; color:#A0AFB7">Languages: Posted on February 20, 2026, by Iris Lennon.</p>
+        <article>
+    <section>
+        <h1 id="awesome-languages">Awesome Languages</h1>
+<p>关于一些有趣的编程语言和具有编程能力的排版语言，以及如何配置它们的开发环境。<br />
+</p>
+<h2 id="latex"><span class="math inline"><em>L</em><em>a</em><em>T</em><em>e</em><em>X</em></span></h2>
+<pre><code>sudo pacman -S perl-tk ## Option
+cd /tmp
+wget2 https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive2025-20250308.iso
+sudo mkdir /mnt/iso
+sudo mount texlive2025-20250308.iso /mnt/iso/
+sudo perl ./install-tl --gui ## Advanced =&gt; checkmake Create symlinks in standard directory.
+
+## Post install
+
+sudo tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+sudo tlmgr update --all # sudo tlmgr update --self --all</code></pre>
+<h3 id="tlmgr">tlmgr</h3>
+<p>使用<code>tlmgr install [package]</code>时，如果给出<code>tlmgr install: package [package] not present in repository.</code>，则应当考虑<code>package</code>为一子包的可能，应安装其父包。</p>
+<h3 id="global-tex-font">Global TeX Font</h3>
+<pre><code>sudo cp /usr/local/texlive/[version]/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-[context].conf
+sudo fc-cache -fv</code></pre>
+<h3 id="debug">Debug</h3>
+<p><code>latex-git-log</code> =&gt;</p>
+<pre><code>-- Can't locate IPC/System/Simple.pm in @INC (you may need to install the IPC::System::Simple module) (@INC entries checked: /usr/lib/perl5/5.40/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.40/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.40/core_perl /usr/share/perl5/core_perl) at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.
+-- BEGIN failed--compilation aborted at /usr/local/texlive/2025/bin/x86_64-linux/latex-git-log line 15.</code></pre>
+<p>in terminal:</p>
+<pre><code>sudo perl -MCPAN -e shell
+## xor cpan shell
+# &lt;= o conf urllist unshift https://mirrors.tuna.tsinghua.edu.cn/CPAN/
+# &lt;= o conf pushy_https 0
+# &lt;= o conf commit
+# &lt;= quit
+
+install IPC/System/Simple.pm</code></pre>
+<h2 id="typst">Typst</h2>
+<p>至少在2026年早期，在<code>typst</code>官方版本中，导出<code>.typ</code>到<code>.html</code>仍是一项实验性功能：</p>
+<pre><code>typst watch --features html
+## or
+TYPST_FEATURES=html</code></pre>
+<h3 id="install">Install</h3>
+<pre><code>cargo install --git https://github.com/typst/typst.git --locked typst-cli</code></pre>
+<h3 id="on-vsc">on VSC</h3>
+<pre><code>sudo pacman -S code &amp;&amp; ext install myriad-dreamin.tinymist</code></pre>
+<h3 id="option"><em>Option</em></h3>
+<pre><code>cargo install font-manager</code></pre>
+<blockquote>
+<p>github:<a href="https://github.com/e-ricus/font-manager-cli">e-ricus/font-manager-cli</a>.</p>
+</blockquote>
+<h2 id="quartor-markdown-deprecated">Quarto/R markdown \deprecated\</h2>
+<pre><code>wget https://github.com/quarto-dev/quarto-cli/releases/download/v[version]/quarto-[version]-linux-[arch].tar.gz
+mkdir $QUARTO_PATH
+tar -C $QUARTO_PATH/v[version]/ -xvzf quarto-[version]-linux-[arch].tar.gz</code></pre>
+<p><code>cat .zshrc</code> =&gt;</p>
+<pre><code>export PATH=&quot;$QUARTO_PATH/v[version]/bin:$PATH&quot;</code></pre>
+<h2 id="gnu-apl-deprecated">GNU APL \deprecated\</h2>
+<p><a href="https://www.metalevel.at/unicapl/asciiapl.pdf" title="asciiapl.pdf">asciiapl.pdf</a></p>
+<pre><code>(require 'apl)
+(set-input-method &quot;apl-ascii&quot;) ;; https://www.metalevel.at/unicapl/
+
+;;; apl.el --- APL input method for Emacs  -*- lexical-binding: t; -*-
+
+;; Author: Markus Triska &lt;triska@metalevel.at&gt;
+;; Homepage: https://www.metalevel.at/unicapl/
+;; Keywords: languages
+
+;; Public domain code.
+
+;;; Commentary:
+
+;; Copy apl.el to your load-path and add to your .emacs:
+
+;;     (require 'apl)
+
+;; Enable the APL input method with
+
+;;     M-x set-input-method RET apl-ascii RET
+
+;; Then enter {iota}, {times}, {execute} etc.
+
+;;; Code:
+
+(defconst apl-version &quot;0.9-PRE&quot;)
+
+(defvar apl-ascii-codepoint
+  '((&quot;{#%}&quot; . ?\x2339)
+    (&quot;{#&amp;}&quot; . ?\x233a)
+    (&quot;{#/=}&quot; . ?\x236f)
+    (&quot;{#/\\}&quot; . ?\x234d)
+    (&quot;{#/}&quot; . ?\x2341)
+    (&quot;{#:}&quot; . ?\x2360)
+    (&quot;{#&lt;}&quot; . ?\x2343)
+    (&quot;{#=}&quot; . ?\x2338)
+    (&quot;{#&gt;}&quot; . ?\x2344)
+    (&quot;{#?}&quot; . ?\x2370)
+    (&quot;{#O}&quot; . ?\x233c)
+    (&quot;{#\\/}&quot; . ?\x2354)
+    (&quot;{#\}&quot; . ?\x2342)
+    (&quot;{#^}&quot; . ?\x2353)
+    (&quot;{#o}&quot; . ?\x233b)
+    (&quot;{#v}&quot; . ?\x234c)
+    (&quot;{%}&quot; . ?\xf7)
+    (&quot;{&amp;_}&quot; . ?\x235a)
+    (&quot;{&amp;}&quot; . ?\x22c4)
+    (&quot;{'_}&quot; . ?\x2358)
+    (&quot;{,-}&quot; . ?\x236a)
+    (&quot;{-&gt;}&quot; . ?\x2192)
+    (&quot;{-|}&quot; . ?\x22a3)
+    (&quot;{-}&quot; . ?\x2212)
+    (&quot;{/=_}&quot; . ?\x2262)
+    (&quot;{/=}&quot; . ?\x2260)
+    (&quot;{/\\_}&quot; . ?\x2359)
+    (&quot;{/\\|}&quot; . ?\x234b)
+    (&quot;{/\\}&quot; . ?\x2206)
+    (&quot;{/match}&quot; . ?\x2262)
+    (&quot;{0~}&quot; . ?\x236c)
+    (&quot;{;_}&quot; . ?\x236e)
+    (&quot;{&lt;-}&quot; . ?\x2190)
+    (&quot;{&lt;=}&quot; . ?\x2264)
+    (&quot;{=_}&quot; . ?\x2261)
+    (&quot;{&gt;=}&quot; . ?\x2265)
+    (&quot;{&gt;\&quot;}&quot; . ?\x2369)
+    (&quot;{@}&quot; . ?\x235d)
+    (&quot;{I-beam}&quot; . ?\x2336)
+    (&quot;{I}&quot; . ?\x2336)
+    (&quot;{O*}&quot; . ?\x235f)
+    (&quot;{O-}&quot; . ?\x2296)
+    (&quot;{O\&quot;}&quot; . ?\x2365)
+    (&quot;{O\\}&quot; . ?\x2349)
+    (&quot;{O_}&quot; . ?\x235c)
+    (&quot;{O}&quot; . ?\x25cb)
+    (&quot;{T}&quot; . ?\x22a4)
+    (&quot;{\&quot;}&quot; . ?\xa8)
+    (&quot;{\\/~}&quot; . ?\x236b)
+    (&quot;{abs}&quot; . ?\x2223)
+    (&quot;{alpha-underbar}&quot; . ?\x2376)
+    (&quot;{alpha_}&quot; . ?\x2376)
+    (&quot;{alpha}&quot; . ?\x237a)
+    (&quot;{and-overbar}&quot; . ?\x22bc)
+    (&quot;{and}&quot; . ?\x2227)
+    (&quot;{assign}&quot; . ?\x2190)
+    (&quot;{backslash-bar}&quot; . ?\x2340)
+    (&quot;{base}&quot; . ?\x22a5)
+    (&quot;{box}&quot; . ?\x2395)
+    (&quot;{branch}&quot; . ?\x2192)
+    (&quot;{caret}&quot; . ?\x2227)
+    (&quot;{cat-bar}&quot; . ?\x236a)
+    (&quot;{catenate1}&quot; . ?\x236a)
+    (&quot;{catenate}&quot; . ?\x2c)
+    (&quot;{ceiling}&quot; . ?\x2308)
+    (&quot;{circle-backslash}&quot; . ?\x2349)
+    (&quot;{circle-dash}&quot; . ?\x2296)
+    (&quot;{circle-diaeresis}&quot; . ?\x2365)
+    (&quot;{circle-jot}&quot; . ?\x233e)
+    (&quot;{circle-star}&quot; . ?\x235f)
+    (&quot;{circle-stile}&quot; . ?\x233d)
+    (&quot;{circle-underbar}&quot; . ?\x235c)
+    (&quot;{circle_}&quot; . ?\x235c)
+    (&quot;{circle}&quot; . ?\x25cb)
+    (&quot;{comma-bar}&quot; . ?\x236a)
+    (&quot;{comment}&quot; . ?\x235d)
+    (&quot;{compress1}&quot; . ?\x233f)
+    (&quot;{compress}&quot; . ?\x2f)
+    (&quot;{deal}&quot; . ?\x3f)
+    (&quot;{decode}&quot; . ?\x22a5)
+    (&quot;{del-diaeresis}&quot; . ?\x2362)
+    (&quot;{del-stile}&quot; . ?\x2352)
+    (&quot;{del-tilde}&quot; . ?\x236b)
+    (&quot;{delta-stile}&quot; . ?\x234b)
+    (&quot;{delta-underbar}&quot; . ?\x2359)
+    (&quot;{delta_}&quot; . ?\x2359)
+    (&quot;{delta}&quot; . ?\x2206)
+    (&quot;{del}&quot; . ?\x2207)
+    (&quot;{depth}&quot; . ?\x2261)
+    (&quot;{dex}&quot; . ?\x22a3)
+    (&quot;{diaeresis}&quot; . ?\xa8)
+    (&quot;{diamond-underbar}&quot; . ?\x235a)
+    (&quot;{diamond_}&quot; . ?\x235a)
+    (&quot;{diamond}&quot; . ?\x22c4)
+    (&quot;{diaresis-dot}&quot; . ?\x2235)
+    (&quot;{disclose}&quot; . ?\x2283)
+    (&quot;{divide}&quot; . ?\xf7)
+    (&quot;{domino}&quot; . ?\x2339)
+    (&quot;{down-arrow}&quot; . ?\x2193)
+    (&quot;{down-caret}&quot; . ?\x2228)
+    (&quot;{down-shoe}&quot; . ?\x222a)
+    (&quot;{down-tack}&quot; . ?\x22a4)
+    (&quot;{down-vane}&quot; . ?\x2356)
+    (&quot;{downcaret-tilde}&quot; . ?\x2371)
+    (&quot;{downshoe-stile}&quot; . ?\x2366)
+    (&quot;{downtack-diaeresis}&quot; . ?\x2361)
+    (&quot;{downtack-jot}&quot; . ?\x2355)
+    (&quot;{downtack-overbar}&quot; . ?\x2351)
+    (&quot;{downwards-vane}&quot; . ?\x2356)
+    (&quot;{drop}&quot; . ?\x2193)
+    (&quot;{each}&quot; . ?\xa8)
+    (&quot;{enclose}&quot; . ?\x2282)
+    (&quot;{encode}&quot; . ?\x22a4)
+    (&quot;{enlist}&quot; . ?\x2208)
+    (&quot;{epsilon-underbar}&quot; . ?\x2377)
+    (&quot;{epsilon_}&quot; . ?\x2377)
+    (&quot;{epsilon}&quot; . ?\x2208)
+    (&quot;{execute}&quot; . ?\x234e)
+    (&quot;{expand1}&quot; . ?\x2340)
+    (&quot;{expand}&quot; . ?\x5c)
+    (&quot;{exp}&quot; . ?\x22c6)
+    (&quot;{find}&quot; . ?\x2377)
+    (&quot;{first}&quot; . ?\x2191)
+    (&quot;{floor}&quot; . ?\x230a)
+    (&quot;{format}&quot; . ?\x2355)
+    (&quot;{frog}&quot; . ?\x2362)
+    (&quot;{gets}&quot; . ?\x2190)
+    (&quot;{goto}&quot; . ?\x2192)
+    (&quot;{grade-down}&quot; . ?\x2352)
+    (&quot;{grade-up}&quot; . ?\x234b)
+    (&quot;{greater-of}&quot; . ?\x2308)
+    (&quot;{greater-than-diaeresis}&quot; . ?\x2369)
+    (&quot;{greater-than-equal}&quot; . ?\x2265)
+    (&quot;{holler}&quot; . ?\x2365)
+    (&quot;{hoot}&quot; . ?\x2364)
+    (&quot;{index-of}&quot; . ?\x2373)
+    (&quot;{index}&quot; . ?\x2337)
+    (&quot;{index}&quot; . ?\x2373)
+    (&quot;{intersection}&quot; . ?\x2229)
+    (&quot;{intersect}&quot; . ?\x2229)
+    (&quot;{inverted-caret}&quot; . ?\x2228)
+    (&quot;{iota-underbar}&quot; . ?\x2378)
+    (&quot;{iota_}&quot; . ?\x2378)
+    (&quot;{iota}&quot; . ?\x2373)
+    (&quot;{is}&quot; . ?\x2190)
+    (&quot;{jot-diaeresis}&quot; . ?\x2364)
+    (&quot;{jot-underbar}&quot; . ?\x235b)
+    (&quot;{jot_}&quot; . ?\x235b)
+    (&quot;{jot}&quot; . ?\x2218)
+    (&quot;{laminate1}&quot; . ?\x236a)
+    (&quot;{laminate}&quot; . ?\x2c)
+    (&quot;{lamp}&quot; . ?\x235d)
+    (&quot;{left-arrow}&quot; . ?\x2190)
+    (&quot;{left-shoe}&quot; . ?\x2282)
+    (&quot;{left-tack}&quot; . ?\x22a3)
+    (&quot;{left-vane}&quot; . ?\x2345)
+    (&quot;{leftbrace}&quot; . ?\x7b)
+    (&quot;{leftshoe-stile}&quot; . ?\x2367)
+    (&quot;{leftwards-vane}&quot; . ?\x2345)
+    (&quot;{less-than-equal}&quot; . ?\x2264)
+    (&quot;{lesser-of}&quot; . ?\x230a)
+    (&quot;{lev}&quot; . ?\x22a2)
+    (&quot;{ln}&quot; . ?\x235f)
+    (&quot;{log}&quot; . ?\x235f)
+    (&quot;{mat-divide}&quot; . ?\x2339)
+    (&quot;{mat-inverse}&quot; . ?\x2339)
+    (&quot;{match}&quot; . ?\x2261)
+    (&quot;{max}&quot; . ?\x2308)
+    (&quot;{member-of}&quot; . ?\x2208)
+    (&quot;{member}&quot; . ?\x2208)
+    (&quot;{minus}&quot; . ?\x2212)
+    (&quot;{min}&quot; . ?\x230a)
+    (&quot;{nabla}&quot; . ?\x2207)
+    (&quot;{nand}&quot; . ?\x2372)
+    (&quot;{nazg}&quot; . ?\x2218)
+    (&quot;{negative}&quot; . ?\x2212)
+    (&quot;{nor}&quot; . ?\x2371)
+    (&quot;{not-equal}&quot; . ?\x2260)
+    (&quot;{not-match}&quot; . ?\x2262)
+    (&quot;{not}&quot; . ?\x223c)
+    (&quot;{o\&quot;}&quot; . ?\x2364)
+    (&quot;{o_}&quot; . ?\x235b)
+    (&quot;{omega-underbar}&quot; . ?\x2379)
+    (&quot;{omega_}&quot; . ?\x2379)
+    (&quot;{omega}&quot; . ?\x2375)
+    (&quot;{or-overbar}&quot; . ?\x22bd)
+    (&quot;{or}&quot; . ?\x2228)
+    (&quot;{o}&quot; . ?\x2218)
+    (&quot;{partition}&quot; . ?\x2282)
+    (&quot;{paw}&quot; . ?\x2235)
+    (&quot;{pi-times}&quot; . ?\x25cb)
+    (&quot;{pick}&quot; . ?\x2283)
+    (&quot;{pow}&quot; . ?\x22c6)
+    (&quot;{quad-&gt;}&quot; . ?\x2348)
+    (&quot;{quad-backslash}&quot; . ?\x2342)
+    (&quot;{quad-circle}&quot; . ?\x233c)
+    (&quot;{quad-colon}&quot; . ?\x2360)
+    (&quot;{quad-delta}&quot; . ?\x234d)
+    (&quot;{quad-del}&quot; . ?\x2354)
+    (&quot;{quad-diamond}&quot; . ?\x233a)
+    (&quot;{quad-divide}&quot; . ?\x2339)
+    (&quot;{quad-down-arrow}&quot; . ?\x2357)
+    (&quot;{quad-downcaret}&quot; . ?\x234c)
+    (&quot;{quad-equal}&quot; . ?\x2338)
+    (&quot;{quad-greater-than}&quot; . ?\x2344)
+    (&quot;{quad-jot}&quot; . ?\x233b)
+    (&quot;{quad-left-arrow}&quot; . ?\x2347)
+    (&quot;{quad-less-than}&quot; . ?\x2343)
+    (&quot;{quad-nabla}&quot; . ?\x2354)
+    (&quot;{quad-not-equal}&quot; . ?\x236f)
+    (&quot;{quad-question}&quot; . ?\x2370)
+    (&quot;{quad-right-arrow}&quot; . ?\x2348)
+    (&quot;{quad-slash}&quot; . ?\x2341)
+    (&quot;{quad-up-arrow}&quot; . ?\x2350)
+    (&quot;{quad-up-caret}&quot; . ?\x2353)
+    (&quot;{quad&lt;-}&quot; . ?\x2347)
+    (&quot;{quad&lt;}&quot; . ?\x2343)
+    (&quot;{quad&gt;}&quot; . ?\x2344)
+    (&quot;{quad}&quot; . ?\x2395)
+    (&quot;{quote-quad}&quot; . ?\x235e)
+    (&quot;{quote-underbar}&quot; . ?\x2358)
+    (&quot;{quote_}&quot; . ?\x2358)
+    (&quot;{rank}&quot; . ?\x2364)
+    (&quot;{ravel}&quot; . ?\x2c)
+    (&quot;{reciprocal}&quot; . ?\xf7)
+    (&quot;{reduce1}&quot; . ?\x233f)
+    (&quot;{reduce}&quot; . ?\x2f)
+    (&quot;{replicate1}&quot; . ?\x233f)
+    (&quot;{replicate}&quot; . ?\x2f)
+    (&quot;{represent}&quot; . ?\x22a4)
+    (&quot;{reshape}&quot; . ?\x2374)
+    (&quot;{residue}&quot; . ?\x2223)
+    (&quot;{reverse}&quot; . ?\x233d)
+    (&quot;{rho}&quot; . ?\x2374)
+    (&quot;{right-arrow}&quot; . ?\x2192)
+    (&quot;{right-shoe}&quot; . ?\x2283)
+    (&quot;{right-tack}&quot; . ?\x22a2)
+    (&quot;{right-vane}&quot; . ?\x2346)
+    (&quot;{rightbrace}&quot; . ?\x7d)
+    (&quot;{rightwards-vane}&quot; . ?\x2346)
+    (&quot;{ring}&quot; . ?\x2218)
+    (&quot;{roll}&quot; . ?\x3f)
+    (&quot;{rotate}&quot; . ?\x2296)
+    (&quot;{rotate}&quot; . ?\x233d)
+    (&quot;{scan1}&quot; . ?\x2340)
+    (&quot;{scan}&quot; . ?\x5c)
+    (&quot;{semicolon-underbar}&quot; . ?\x236e)
+    (&quot;{shape}&quot; . ?\x2374)
+    (&quot;{signum}&quot; . ?\xd7)
+    (&quot;{slash-bar}&quot; . ?\x233f)
+    (&quot;{slashbar}&quot; . ?\x233f)
+    (&quot;{slope-bar}&quot; . ?\x2340)
+    (&quot;{smirk}&quot; . ?\x2368)
+    (&quot;{snout}&quot; . ?\x2361)
+    (&quot;{sourpuss}&quot; . ?\x2363)
+    (&quot;{squad}&quot; . ?\x2337)
+    (&quot;{squish-quad}&quot; . ?\x2337)
+    (&quot;{star-diaeresis}&quot; . ?\x2363)
+    (&quot;{star}&quot; . ?\x22c6)
+    (&quot;{stile-tilde}&quot; . ?\x236d)
+    (&quot;{stile}&quot; . ?\x2223)
+    (&quot;{take}&quot; . ?\x2191)
+    (&quot;{tilde-diaeresis}&quot; . ?\x2368)
+    (&quot;{tilde}&quot; . ?\x223c)
+    (&quot;{times}&quot; . ?\xd7)
+    (&quot;{transpose}&quot; . ?\x2349)
+    (&quot;{type}&quot; . ?\x2208)
+    (&quot;{union}&quot; . ?\x222a)
+    (&quot;{up-arrow}&quot; . ?\x2191)
+    (&quot;{up-caret}&quot; . ?\x2227)
+    (&quot;{up-shoe}&quot; . ?\x2229)
+    (&quot;{up-tack}&quot; . ?\x22a5)
+    (&quot;{up-vane}&quot; . ?\x234f)
+    (&quot;{upcaret-tilde}&quot; . ?\x2372)
+    (&quot;{upshoe-jot}&quot; . ?\x235d)
+    (&quot;{uptack-jot}&quot; . ?\x234e)
+    (&quot;{uptack-underbar}&quot; . ?\x234a)
+    (&quot;{upwards-vane}&quot; . ?\x234f)
+    (&quot;{w}&quot; . ?\x2375)
+    (&quot;{x}&quot; . ?\xd7)
+    (&quot;{zilde}&quot; . ?\x236c)
+    (&quot;{|-}&quot; . ?\x22a2)
+    (&quot;{|~}&quot; . ?\x236d)
+    (&quot;{~\&quot;}&quot; . ?\x2368)
+    (&quot;{~^}&quot; . ?\x2372)
+    (&quot;{~v}&quot; . ?\x2371)
+    (&quot;{~}&quot; . ?\x223c))
+  &quot;Correspondence between ASCII transliterations and Unicode codepoints.&quot;)
+
+(defvar apl-aplus-pairs
+  '((254 . ?\x22c4) (126 . ?\x223c) (161 . ?\xa8) (224 . ?\x2336)
+    (162 . ?\xaf) (230 . ?\x236b) (231 . ?\x2352) (164 . ?\x2264)
+    (232 . ?\x234b) (166 . ?\x2265) (244 . ?\x2349) (225 . ?\x2296)
+    (168 . ?\x2260) (240 . ?\x235f) (169 . ?\x2228) (185 . ?\x2371)
+    (94 . ?\x2227) (176 . ?\x2372) (171 . ?\xd7) (223 . ?\xf7)
+    (247 . ?\x233d) (173 . ?\x2339) (215 . ?\x2375) (197 . ?\x2208)
+    (229 . ?\x2377) (210 . ?\x2374) (217 . ?\x2191) (213 . ?\x2193)
+    (201 . ?\x2373) (233 . ?\x2378) (207 . ?\x25cb) (239 . ?\x2365)
+    (42 . ?\x22c6) (179 . ?\x235f) (251 . ?\x2190) (253 . ?\x2192)
+    (220 . ?\x2340) (252 . ?\x2359) (193 . ?\x237a) (225 . ?\x2296)
+    (211 . ?\x2308) (196 . ?\x230a) (189 . ?\x2261) (199 . ?\x2207)
+    (231 . ?\x2352) (200 . ?\x2206) (202 . ?\x2218) (234 . ?\x2364)
+    (167 . ?\x233c) (204 . ?\x2395) (236 . ?\x235e) (45 . ?\x2212)
+    (219 . ?\x22a2) (188 . ?\x2342) (221 . ?\x22a3) (187 . ?\x233c)
+    (218 . ?\x2282) (216 . ?\x2283) (195 . ?\x2229) (227 . ?\x235d)
+    (214 . ?\x222a) (194 . ?\x22a5) (226 . ?\x234e) (206 . ?\x22a4)
+    (238 . ?\x2355) (124 . ?\x2223) (175 . ?\x233f) (205 . ?\x2223))
+    &quot;Correspondence between custom A+ encoding and Unicode codepoints.&quot;)
+
+
+(defvar apl-aplus-table
+  (mapcar (lambda (pair)
+        (cons (decode-char 'ucs (car pair))
+          (decode-char 'ucs (cdr pair))))
+      apl-aplus-pairs)
+  &quot;Translation table mapping A+ characters to Unicode symbols.&quot;)
+
+(defun apl-set-font (font)
+  &quot;Set font for APL characters. FONT is a font as passed to
+set-fontset-font and should provide glyphs for all APL characters
+that you want to use. An example is GNU unifont. Try
+-gnu-unifont-*-r-*--*-*-*-*-*-*-ISO10646-1. Emacs is becoming
+increasingly better at handling Unicode and may choose the right
+glyphs for all characters out of the box, sometimes drawing from
+various fonts. You therefore probably do not not need this
+function at all, except maybe for enforcing a uniform font for
+all APL characters.&quot;
+  (let ((all-symbols (mapcar (lambda (x)
+                               (decode-char 'ucs (cdr x)))
+                             apl-ascii-codepoint)))
+    (dolist (s all-symbols)
+      (set-fontset-font &quot;fontset-default&quot; s font))))
+
+(defvar apl-aplus-keyboard nil)
+
+(defun apl-toggle-aplus-keyboard ()
+  &quot;Toogle translation of A+ keyboard input to Unicode characters.&quot;
+  (interactive)
+  (setq apl-aplus-keyboard (not apl-aplus-keyboard))
+  (dolist (pair apl-aplus-table)
+    (keyboard-translate (car pair)
+            (if apl-aplus-keyboard
+                (cdr pair)
+              (car pair)))))
+
+(defun apl-aplus-to-unicode (begin end)
+  &quot;Convert A+ symbols in region to Unicode characters.&quot;
+  (interactive &quot;r&quot;)
+  (translate-region begin end (make-translation-table apl-aplus-table)))
+
+(defun apl-flip (f) (cons (cdr f) (car f)))
+
+(defun apl-unicode-to-aplus (begin end)
+  &quot;Convert APL Unicode characters in region to A+.&quot;
+  (interactive &quot;r&quot;)
+  (translate-region begin end
+            (make-translation-table (mapcar #'apl-flip
+                            apl-aplus-table))))
+
+(defun apl-ascii-to-unicode ()
+  &quot;Translate ASCII transliterations to Unicode APL codepoints in the buffer.
+In transient mark mode, if the region is active, operate on the region.&quot;
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (when (and transient-mark-mode mark-active)
+        (narrow-to-region (region-beginning) (region-end)))
+      (dolist (pair apl-ascii-codepoint)
+        (goto-char (point-min))
+        (while (search-forward (car pair) nil t)
+          (replace-match (string (decode-char 'ucs (cdr pair))) nil t))))))
+
+
+(when (require 'quail nil t)
+  (quail-define-package
+   &quot;apl-ascii&quot; &quot;APL&quot; &quot;apl&quot; t
+   &quot;APL ASCII input method. Use {rho}, {iota} etc.&quot;
+   '((&quot;\t&quot; . quail-completion))
+   t nil nil nil nil nil nil nil nil t)
+  (dolist (pair apl-ascii-codepoint)
+    (quail-defrule (car pair) (decode-char 'ucs (cdr pair)))))
+
+
+(defun apl-version ()
+  (interactive)
+  (message &quot;Using version %s of apl.el&quot; apl-version))
+
+(provide 'apl)
+;;; apl.el ends here</code></pre>
+<h2 id="spad-fricas-algebra">SPAD &amp;&amp; FriCAS Algebra<br />
+</h2>
+<p>见于<a href="http://euclideanspace.com/prog/scratchpad/spad/index.htm">euclideanspace.com/</a>。</p>
+<pre><code>sudo pacman -S sbcl
+git clone --depth=1 git@github.com:fricas/fricas.git
+cd fricas
+./configure
+make
+sudo make install</code></pre>
+<h2 id="idris2-pack-v0.7-deprecated">Idris2 &amp;&amp; Pack v0.7 \deprecated\</h2>
+<pre><code>git clone --depth=1 git@github.com:racket/ChezScheme.git
+cd ChezScheme
+./configure --threads
+make
+sudo make install
+
+git clone --depth=1 git@github.com:stefan-hoeck/idris2-pack.git
+cd idris2-pack
+./install.sh
+
+export PATH=$PATH:~/.pack/bin</code></pre>
+<h2 id="agda">Agda</h2>
+<pre><code>cabal update
+cabal install Agda
+
+wget -O agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v2.2.tar.gz
+tar -xvf agda-stdlib.tar.gz
+
+cd agda-stdlib-2.2
+cabal install</code></pre>
+<h2 id="lisp">Lisp</h2>
+<h3 id="commonlisp-roswell">CommonLisp &amp;&amp; Roswell</h3>
+<pre><code>sudo pacman -S rlwrap
+
+git clone -b release https://github.com/roswell/roswell.git
+cd roswell
+sh bootstrap
+./configure --prefix=$HOME/.local
+make
+make install
+echo 'PATH=$HOME/.local/bin:$PATH' &gt;&gt; ~/.zshrc
+
+ros setup
+ros lisp=sbcl-bin/system setup
+ros install qlot</code></pre>
+<h3 id="lem">lem</h3>
+<pre><code>sudo pacman -S sdl2 sdl2_ttf sdl2_image
+
+mkdir $HOME/common-lisp
+cd common-lisp
+git clone --depth=1 https://github.com/lem-project/lem.git
+cd lem
+make sdl2</code></pre>
+<h2 id="rust">Rust</h2>
+<pre><code>rustup toolchain uninstall stable &amp;&amp; rustup toolchain install stable</code></pre>
+<h3 id="uiua">Uiua</h3>
+<pre><code>cargo install --git https://github.com/uiua-lang/uiua uiua -F full</code></pre>
+    </section>
+</article>
+
+      </div>
+    </main>
+  </body>
+  <footer>
+    <center>
+      <a href="../about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
+      <a href="../contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
+      <br>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
+      <br>
+      <br>
+      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
+  </center>
+  </footer>
+</html>

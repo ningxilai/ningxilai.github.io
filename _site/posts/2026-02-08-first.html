@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light dark" name="color-scheme">
+    <title>Prelude - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="../images/favicon.svg">
+    <article data-theme="light"></article>
+    <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
+    <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
+    <link href="../js/MathJax.js" />
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+    // Apply Zhuque Fangsong font only to Chinese characters in headings
+    // and fix heading counter logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function isChinese(char) {
+            const code = char.charCodeAt(0);
+            // CJK Unified Ideographs
+            return (code >= 0x4E00 && code <= 0x9FFF) ||
+                   // CJK Unified Ideographs Extension A
+                   (code >= 0x3400 && code <= 0x4DBF) ||
+                   // CJK Unified Ideographs Extension B
+                   (code >= 0x20000 && code <= 0x2A6DF) ||
+                   // CJK Unified Ideographs Extension C
+                   (code >= 0x2A700 && code <= 0x2B73F) ||
+                   // CJK Unified Ideographs Extension D
+                   (code >= 0x2B740 && code <= 0x2B81F) ||
+                   // CJK Compatibility Ideographs
+                   (code >= 0xF900 && code <= 0xFAFF) ||
+                   // CJK Compatibility Ideographs Supplement
+                   (code >= 0x2F800 && code <= 0x2FA1F) ||
+                   // Full-width ASCII and half-width Katakana
+                   (code >= 0xFF01 && code <= 0xFF5E) ||
+                   // CJK Symbols and Punctuation
+                   (code >= 0x3000 && code <= 0x303F) ||
+                   // Hiragana
+                   (code >= 0x3040 && code <= 0x309F) ||
+                   // Katakana
+                   (code >= 0x30A0 && code <= 0x30FF);
+        }
+
+        function processTextNode(node) {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+
+            const text = node.textContent;
+            if (!text) return;
+
+            const fragment = document.createDocumentFragment();
+            let currentText = '';
+            let isCurrentChinese = null;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charIsChinese = isChinese(char);
+
+                if (isCurrentChinese !== charIsChinese && currentText !== '') {
+                    // Create span for previous segment
+                    const span = document.createElement('span');
+                    span.textContent = currentText;
+                    if (isCurrentChinese) {
+                        span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                    }
+                    fragment.appendChild(span);
+                    currentText = '';
+                }
+
+                isCurrentChinese = charIsChinese;
+                currentText += char;
+            }
+
+            // Process remaining text
+            if (currentText !== '') {
+                const span = document.createElement('span');
+                span.textContent = currentText;
+                if (isCurrentChinese) {
+                    span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                }
+                fragment.appendChild(span);
+            }
+
+            node.parentNode.replaceChild(fragment, node);
+        }
+
+        // Fix heading counters - hierarchical counting
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        // Array to store counters for each level [h1, h2, h3, h4, h5, h6]
+        const counters = [0, 0, 0, 0, 0, 0];
+
+        headings.forEach(function(heading) {
+            const level = parseInt(heading.tagName.charAt(1));
+            const index = level - 1; // Convert to 0-based index
+
+            // Increment current level counter
+            counters[index]++;
+
+            // Reset all lower level counters to 0
+            for (let i = index + 1; i < 6; i++) {
+                counters[i] = 0;
+            }
+
+            // Build counter display
+            let counterText = '';
+            if (level === 1) {
+                counterText = 'Chapter ' + counters[0] + ': ';
+            } else {
+                // Build hierarchical counter from h1 to current level
+                const parts = [];
+                for (let i = 0; i <= index; i++) {
+                    if (counters[i] > 0) {
+                        parts.push(counters[i]);
+                    }
+                }
+                counterText = parts.join('.') + ' ';
+            }
+
+            // Insert counter before heading content
+            const counterSpan = document.createElement('span');
+            counterSpan.className = 'heading-counter';
+            counterSpan.textContent = counterText;
+            counterSpan.style.color = level === 1 ? '#708080' :
+                                      level === 2 ? '#507080' :
+                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.fontSize = level === 1 ? '100%' :
+                                         level === 2 ? '80%' :
+                                         level === 3 ? '60%' : '50%';
+
+            heading.insertBefore(counterSpan, heading.firstChild);
+
+            // Process text nodes for Chinese font
+            const walker = document.createTreeWalker(
+                heading,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Process in reverse order to avoid index issues
+            textNodes.reverse().forEach(processTextNode);
+        });
+    });
+    </script>
+    <style>
+     /* Basic styles for Mimas site */
+
+     * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+     }
+
+      body {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          color: #333;
+          background: #f5f5f5;
+      }
+
+     div {
+         font-family:
+             "Times New Roman",
+             "LXGW WenKai GB Screen",
+             "Noto Serif SC",
+             sans-serif;
+         font-variant-ligatures: common-ligatures;
+     }
+
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 2rem;
+     }
+
+     /* Header */
+     .site-header {
+         background: #fff;
+         border-bottom: 1px solid #e0e0e0;
+         padding: 1rem 0;
+         margin-bottom: 2rem;
+     }
+
+     .site-header nav {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 0 2rem;
+         display: flex;
+         gap: 2rem;
+     }
+
+     .site-header a {
+         color: #333;
+         text-decoration: none;
+         font-weight: 500;
+     }
+
+     .site-header a:hover {
+         color: #0066cc;
+     }
+
+     /* Main content */
+     main {
+         background: #fff;
+         border-radius: 8px;
+         padding: 2rem;
+         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     }
+
+     /* Typography */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: #708080;
+          margin-top: 1.2rem;
+          margin-bottom: 0.3rem;
+          line-height: 1.15;
+      }
+
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+     p {
+         margin-bottom: 1.1rem;
+         color: #7080A3;
+         word-wrap:break-word;
+         white-space:pre-wrap;
+         word-break:break-all;
+     }
+
+     li::marker {
+         color: #609090;
+     }
+
+     li {
+         color: #6060A3
+     }
+
+     strong {
+         color: #705081;
+     }
+
+     code {
+         background: #f0f0f0;
+         padding: 0.2rem 0.4rem;
+         border-radius: 3px;
+         font-family: 'IBM Plex Mono', sans-serif;
+         font-size: 0.9em;
+     }
+
+     pre code {
+         display: block;
+         padding: 0.9rem;
+         overflow-x: auto;
+     }
+
+     footer {
+         text-align: center;
+         padding: 5px;
+     }
+
+     /* Card component */
+     .card {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         padding: 1.5rem;
+         margin-bottom: 1rem;
+     }
+
+     .card-header {
+         margin-bottom: 1rem;
+     }
+
+     .card-title {
+         margin: 0 0 0.5rem 0;
+     }
+
+     .card-description {
+         color: #666;
+         margin: 0;
+     }
+
+     .card-body {
+         margin-bottom: 1rem;
+     }
+
+     .card-footer {
+         border-top: 1px solid #e0e0e0;
+         padding-top: 1rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+
+     /* Footer */
+     .site-footer {
+         text-align: center;
+         padding: 2rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+    </style>
+  </head>
+  <body>
+     <main class="container" style="flex: 1;">
+       <div class="content">
+
+        <header>
+          <div style="text-align:right">
+            <a href="../archive.html">Archives</a>
+            <a href="../">SiteMap</a>
+          </div>
+        </header>
+        <br>
+          <hr>
+        <p style="font-size: 1.6m; color:#A0AFB7">Prelude: Posted on February  8, 2026, by Iris Lennon.</p>
+        <article>
+    <section>
+        <h1 id="prelude">Prelude</h1>
+<p><strong><em>Colorless green ideas sleep furiously,Furiously sleep ideas green colorless.</em></strong> <em>— Chomsky</em></p>
+<p>关于思想的流通，有一种<code>|</code>风格的描述，或者可以这样表述出来：</p>
+<p>从生活中不成形的语料开始收集原料与催化剂，脑海中的思想作为某种工厂式的措施开始对其进行初步处理，也就是筛选并分离作为原型前体的各组分，这就是所谓的 <strong><em>Prelude</em></strong> 阶段。姑且称之为预处理，这个过程包含了许多工具的协作，关于编辑器、文本搜索与批处理、搜索引擎与搜索引擎的再生产，最终的结果是一批预兆着最终产物的思想原料。</p>
+<p>接下来是 <strong><em><a href="https://www.gnu.org/software/emacs/" title="emacs">Editor</a></em></strong> 的阶段。</p>
+<h2 id="emacsvimpandoc-and-find.">Emacs,Vim,Pandoc and find.</h2>
+<ul>
+<li><strong>Emacs</strong>: EMACS Makes A Computer Slow.</li>
+<li><strong>Vim</strong>: Vi IMproved.</li>
+<li><strong>Pandoc</strong>: “a universal document converter”</li>
+<li><strong>find</strong>: “search for files in a directory hierarchy”</li>
+</ul>
+<h3 id="emacs.d-or-xdg_config_homeemacs"><code>.emacs.d</code> or <code>$XDG_CONFIG_HOME/emacs</code></h3>
+<p>Create a new <code>init.el</code> in the <code>~/.emacs.d</code> directory and start <code>emacs</code>:</p>
+<pre><code>emacs</code></pre>
+<h3 id="build-and-install-igc-branch">build and install /<code>igc branch</code>/</h3>
+<p><em>master</em></p>
+<pre><code>./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk</code></pre>
+<p><em>igc</em></p>
+<pre><code>git clone -b feature/igc --depth=1 'https://github.com/emacs-mirror/emacs.git' emacs-igc
+
+CC=clang CXX=clang++ CPP=&quot;clang -E&quot; LD=ld.lld ./configure --prefix=$HOME/.local --with-pgtk --with-native-compilation=aot --with-modules --with-sound=alsa</code></pre>
+<h3 id="configure"><code>configure</code></h3>
+<p><a href="https://github.com/ningxilai/.emacs.d">ningxilai/.emacs.d</a></p>
+<h4 id="fonts">fonts</h4>
+<pre><code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts</code></pre>
+<p><code>C-h v system-configuration-options</code> =&gt;
+<code>"--prefix=/home/iris/.local --with-native-compilation=aot --with-sound=yes --with-pgtk --with-mps=yes"</code></p>
+<h4 id="treesit">treesit</h4>
+<p>Manual installation of <code>libtree-sitter-[languages].so</code> support.</p>
+<p><em>using</em> <code>typst</code> <em>as an example</em></p>
+<pre><code>git clone --depth 1 https://github.com/uben0/tree-sitter-typst
+cd tree-sitter-typst/src
+
+cc -fPIC -std=c99 -c parser.c
+cc -fPIC -std=c99 -c scanner.c
+cc -shared parser.o scanner.o -o libtree-sitter-typst.so
+
+# to emacs
+mkdir tree-sitter &amp;&amp; cd tree-sitter
+mv libtree-sitter-typst ./</code></pre>
+<h4 id="programming-deprecated">Programming \deprecated\</h4>
+<p><code>Haskell</code>:</p>
+<pre><code>(use-package haskell-mode
+  :ensure t
+  :hook
+  (haskell-mode . interactive-haskell-mode)
+  (haskell-mode . haskell-indentation-mode))
+
+(use-package lsp-haskell
+  :ensure t
+  :after haskell-mode
+  :hook
+  (haskell-mode . lsp-mode)
+  (haskell-literate-mode . lsp-mode))</code></pre>
+<h4 id="programming">Programming</h4>
+<p><code>Haskell</code>:</p>
+<pre><code>(setup (:elpaca haskell-mode)
+  (:custom haskell-process-suggest-remove-import-lines t  ; warnings for redundant imports etc
+           haskell-process-auto-import-loaded-modules t
+           haskell-process-show-overlays t)
+  (:hooks haskell-mode-hook haskell-collapse-mode
+          haskell-mode-hook interactive-haskell-mode
+          haskell-mode-hook (lambda()(setq-local yas-indent-line 'fixed))
+          haskell-mode-local-vars lsp-haskell
+          haskell-literate-mode-local-vars lsp-haskell))
+
+(setup (:elpaca haskell-ts-mode :repos &quot;https://codeberg.org/pranshu/haskell-ts-mode&quot;)
+  (:custom haskell-ts-font-lock-level 4
+           haskell-ts-use-indent t
+           haskell-ts-ghci &quot;ghci&quot;
+           haskell-ts-use-indent t))
+
+(setup (:elpaca haskell-snippets)
+  (:custom haskell-snippets-dir &quot;elpaca/builds/haskell-snippets/snippets/haskell-mode&quot;))
+
+(setup (:elpaca lsp-haskell :host github :repo &quot;emacs-lsp/lsp-haskell&quot;)
+  (:custom lsp-haskell-server-path &quot;~/.ghcup/bin/haskell-language-server-wrapper&quot;))</code></pre>
+<h3 id="lunarvim">LunarVim</h3>
+<blockquote>
+<p>Have <code>git</code>, <code>make</code>, <code>pip</code>, <code>python</code>, <code>npm</code>, <code>node</code>, <code>cargo</code> and <code>ripgrep</code> installed on your system.
+<br>
+<em>Optional</em> : <code>lazygit</code></p>
+</blockquote>
+<pre><code>## Cargo
+cargo install --git https://github.com/sharkdp/fd
+cargo install ripgrep
+## Pacman
+sudo pacman -S nodejs tree-sitter-cli
+## Install
+git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+cd ~/.local/share/lunarvim/lvim/
+sh utils/installer/install.sh</code></pre>
+<p>If in the Termux environment:</p>
+<p>The <code>shebang</code> of <code>lvim</code> : <code>#!/usr/bin/env sh</code> =&gt; <code>#!/data/data/com.termux/files/usr/bin/env zsh</code></p>
+<h3 id="pandocmdhtml-and-find.">Pandoc,md,html and find.</h3>
+<p>Pandoc转化<code>.md</code>到<code>html</code>后序列化残留的问题，可以使用<code>pandoc -f html URL -t commonmark-raw_html -o name.md</code>的方法解决，对于代码块标记导出后被覆盖的问题，可用<code>find -type f -name "*.md" | xargs sed 's#sourceCode#bash#g' -i</code>替换。
+<br>
+反之，Pandoc转化<code>.html</code>到<code>.md</code>后序列化残留的问题，可以使用<code>pandoc -s name.html -t markdown_strict -o name.md</code>的方法解决。</p>
+<h3 id="code-snippet">Code Snippet</h3>
+<h4 id="reader-deprecated">Reader \deprecated\</h4>
+<p>下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 <code>.epub</code> 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，<code>(setq djvu-image-mode t)</code> 后正常显示。</p>
+<p><code>sudo pacman -S djvulibre</code></p>
+<p><code>(use-package djvu :ensure t)</code></p>
+<p><strong>to PDF</strong>:</p>
+<pre><code>sudo pacman -S libtiff
+
+ddjvu -format=tiff name(1).djvu name(2).tiff &amp;&amp; tiff2pdf -j -o name(3).pdf name(2).tiff</code></pre>
+<h4 id="reader">Reader</h4>
+<pre><code>(setup (:elpaca reader :host codeberg :repo &quot;MonadicSheep/emacs-reader&quot; :files (&quot;*.el&quot; &quot;render-core.so&quot;) :pre-build (&quot;make&quot; &quot;all&quot;)))</code></pre>
+    </section>
+</article>
+
+      </div>
+    </main>
+  </body>
+  <footer>
+    <center>
+      <a href="../about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
+      <a href="../contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
+      <br>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
+      <br>
+      <br>
+      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
+  </center>
+  </footer>
+</html>

@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light dark" name="color-scheme">
+    <title>Office - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="../images/favicon.svg">
+    <article data-theme="light"></article>
+    <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
+    <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
+    <link href="../js/MathJax.js" />
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+    // Apply Zhuque Fangsong font only to Chinese characters in headings
+    // and fix heading counter logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function isChinese(char) {
+            const code = char.charCodeAt(0);
+            // CJK Unified Ideographs
+            return (code >= 0x4E00 && code <= 0x9FFF) ||
+                   // CJK Unified Ideographs Extension A
+                   (code >= 0x3400 && code <= 0x4DBF) ||
+                   // CJK Unified Ideographs Extension B
+                   (code >= 0x20000 && code <= 0x2A6DF) ||
+                   // CJK Unified Ideographs Extension C
+                   (code >= 0x2A700 && code <= 0x2B73F) ||
+                   // CJK Unified Ideographs Extension D
+                   (code >= 0x2B740 && code <= 0x2B81F) ||
+                   // CJK Compatibility Ideographs
+                   (code >= 0xF900 && code <= 0xFAFF) ||
+                   // CJK Compatibility Ideographs Supplement
+                   (code >= 0x2F800 && code <= 0x2FA1F) ||
+                   // Full-width ASCII and half-width Katakana
+                   (code >= 0xFF01 && code <= 0xFF5E) ||
+                   // CJK Symbols and Punctuation
+                   (code >= 0x3000 && code <= 0x303F) ||
+                   // Hiragana
+                   (code >= 0x3040 && code <= 0x309F) ||
+                   // Katakana
+                   (code >= 0x30A0 && code <= 0x30FF);
+        }
+
+        function processTextNode(node) {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+
+            const text = node.textContent;
+            if (!text) return;
+
+            const fragment = document.createDocumentFragment();
+            let currentText = '';
+            let isCurrentChinese = null;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charIsChinese = isChinese(char);
+
+                if (isCurrentChinese !== charIsChinese && currentText !== '') {
+                    // Create span for previous segment
+                    const span = document.createElement('span');
+                    span.textContent = currentText;
+                    if (isCurrentChinese) {
+                        span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                    }
+                    fragment.appendChild(span);
+                    currentText = '';
+                }
+
+                isCurrentChinese = charIsChinese;
+                currentText += char;
+            }
+
+            // Process remaining text
+            if (currentText !== '') {
+                const span = document.createElement('span');
+                span.textContent = currentText;
+                if (isCurrentChinese) {
+                    span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                }
+                fragment.appendChild(span);
+            }
+
+            node.parentNode.replaceChild(fragment, node);
+        }
+
+        // Fix heading counters - hierarchical counting
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        // Array to store counters for each level [h1, h2, h3, h4, h5, h6]
+        const counters = [0, 0, 0, 0, 0, 0];
+
+        headings.forEach(function(heading) {
+            const level = parseInt(heading.tagName.charAt(1));
+            const index = level - 1; // Convert to 0-based index
+
+            // Increment current level counter
+            counters[index]++;
+
+            // Reset all lower level counters to 0
+            for (let i = index + 1; i < 6; i++) {
+                counters[i] = 0;
+            }
+
+            // Build counter display
+            let counterText = '';
+            if (level === 1) {
+                counterText = 'Chapter ' + counters[0] + ': ';
+            } else {
+                // Build hierarchical counter from h1 to current level
+                const parts = [];
+                for (let i = 0; i <= index; i++) {
+                    if (counters[i] > 0) {
+                        parts.push(counters[i]);
+                    }
+                }
+                counterText = parts.join('.') + ' ';
+            }
+
+            // Insert counter before heading content
+            const counterSpan = document.createElement('span');
+            counterSpan.className = 'heading-counter';
+            counterSpan.textContent = counterText;
+            counterSpan.style.color = level === 1 ? '#708080' :
+                                      level === 2 ? '#507080' :
+                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.fontSize = level === 1 ? '100%' :
+                                         level === 2 ? '80%' :
+                                         level === 3 ? '60%' : '50%';
+
+            heading.insertBefore(counterSpan, heading.firstChild);
+
+            // Process text nodes for Chinese font
+            const walker = document.createTreeWalker(
+                heading,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Process in reverse order to avoid index issues
+            textNodes.reverse().forEach(processTextNode);
+        });
+    });
+    </script>
+    <style>
+     /* Basic styles for Mimas site */
+
+     * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+     }
+
+      body {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          color: #333;
+          background: #f5f5f5;
+      }
+
+     div {
+         font-family:
+             "Times New Roman",
+             "LXGW WenKai GB Screen",
+             "Noto Serif SC",
+             sans-serif;
+         font-variant-ligatures: common-ligatures;
+     }
+
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 2rem;
+     }
+
+     /* Header */
+     .site-header {
+         background: #fff;
+         border-bottom: 1px solid #e0e0e0;
+         padding: 1rem 0;
+         margin-bottom: 2rem;
+     }
+
+     .site-header nav {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 0 2rem;
+         display: flex;
+         gap: 2rem;
+     }
+
+     .site-header a {
+         color: #333;
+         text-decoration: none;
+         font-weight: 500;
+     }
+
+     .site-header a:hover {
+         color: #0066cc;
+     }
+
+     /* Main content */
+     main {
+         background: #fff;
+         border-radius: 8px;
+         padding: 2rem;
+         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     }
+
+     /* Typography */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: #708080;
+          margin-top: 1.2rem;
+          margin-bottom: 0.3rem;
+          line-height: 1.15;
+      }
+
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+     p {
+         margin-bottom: 1.1rem;
+         color: #7080A3;
+         word-wrap:break-word;
+         white-space:pre-wrap;
+         word-break:break-all;
+     }
+
+     li::marker {
+         color: #609090;
+     }
+
+     li {
+         color: #6060A3
+     }
+
+     strong {
+         color: #705081;
+     }
+
+     code {
+         background: #f0f0f0;
+         padding: 0.2rem 0.4rem;
+         border-radius: 3px;
+         font-family: 'IBM Plex Mono', sans-serif;
+         font-size: 0.9em;
+     }
+
+     pre code {
+         display: block;
+         padding: 0.9rem;
+         overflow-x: auto;
+     }
+
+     footer {
+         text-align: center;
+         padding: 5px;
+     }
+
+     /* Card component */
+     .card {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         padding: 1.5rem;
+         margin-bottom: 1rem;
+     }
+
+     .card-header {
+         margin-bottom: 1rem;
+     }
+
+     .card-title {
+         margin: 0 0 0.5rem 0;
+     }
+
+     .card-description {
+         color: #666;
+         margin: 0;
+     }
+
+     .card-body {
+         margin-bottom: 1rem;
+     }
+
+     .card-footer {
+         border-top: 1px solid #e0e0e0;
+         padding-top: 1rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+
+     /* Footer */
+     .site-footer {
+         text-align: center;
+         padding: 2rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+    </style>
+  </head>
+  <body>
+     <main class="container" style="flex: 1;">
+       <div class="content">
+
+        <header>
+          <div style="text-align:right">
+            <a href="../archive.html">Archives</a>
+            <a href="../">SiteMap</a>
+          </div>
+        </header>
+        <br>
+          <hr>
+        <p style="font-size: 1.6m; color:#A0AFB7">Office: Posted on February 20, 2026, by Iris Lennon.</p>
+        <article>
+    <section>
+        <h1 id="useful-tools">Useful Tools</h1>
+<p>关于在linux上办公以及创作…诸如此类。</p>
+<h2 id="easyocr">EasyOCR</h2>
+<pre><code>pip install -U huggingface_hub
+pip install easyocr
+
+## export HF_ENDPOINT=https://hf-mirror.com
+
+easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard</code></pre>
+<h2 id="mupdf">mupdf</h2>
+<pre><code>git clone --recursive git://git.ghostscript.com/mupdf.git &amp;&amp; cd mupdf &amp;&amp;  make &amp;&amp; cp ./build/release/mutool ~/.local/bin/mutool
+
+ # install to .local
+ vi Makefile
+
+ profile ?= /usr/local/ =&gt; profile ?= /home/iris/.local/</code></pre>
+<blockquote>
+<p>关于<code>mupdf</code>库，可以使用<code>pacman</code>也可以如此安装，最终通过<code>emacs</code>的<code>reader</code>工作。</p>
+</blockquote>
+<h2 id="env">Env</h2>
+<h3 id="go">Go</h3>
+<p><code>go env -w GO111MODULE=on</code></p>
+<p><code>go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</code></p>
+<h3 id="python">Python</h3>
+<p><code>python -m venv ~/.local/</code> xor <code>uv venv ~/uv/</code></p>
+<pre><code># cat .zshrc =&gt; export PATH=$PATH:~/.local/bin
+
+pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
+pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple</code></pre>
+<p><code>uv</code> config <code>~/.config/uv/uv.toml</code></p>
+<pre><code>[[index]]
+url = &quot;https://mirrors.ustc.edu.cn/pypi/simple&quot;
+default = true</code></pre>
+<h3 id="tsjs">TS/JS</h3>
+<p><code>npm config set prefix '$PATH'</code> =&gt;
+<code>.zshrc</code>:<code>export PATH="$HOME/node_global/bin:$PATH"</code></p>
+<pre><code>npm install -g nrm
+nrm ls
+nrm use taobao
+nrm test</code></pre>
+<h2 id="shelltools">ShellTools</h2>
+<p><code>cargo install starship</code></p>
+<p><a href="https://github.com/starship/starship/issues/5985#issuecomment-2126457753">issue 5985:timeout setting</a> =&gt;</p>
+<p><code>starship config command_timeout &lt;some value&gt;</code></p>
+<h3 id="tmux">tmux</h3>
+<pre><code>set -g base-index         0
+set -g display-panes-time 10000
+set -g mouse              on
+set -g pane-base-index    0
+set -g renumber-windows   on
+
+setw -g allow-rename      off
+setw -g automatic-rename  off
+setw -g mode-keys         vi
+
+set -g @resurrect-dir '~/.tmux/resurrect'
+
+set -g status-right '#{prefix_highlight} #H | %a %Y-%m-%d %H:%M'
+set -g @prefix_highlight_show_copy_mode 'on'
+
+
+setenv -g TMUX_PLUGIN_MANAGER_PATH '~/.tmux/plugins'
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin &quot;nordtheme/tmux&quot;
+
+is_vim=&quot;ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?\.?(view|n?vim?x?)(-wrapped)?(diff)?$'&quot;
+
+bind-key -n 'C-h' if-shell &quot;$is_vim&quot; 'send-keys C-h' 'select-pane -L'
+bind-key -n 'C-j' if-shell &quot;$is_vim&quot; 'send-keys C-j' 'select-pane -D'
+bind-key -n 'C-k' if-shell &quot;$is_vim&quot; 'send-keys C-k' 'select-pane -U'
+bind-key -n 'C-l' if-shell &quot;$is_vim&quot; 'send-keys C-l' 'select-pane -R'
+
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+
+is_vim=&quot;ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'&quot;
+
+bind -n 'M-h' if-shell &quot;$is_vim&quot; 'send-keys M-h' 'resize-pane -L 1'
+bind -n 'M-j' if-shell &quot;$is_vim&quot; 'send-keys M-j' 'resize-pane -D 1'
+bind -n 'M-k' if-shell &quot;$is_vim&quot; 'send-keys M-k' 'resize-pane -U 1'
+bind -n 'M-l' if-shell &quot;$is_vim&quot; 'send-keys M-l' 'resize-pane -R 1'
+
+bind-key -T copy-mode-vi M-h resize-pane -L 1
+bind-key -T copy-mode-vi M-j resize-pane -D 1
+bind-key -T copy-mode-vi M-k resize-pane -U 1
+bind-key -T copy-mode-vi M-l resize-pane -R 1
+
+run '~/.tmux/plugins/tpm/tpm'
+</code></pre>
+<pre><code>git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+sh ~/.tmux/plugins/tpm/bin/install_plugins</code></pre>
+<p><code>C-b :source-file ~/.tmux.conf</code></p>
+<h4 id="lvim-config.lua">lvim <code>config.lua</code></h4>
+<pre><code>vim.api.nvim_set_keymap(
+  &quot;n&quot;,
+  &quot;&lt;C-h&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).move_left()&lt;CR&gt;]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  &quot;n&quot;,
+  &quot;&lt;C-j&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).move_bottom()&lt;CR&gt;]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  &quot;n&quot;,
+  &quot;&lt;C-k&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).move_top()&lt;CR&gt;]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(&quot;n&quot;,
+  &quot;&lt;C-l&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).move_right()&lt;CR&gt;]],
+  { noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(&quot;n&quot;,
+  &quot;&lt;M-h&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).resize_left()&lt;cr&gt;]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+    &quot;n&quot;,
+    &quot;&lt;M-j&gt;&quot;,
+    [[&lt;cmd&gt;lua require(&quot;tmux&quot;).resize_bottom()&lt;cr&gt;]],
+    { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  &quot;n&quot;,
+  &quot;&lt;M-k&gt;&quot;,
+  [[&lt;cmd&gt;lua require(&quot;tmux&quot;).resize_top()&lt;cr&gt;]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+    &quot;n&quot;,
+    &quot;&lt;M-l&gt;&quot;,
+    [[&lt;cmd&gt;lua require(&quot;tmux&quot;).resize_right()&lt;cr&gt;]],
+    { noremap = true, silent = true }
+)</code></pre>
+<h3 id="imageview">ImageView</h3>
+<pre><code>cargo install viu
+## viu $PATH/$NAME</code></pre>
+<h3 id="fish">fish</h3>
+<pre><code>cargo install --git https://github.com/fish-shell/fish-shell --locked</code></pre>
+<h4 id="fisher">fisher</h4>
+<pre><code>git clone --depth=1 https://github.com/jorgebucaran/fisher.git &amp;&amp; cd fisher/functions
+
+source
+fisher install ../
+fisher install IlanCosman/tide@v6</code></pre>
+<h4 id="starship">starship</h4>
+<p><code>starship init fish | source</code> =&gt; <code>config.fish</code></p>
+<p><code>cat $__fish_config_dir/config.fish</code> =&gt;</p>
+<pre><code>alias cat=bat
+alias ls=eza
+alias grep=rg
+alias vi=lvim</code></pre>
+<h3 id="zsh">zsh</h3>
+<p><code>pacman -S zsh zsh-completions</code></p>
+<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting/issues/812">zsh-syntax-higtlighting/issue/812</a></p>
+<p><em>Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation. <strong>zsh highlight</strong> </em></p>
+<h4 id="zshrcpackagemanager-and-p10kstarship-deprecated"><code>.zshrc</code>:PackageManager and p10k/starship \deprecated\</h4>
+<pre><code>HISTFILE=&quot;$HOME/.zsh_history&quot;
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+
+git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
+zsh ~/.local/share/zinit/zinit.git/scripts/install.sh
+source ~/.zshrc
+
+zinit ice depth&quot;1&quot; # git clone depth
+zinit snippet OMZ::* # use OMZ
+
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+#starship Scheme
+
+starship preset nerd-font-symbols -o ~/.config/starship.toml
+eval &quot;$(starship init zsh)&quot;
+
+#OMZ Scheme
+
+zinit light romkatv/powerlevel10k #p10k
+
+plugins=(git
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        zsh-completions)
+
+ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</code></pre>
+<p><code>zim</code>:</p>
+<p><code>wget2 -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh</code></p>
+<p><code>.zimrc</code> =&gt;</p>
+<pre><code>++ zmodule zdharma-continuum/fast-syntax-highlighting
+-- zmodule asciiship
+++ zmodule romkatv/powerlevel10k</code></pre>
+<p><code>.zshrc</code> =&gt;</p>
+<pre><code># Promat
+## Copy by https://emacs-china.org/u/blindingdark/summary
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b '
+
+NEWLINE=$'\n'
+setopt PROMPT_SUBST
+PROMPT='%F{blue}%~%f %F{red}${vcs_info_msg_0_}%f${NEWLINE}%(?..%F{red}%?%f )%F{green}❯%f '</code></pre>
+<h3 id="zshrc"><code>.zshrc</code></h3>
+<pre><code>#!/usr/bin/env zsh
+
+# if [[ &quot;$(tty)&quot; == &quot;/dev/tty1&quot; ]]; then
+#     exec start-hyprland &amp;&gt;/dev/null
+# fi
+
+##### .zshrc
+
+if (( EUID != 0 )); then
+  path=(
+    $HOME/bin
+    $HOME/.local/bin
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/local/sbin
+    /usr/sbin
+    /sbin
+    /usr/local/games
+    /usr/games
+    &quot;${ADDONS}&quot;
+    &quot;${path[@]}&quot;
+  )
+else
+  path=(
+    $HOME/bin
+    $HOME/.local/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /sbin
+    /bin
+    /usr/sbin
+    /usr/bin
+    &quot;${ADDONS}&quot;
+    &quot;${path[@]}&quot;
+  )
+fi
+
+path=( &quot;${path[@]:#}&quot; )
+
+typeset -U path
+
+export RUSTUP_UPDATE_ROOT=https://mirrors.aliyun.com/rustup/rustup
+export RUSTUP_DIST_SERVER=https://mirrors.aliyun.com/rustup
+export PATH=$HOME/.cargo/bin/:$PATH
+
+export ZVM_INSTALL=&quot;$HOME/.zvm/self&quot;
+export PATH=&quot;$PATH:$HOME/.zvm/bin&quot;
+export PATH=&quot;$PATH:$ZVM_INSTALL/&quot;
+
+export PATH=$HOME/.ghcup/bin/:$PATH
+export PATH=$HOME/.cabal/bin/:$PATH
+
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+export PATH=$HOME/.npm/bin/:$PATH
+
+export PATH=$HOME/.uv/bin/:$PATH
+
+export PLAN9=/home/iris/.local/plan9 export PLAN9
+export PATH=$PATH:$PLAN9/bin export PATH
+
+PS1=&quot;Ready &gt; &quot;
+RPS1=&quot;%F{240}Loading...%f&quot;
+
+############
+### Environment
+############
+
+ZDOTDIR=&quot;${XDG_CONFIG_HOME:-$HOME/.config}/zsh&quot;
+ZSCRIPTDIR=&quot;${ZDOTDIR}/scripts&quot;
+ZDATADIR=&quot;${XDG_DATA_HOME:-$HOME/.local/share}/zsh.d&quot;
+ZPLUGINDIR=&quot;${ZDATADIR}/plugins&quot;
+ZCACHEDIR=&quot;${ZDATADIR}/cache&quot;
+[ -d &quot;${ZCACHEDIR}&quot; ] || mkdir -p &quot;${ZCACHEDIR}&quot;
+
+#[[ &quot;:$PATH:&quot; == *&quot;:$HOME/bin:&quot;* ]] || export PATH=&quot;${HOME}/bin:$PATH&quot;
+
+if [[ $(tty) == /dev/tty* ]] ; then
+  export LANG=C.UTF-8
+elif [[ $(tty) == /dev/pts/* ]] ; then
+  export LANG=en_US.UTF-8
+fi
+
+if (( ${+commands[gpg]} )); then
+  export GPG_TTY=$(tty)
+fi
+
+if [[ -z &quot;${EDITOR}&quot; ]]; then
+  for _editor in helix hx nvim vim nano; do
+    if (( ${+commands[${_editor}]} )); then
+      export EDITOR=&quot;${_editor}&quot;
+      break
+    fi
+  done
+fi
+
+if (( ${+commands[fd]} )); then
+  export FZF_DEFAULT_COMMAND=&quot;fd --hidden --follow --exclude '.git' --exclude 'node_modules'&quot;
+elif (( ${+commands[fdfind]} )); then
+  export FZF_DEFAULT_COMMAND=&quot;fdfind --hidden --follow --exclude '.git' --exclude 'node_modules'&quot;
+elif (( ${+commands[rg]} )); then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob &quot;!{.git,node_modules}/**&quot;'
+else
+  export FZF_DEFAULT_COMMAND='find . -type f -not \( -path &quot;*/.git/*&quot; -o -path &quot;./node_modules/*&quot; \)'
+fi
+
+# wl-clipboard
+
+# 复制选区到 wl-clipboard (不删除)
+wl-copy-region-as-kill() {
+        zle copy-region-as-kill
+        print -rn -- &quot;$CUTBUFFER&quot; | wl-copy --trim-newline
+}
+zle -N wl-copy-region-as-kill
+
+# 剪切选区到 wl-clipboard
+wl-kill-region() {
+        zle kill-region
+        print -rn -- &quot;$CUTBUFFER&quot; | wl-copy --trim-newline
+}
+zle -N wl-kill-region
+
+# 剪切到行尾
+wl-kill-line() {
+        zle kill-line
+        print -rn -- &quot;$CUTBUFFER&quot; | wl-copy --trim-newline
+}
+zle -N wl-kill-line
+
+# 后向删除单词
+wl-backward-kill-word() {
+        zle backward-kill-word
+        print -rn -- &quot;$CUTBUFFER&quot; | wl-copy --trim-newline
+}
+zle -N wl-backward-kill-word
+
+# 从 wl-clipboard 粘贴
+wl-yank() {
+        CUTBUFFER=$(wl-paste --no-newline)
+        zle yank
+}
+zle -N wl-yank
+
+# 绑定 Emacs 风格快捷键
+bindkey '^[w' wl-copy-region-as-kill    # Alt+W: 复制
+bindkey '^W' wl-kill-region              # Ctrl+W: 剪切
+bindkey '^K' wl-kill-line                # Ctrl+K: 剪切到行尾
+bindkey '^Y' wl-yank                     # Ctrl+Y: 粘贴
+bindkey '^[^?' wl-backward-kill-word     # Alt+Backspace: 删除单词
+
+# ssh
+
+export SSH_KEY_PATH=&quot;~/.ssh/rsa_id&quot;
+
+#
+### End of Environment
+#
+
+############
+### Features
+############
+
+# Basic
+setopt always_to_end
+setopt extended_glob
+setopt no_beep
+setopt no_flow_control
+setopt no_nomatch
+setopt prompt_subst
+
+# Directory
+setopt auto_cd
+DIRSTACKSIZE=16
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_minus
+
+# Job Control
+setopt long_list_jobs
+setopt no_bg_nice
+setopt no_check_jobs
+setopt no_hup
+
+# I/O
+setopt interactive_comments
+setopt no_clobber
+setopt rc_quotes
+
+# History
+HISTFILE=&quot;${ZCACHEDIR}/zsh_history&quot;
+HISTSIZE='261120'
+SAVEHIST='261120'
+setopt inc_append_history
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt share_history
+
+#
+### End of Features
+#
+
+############
+### Aliases
+############
+
+alias cp='cp -iv --reflink=auto'
+alias rcp='rsync -v --progress'
+alias rmv='rsync -v --progress --remove-source-files'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias rmdir='rmdir -v'
+alias ln='ln -v'
+alias chmod=&quot;chmod -c&quot;
+alias chown=&quot;chown -c&quot;
+alias mkdir=&quot;mkdir -v&quot;
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+
+if (( ${+commands[bat]} )); then
+  alias cat='bat'
+elif (( ${+commands[batcat]} )); then
+  alias cat='batcat'
+  alias bat='batcat'
+fi
+
+if (( ${+commands[eza]} )); then
+  alias ls='command eza --color=auto --sort=Name --classify --group-directories-first --time-style=long-iso --group'
+  alias l='ls'
+  alias la='ls -a'
+  alias lh='ls --all --header --long'
+  alias ll='lh'
+  xtree () {
+    eza -T --color=always &quot;$@&quot; | cat
+  }
+else
+  alias ls='command ls -C --color=auto --human-readable --classify --group-directories-first --time-style=+%Y-%m-%d\ %H:%M --quoting-style=literal'
+  alias l='ls'
+  alias la='ls -A'
+  alias lh='la -l'
+  alias ll='lh'
+fi
+
+if (( ${+commands[fd]} )); then
+  alias fd='fd'
+elif (( ${+commands[fdfind]} )); then
+  alias fd='fdfind'
+fi
+
+if (( ${+commands[doas]} )) ; then
+  alias s=&quot;doas&quot;
+elif (( ${+commands[sudo]} )); then
+  alias s=&quot;sudo&quot;
+fi
+
+if (( ${+commands[systemctl]} )) ; then
+  alias sdctl=&quot;systemctl&quot;
+fi
+
+# https://github.com/lilydjwg/dotzsh/blob/master/zshrc
+alias -g NN=&quot;*(oc[1])&quot;
+alias -g NNF=&quot;*(oc[1].)&quot;
+alias -g NND=&quot;*(oc[1]/)&quot;
+alias -g NUL=&quot;/dev/null&quot;
+
+#
+### End of Aliases
+#
+
+############
+### Func
+############
+
+## Modified based on MamoruDS/history-fuzzy-search
+history-fuzzy-search() {
+  local preview_extra_cmd='_fetch() { setopt extended_glob &amp;&amp; HISTFILE='&quot;$HISTFILE&quot;' &amp;&amp; fc -R &amp;&amp; print -rNC1 -- ${(v)history[$((${(M)${*}## #&lt;-&gt;}))]} } &amp;&amp; _fetch {}'
+  local fuzzy_history=$(fc -lr 0 | fzf +s +m -x --with-nth 2.. --scheme=history --layout=reverse --height=50% --preview-window='bottom:3:wrap' --preview $preview_extra_cmd --query=&quot;$BUFFER&quot;)
+  if [ -n &quot;$fuzzy_history&quot; ]; then
+    BUFFER=&quot;${fuzzy_history[@]}&quot;
+    zle vi-fetch-history -n $BUFFER
+  fi
+  zle reset-prompt
+}
+
+## file find
+file-fuzzy-find() {
+  local fuzzy_filefind cmd keyword
+  if [[ &quot;${BUFFER}&quot; == *&quot; &quot;* ]]; then
+    cmd=${${BUFFER}[(w)1]}
+    keyword=${BUFFER#&quot;${cmd} &quot;}
+    fuzzy_filefind=&quot;$cmd $(eval ${FZF_DEFAULT_COMMAND} | sk --height=50% --layout=reverse --query=&quot;${keyword}&quot; -1)&quot;
+  else
+    fuzzy_filefind=&quot;$(eval ${FZF_DEFAULT_COMMAND} | sk --height=50% --layout=reverse --query=&quot;${BUFFER}&quot; -1)&quot;
+  fi
+  if [ -n &quot;$fuzzy_filefind&quot; ]; then
+    BUFFER=&quot;${fuzzy_filefind[@]}&quot;
+  fi
+  zle end-of-line
+  zle reset-prompt
+}
+
+## sudo or doas will be inserted before the command
+sudo-command-line() {
+  local cmd
+  [[ -z ${BUFFER} ]] &amp;&amp; zle up-history
+  if (( ${+commands[doas]} )) ; then
+    cmd=&quot;doas &quot;
+  elif (( ${+commands[sudo]} )) ; then
+    cmd=&quot;sudo &quot;
+  else
+    cmd=&quot;su - root -c &quot;
+  fi
+  if [[ ${BUFFER} == ${cmd}* ]]; then
+    CURSOR=$(( CURSOR-${#cmd} ))
+    BUFFER=&quot;${BUFFER#$cmd}&quot;
+  else
+    BUFFER=&quot;${cmd}${BUFFER}&quot;
+    CURSOR=$(( CURSOR+${#cmd} ))
+  fi
+  zle reset-prompt
+}
+
+## File Download
+xget() {
+  local uri=&quot;$1&quot;
+  local save=&quot;$2&quot;
+  if [[ -z &quot;$save&quot; ]]; then
+    save=$(basename &quot;${uri%%\?*}&quot;)
+  fi
+  if (( ${+commands[aria2c]} )); then
+    aria2c --max-connection-per-server=4 --continue &quot;$uri&quot; -o &quot;$save&quot;
+  elif (( ${+commands[axel]} )); then
+    axel --num-connections=4 --alternate &quot;$uri&quot; -o &quot;$save&quot;
+  elif (( ${+commands[wget]} )); then
+    wget --continue --progress=bar -O &quot;$save&quot; &quot;$uri&quot;
+  elif (( ${+commands[curl]} )); then
+    curl --continue-at - --location --progress-bar --remote-name --remote-time &quot;$uri&quot; -o &quot;$save&quot;
+  else
+    printf &quot;No suitable download tool found.\n&quot;
+  fi
+}
+
+## smart cd function, allows switching to /etc when running 'cd /etc/fstab'
+cd() {
+  if (( ${#argv} == 1 )) &amp;&amp; [[ -f ${1} ]]; then
+    [[ ! -e ${1:h} ]] &amp;&amp; return 1
+    print &quot;Correcting ${1} to ${1:h}&quot;
+    builtin cd ${1:h}
+  else
+    builtin cd &quot;$@&quot;
+  fi
+}
+
+reload() {
+  # clear
+  exec &quot;${SHELL}&quot; &quot;$@&quot;
+}
+
+mkdcd() {
+  [[ -n &quot;$1&quot; ]] &amp;&amp; mkdir -p &quot;$1&quot; &amp;&amp; builtin cd &quot;$1&quot;
+}
+
+#
+### End of Func
+#
+
+############
+### Keybindings
+############
+
+# Modified based on jirutka/alpine-zsh-config
+# Use emacs key bindings.
+bindkey -e
+
+# Load widgets that are not loaded by default.
+autoload -U up-line-or-beginning-search
+zle -N up-line-or-beginning-search
+
+autoload -U down-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ ${TERM} != dumb ]] &amp;&amp; () {
+  emulate -L zsh -o no_aliases
+
+  # Make sure that the terminal is in application mode when zle is active,
+  # since only then values from $terminfo are valid.
+  if (( ${+terminfo[smkx]} &amp;&amp; ${+terminfo[rmkx]} )); then
+    autoload -U add-zle-hook-widget
+
+    function .zshrc::term-application-mode() {
+      echoti smkx
+    }
+    add-zle-hook-widget zle-line-init .zshrc::term-application-mode
+
+    function .zshrc::term-normal-mode() {
+      echoti rmkx
+    }
+    add-zle-hook-widget zle-line-finish .zshrc::term-normal-mode
+  fi
+
+  # `seq` is a fallback for the case when terminfo is not available.
+  local kcap seq widget
+  for  kcap   seq        widget (                       # key name
+    khome  '^[[H'     beginning-of-line              # Home
+    khome  '^[OH'     beginning-of-line              # Home (in app mode)
+    kend   '^[[F'     end-of-line                    # End
+    kend   '^[OF'     end-of-line                    # End (in app mode)
+    kdch1  '^[[3~'    delete-char                    # Delete
+    kpp    '^[[5~'    up-line-or-history             # PageUp
+    knp    '^[[6~'    down-line-or-history           # PageDown
+    kcuu1  '^[[A'     up-line-or-beginning-search    # UpArrow - fuzzy find history backward
+    kcuu1  '^[OA'     up-line-or-beginning-search    # UpArrow - fuzzy find history backward (in app mode)
+    kcud1  '^[[B'     down-line-or-beginning-search  # DownArrow - fuzzy find history forward
+    kcud1  '^[OB'     down-line-or-beginning-search  # DownArrow - fuzzy find history forward (in app mode)
+    kcbt   '^[[Z'     reverse-menu-complete          # Shift + Tab
+    x      '^[[2;5~'  copy-region-as-kill            # Ctrl + Insert
+    kDC5   '^[[3;5~'  kill-word                      # Ctrl + Delete
+    kRIT5  '^[[1;5C'  forward-word                   # Ctrl + RightArrow
+    kLFT5  '^[[1;5D'  backward-word                  # Ctrl + LeftArrow
+  ); do
+    bindkey -M emacs ${terminfo[$kcap]:-$seq} $widget
+    bindkey -M viins ${terminfo[$kcap]:-$seq} $widget
+    bindkey -M vicmd ${terminfo[$kcap]:-$seq} $widget
+  done
+}
+
+# Expandpace.
+bindkey ' ' magic-space
+
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic &amp;&amp; zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic &amp;&amp; zle -N self-insert url-quote-magic
+
+# &lt;Ctrl-e&gt; to edit command-line in EDITOR
+autoload -Uz edit-command-line &amp;&amp; zle -N edit-command-line &amp;&amp; \
+  bindkey &quot;^E&quot; edit-command-line
+
+# [Esc] [Esc] to sudo-command-line
+zle -N sudo-command-line &amp;&amp; \
+  bindkey &quot;\e\e&quot; sudo-command-line
+
+if (( ${+commands[fzf]} )) ; then
+# &lt;Ctrl-r&gt; to history-fuzzy-search
+  zle -N history-fuzzy-search &amp;&amp; \
+    bindkey &quot;^R&quot; history-fuzzy-search
+# &lt;Ctrl-t&gt; to file-fuzzy-find
+  zle -N file-fuzzy-find &amp;&amp; \
+    bindkey &quot;^T&quot; file-fuzzy-find
+fi
+
+_exit_zsh() { exit; }
+zle -N _exit_zsh &amp;&amp; \
+  bindkey &quot;^D&quot; _exit_zsh
+
+#
+### End of Keybindings
+#
+
+#
+#Plugins
+#
+
+# Clone zcomet if necessary
+if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
+  command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
+  fi
+
+  source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
+
+# It is good to load these popular plugins last, and in this order:
+
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+zcomet load zdharma/fast-syntax-highlighting
+
+zcomet load zsh-users/zsh-autosuggestions
+zcomet load zsh-users/zsh-completions
+
+export TYPEWRITTEN_PROMPT_LAYOUT=&quot;pure_verbose&quot;
+
+zcomet load reobin/typewritten
+
+zcomet compinit
+
+#
+### End of Plugins
+#
+
+## END OF FILE #################################################################
+# vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
+# Local variables:
+# mode: sh
+# End:
+
+PATH=&quot;/home/iris/perl5/bin${PATH:+:${PATH}}&quot;; export PATH;
+PERL5LIB=&quot;/home/iris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}&quot;; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT=&quot;/home/iris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}&quot;; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT=&quot;--install_base \&quot;/home/iris/perl5\&quot;&quot;; export PERL_MB_OPT;
+PERL_MM_OPT=&quot;INSTALL_BASE=/home/iris/perl5&quot;; export PERL_MM_OPT;</code></pre>
+<h2 id="terminal">Terminal</h2>
+<p><a href="https://sw.kovidgoyal.net/kitty/overview/#overview">hotkey</a></p>
+<p><code>sudo pacman -S kitty</code></p>
+<h3 id="kitty">Kitty</h3>
+<p><code>kitty +kitten themes --reload-in=all [theme name]</code> <em>Doom Vibrant</em></p>
+<pre><code>git clone --depth 1 https://github.com/dexpota/kitty-themes ~/.config/kitty/kitty-themes/ &amp;&amp; ln -s  ~/.config/kitty/kitty-themes/ ~/.config/kitty/themes</code></pre>
+<p><code>cat ~/.config/kitty/kitty.conf</code> =&gt;</p>
+<pre><code># BEGIN_KITTY_THEME
+# Spacemacs
+include current-theme.conf
+# END_KITTY_THEME
+font_family      FiraCode Nerd Font
+
+symbol_map U+4E00-U+9FA5 LxgwWenKai</code></pre>
+<p><em>deprecated</em></p>
+<pre><code>kitty +kitten themes --dump-theme
+## xor
+cd ~/.config/kitty
+ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf</code></pre>
+<p><code>cat ~/.config/kitty/kitty.conf</code> =&gt;</p>
+<pre><code># ...
+# include ./theme.conf
+# ...</code></pre>
+<h3 id="fetch">Fetch</h3>
+<p><code>cargo install --git "https://github.com/kamui-fin/rfetch" --features=battery</code></p>
+<h4 id="config">Config</h4>
+<pre><code># cat .config/rfetch/config.toml
+
+modules = [&quot;user_host&quot;, &quot;shell&quot;, &quot;distro&quot;, &quot;packages&quot;, &quot;uptime&quot;, &quot;memory&quot;, &quot;kernel&quot;, &quot;ip&quot;, &quot;cpu&quot;, &quot;disk_usage&quot;, &quot;process_num&quot;, &quot;arch&quot;, &quot;temp&quot;, &quot;locale&quot;, &quot;device_name&quot;, &quot;time&quot;, &quot;date&quot;, &quot;battery&quot;]
+delimiter = &quot;~&gt;&quot;
+title_color = &quot;pink&quot;
+
+[user_host]
+line = true
+line_symbol = &quot;━&quot;
+line_color = &quot;magenta&quot;
+
+[colors]
+enabled = true
+show_bg_colors = false
+
+[ip]
+public = true</code></pre>
+<h2 id="packagemanager">PackageManager</h2>
+<h3 id="pacman">pacman</h3>
+<p><a href="https://www.archlinuxcn.org/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/">upgrade-requires-manual-intervention</a></p>
+<p><code>sudo pacman -Qo /usr/lib/firmware/nvidia/ad103</code> =&gt;
+<code>/usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2</code></p>
+<pre><code>&gt; error: failed to commit transaction (conflicting files)
+&gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad103 exists in
+&gt; filesystem
+&gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad104 exists in
+&gt; filesystem
+&gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad106 exists in
+&gt; filesystem
+&gt; linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad107 exists in
+&gt; filesystem</code></pre>
+<p><a href="https://archlinux.org/news/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/">break change</a></p>
+<pre><code>cd lib/firmware/nvidia
+
+ sudo mv ad103 ad103.bak
+ sudo mv ad104 ad104.bak
+ sudo mv ad106 ad106.bak
+ sudo mv ad107 ad107.bak
+
+sudo pacman -Syu
+sudo rm -r *.bak # nil!</code></pre>
+<p>or</p>
+<pre><code>sudo pacman -Rcn linux-firmware-nvidia &amp;&amp; sudo pacman -Syu linux-firmware</code></pre>
+<h3 id="aura">aura</h3>
+<pre><code>## aura check
+
+sudo pacman -S pacman-contrib graphviz
+pip install shellcheck-py
+
+## install
+
+cargo install aura
+
+## Deps Graph
+
+aura deps [package-name] --open
+
+# cat ~/.config/mimeapps.list =&gt; image/png=emacs.desktop</code></pre>
+<h3 id="reflector">Reflector</h3>
+<pre><code>sudo pacman -S reflector
+sudo systemctl [enable/start] reflector.[timer/service]
+
+sudo vim /etc/xdg/reflector/reflector.conf
+# -- --country France,Germany
+# -- --protocol https
+# ...
+# ++ --country China
+# ++ --protocol https
+
+sudo vim /etc/pacman.conf
+# -- #NoExtract   =
+# ++ NoExtract   = true</code></pre>
+<h2 id="fonts">Fonts</h2>
+<p>Global TeX Font and
+<code>git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/</code>.</p>
+<h2 id="linuxtools">LinuxTools</h2>
+<h3 id="uefi-shell">UEFI Shell</h3>
+<p>by <a href="https://forum.archlinuxcn.org/t/topic/13438/3">giteeajake</a></p>
+<pre><code>pacman -S edk2-shell &amp;&amp; sudo cp /usr/share/edk2-shell/x64/Shell_Full.efi /boot/shellx64.efi</code></pre>
+<h3 id="oom">OOM</h3>
+<pre><code>sudo pacman -S earlyoom
+sudo systemctl enable --now earlyoom</code></pre>
+<h3 id="trash">Trash</h3>
+<pre><code>cargo install cargo install czkawka_[gui/cli]</code></pre>
+<h3 id="browser">Browser</h3>
+<pre><code>sudo pacman -S nyxt</code></pre>
+<h4 id="clipboard">Clipboard</h4>
+<pre><code>sudo pacman -S wl-clipboard</code></pre>
+<h4 id="config-file"><code>config file</code></h4>
+<p>=&gt; <code>.config/nyxt/config.lisp</code></p>
+<pre><code>;; emacs keybinds
+(define-configuration buffer
+  ((default-modes
+    (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))</code></pre>
+<h3 id="filemanager">FileManager</h3>
+<p><em>install</em></p>
+<pre><code>sudo pacman -S yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick
+paru -S resvg
+
+cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli</code></pre>
+<h3 id="iwctl"><code>iwctl</code></h3>
+<p>退出时使用<code>exit</code>会断开连接状态，使用<code>C-d</code>则不会断联。</p>
+<h2 id="hyprland">Hyprland</h2>
+<h3 id="hyprland-1">hyprland</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode conf"><code class="sourceCode toml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">################</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">### MONITORS </span><span class="al">###</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">################</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Monitors/</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="dt">monitor</span><span class="op">=</span><span class="dt">eDP-1</span><span class="er">,</span><span class="dt">2240x1400</span><span class="er">@</span><span class="dt">60</span><span class="er">,</span><span class="dt">0x0</span><span class="er">,</span><span class="dt">1</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">### MY PROGRAMS </span><span class="al">###</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Keywords/</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Set programs that you use</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="er">$</span><span class="dt">terminal</span> <span class="op">=</span> <span class="dt">kitty</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="er">$</span><span class="dt">editor</span> <span class="op">=</span> <span class="dt">emacsclient</span> <span class="dt">--alternate-editor</span><span class="op">=</span> <span class="dt">--create-frame</span> <span class="er">%</span><span class="dt">F</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="er">$</span><span class="dt">fileManager</span> <span class="op">=</span> <span class="dt">dolphin</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="er">$</span><span class="dt">screenshot</span> <span class="op">=</span> <span class="dt">grim</span> <span class="dt">-g</span> <span class="dt">&quot;$(slurp)&quot;</span> <span class="dt">&quot;$HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png&quot;</span> <span class="co">## &amp;&amp; xdg-open &quot;$HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png&quot;</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co">#################</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="co">### AUTOSTART </span><span class="al">###</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="co">#################</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Autostart necessary processes (like notifications daemons, status bars, etc.)</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Or execute your favorite apps at launch like this:</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a><span class="co"># exec-once = $terminal</span></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">waybar</span></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">hyprpaper</span></span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">fcitx5</span> <span class="dt">--replace</span> <span class="dt">-d</span></span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">echo</span> <span class="dt">'Xft.dpi:144'</span> <span class="er">|</span> <span class="dt">xrdb</span> <span class="dt">-merge</span></span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">systemctl</span> <span class="dt">--user</span> <span class="dt">start</span> <span class="dt">dunst.service</span></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">dbus-update-activation-environment</span> <span class="dt">--all</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a><span class="dt">exec-once</span> <span class="op">=</span> <span class="dt">sleep</span> <span class="dt">1</span> <span class="er">&amp;&amp;</span> <span class="dt">dbus-update-activation-environment</span> <span class="dt">--systemd</span> <span class="dt">WAYLAND_DISPLAY</span> <span class="dt">XDG_CURRENT_DESKTOP</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="co">#############################</span></span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="co">### ENVIRONMENT VARIABLES </span><span class="al">###</span></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="co">#############################</span></span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Environment-variables/</span></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">XDG_DATA_DIRS</span><span class="er">,$</span><span class="dt">HOME</span><span class="er">/</span><span class="dt">.local</span><span class="er">/</span><span class="dt">share</span><span class="er">:/</span><span class="dt">usr</span><span class="er">/</span><span class="dt">local</span><span class="er">/</span><span class="dt">share</span><span class="er">:/</span><span class="dt">usr</span><span class="er">/</span><span class="dt">share</span></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">XCURSOR_SIZE</span><span class="er">,</span><span class="dt">24</span></span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">HYPRCURSOR_SIZE</span><span class="er">,</span><span class="dt">24</span></span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">ELECTRON_OZONE_PLATFORM_HINT</span><span class="er">,</span><span class="dt">auto</span></span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">QT_IM_MODULE</span><span class="er">,</span> <span class="dt">fcitx</span></span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">XMODIFIERS</span><span class="er">,</span> <span class="er">@</span><span class="dt">im</span><span class="op">=</span><span class="dt">fcitx</span></span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">SDL_IM_MODULE</span><span class="er">,</span> <span class="dt">fcitx</span></span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">GLFW_IM_MODULE</span><span class="er">,</span> <span class="dt">ibus</span></span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">INPUT_METHOD</span><span class="er">,</span> <span class="dt">fcitx</span></span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">QT_QPA_PLATFORM</span><span class="er">,</span> <span class="dt">wayland</span></span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">QT_QPA_PLATFORMTHEME</span><span class="er">,</span> <span class="dt">qt6ct</span></span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">XDG_MENU_PREFIX</span><span class="er">,</span> <span class="dt">plasma-</span></span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="dt">TERMINAL</span><span class="er">,</span><span class="dt">kitty</span> <span class="dt">-1</span></span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a><span class="co">### PERMISSIONS </span><span class="al">###</span></span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Permissions/</span></span>
+<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Please note permission changes here require a Hyprland restart and are not applied on-the-fly</span></span>
+<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a><span class="co"># for security reasons</span></span>
+<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="dt">ecosystem</span> <span class="er">{</span></span>
+<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a>  <span class="dt">enforce_permissions</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a><span class="dt">permission</span> <span class="op">=</span> <span class="er">/</span><span class="dt">usr</span><span class="er">/(</span><span class="dt">bin</span><span class="er">|</span><span class="dt">local</span><span class="er">/</span><span class="dt">bin</span><span class="er">)/</span><span class="dt">grim</span><span class="er">,</span> <span class="dt">screencopy</span><span class="er">,</span> <span class="dt">allow</span></span>
+<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="dt">permission</span> <span class="op">=</span> <span class="er">/</span><span class="dt">usr</span><span class="er">/(</span><span class="dt">lib</span><span class="er">|</span><span class="dt">libexec</span><span class="er">|</span><span class="dt">lib64</span><span class="er">)/</span><span class="dt">xdg-desktop-portal-hyprland</span><span class="er">,</span> <span class="dt">screencopy</span><span class="er">,</span> <span class="dt">allow</span></span>
+<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a><span class="dt">permission</span> <span class="op">=</span> <span class="er">/</span><span class="dt">usr</span><span class="er">/(</span><span class="dt">bin</span><span class="er">|</span><span class="dt">local</span><span class="er">/</span><span class="dt">bin</span><span class="er">)/</span><span class="dt">hyprpm</span><span class="er">,</span> <span class="dt">plugin</span><span class="er">,</span> <span class="dt">allow</span></span>
+<span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a><span class="co">#####################</span></span>
+<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a><span class="co">### LOOK AND FEEL </span><span class="al">###</span></span>
+<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a><span class="co">#####################</span></span>
+<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Refer to https://wiki.hypr.land/Configuring/Variables/</span></span>
+<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#general</span></span>
+<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a><span class="dt">general</span> <span class="er">{</span></span>
+<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a>    <span class="dt">gaps_in</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a>    <span class="dt">gaps_out</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a>    <span class="dt">border_size</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a>    <span class="co"># https://wiki.hypr.land/Configuring/Variables/#variable-types for info about colors</span></span>
+<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a>    <span class="dt">col.active_border</span> <span class="op">=</span> <span class="dt">rgba</span><span class="er">(</span><span class="dt">8fBcbbee</span><span class="er">)</span> <span class="dt">rgba</span><span class="er">(</span><span class="dt">dce0e8ee</span><span class="er">)</span> <span class="dt">45deg</span></span>
+<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a>    <span class="dt">col.inactive_border</span> <span class="op">=</span> <span class="dt">rgba</span><span class="er">(</span><span class="dt">ecececaa</span><span class="er">)</span></span>
+<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set to true enable resizing windows by clicking and dragging on borders and gaps</span></span>
+<span id="cb34-95"><a href="#cb34-95" aria-hidden="true" tabindex="-1"></a>    <span class="dt">resize_on_border</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Please see https://wiki.hypr.land/Configuring/Tearing/ before you turn this on</span></span>
+<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a>    <span class="dt">allow_tearing</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a>    <span class="dt">layout</span> <span class="op">=</span> <span class="dt">master</span> <span class="co">#dwindle</span></span>
+<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#decoration</span></span>
+<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a><span class="dt">decoration</span> <span class="er">{</span></span>
+<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a>    <span class="dt">rounding</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a>    <span class="dt">rounding_power</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Change transparency of focused and unfocused windows</span></span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>    <span class="dt">active_opacity</span> <span class="op">=</span> <span class="fl">0.9</span></span>
+<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a>    <span class="dt">inactive_opacity</span> <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>    <span class="dt">shadow</span> <span class="er">{</span></span>
+<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a>        <span class="dt">enabled</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>        <span class="dt">range</span> <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a>        <span class="dt">render_power</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a>        <span class="dt">color</span> <span class="op">=</span> <span class="dt">rgba</span><span class="er">(</span><span class="dt">1a1a1aee</span><span class="er">)</span></span>
+<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a>    <span class="co"># https://wiki.hypr.land/Configuring/Variables/#blur</span></span>
+<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a>    <span class="dt">blur</span> <span class="er">{</span></span>
+<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a>        <span class="dt">enabled</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a>        <span class="dt">passes</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>        <span class="dt">vibrancy</span> <span class="op">=</span> <span class="fl">0.1696</span></span>
+<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#animations</span></span>
+<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a><span class="dt">animations</span> <span class="er">{</span></span>
+<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a>    <span class="dt">enabled</span> <span class="op">=</span> <span class="dt">no</span> <span class="co"># , please :)</span></span>
+<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Default animations, see https://wiki.hypr.land/Configuring/Animations/ for more</span></span>
+<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bezier</span> <span class="op">=</span> <span class="dt">easeOutQuint</span><span class="er">,</span><span class="dt">0.23</span><span class="er">,</span><span class="dt">1</span><span class="er">,</span><span class="dt">0.32</span><span class="er">,</span><span class="dt">1</span></span>
+<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bezier</span> <span class="op">=</span> <span class="dt">easeInOutCubic</span><span class="er">,</span><span class="dt">0.65</span><span class="er">,</span><span class="dt">0.05</span><span class="er">,</span><span class="dt">0.36</span><span class="er">,</span><span class="dt">1</span></span>
+<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bezier</span> <span class="op">=</span> <span class="dt">linear</span><span class="er">,</span><span class="dt">0</span><span class="er">,</span><span class="dt">0</span><span class="er">,</span><span class="dt">1</span><span class="er">,</span><span class="dt">1</span></span>
+<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bezier</span> <span class="op">=</span> <span class="dt">almostLinear</span><span class="er">,</span><span class="dt">0.5</span><span class="er">,</span><span class="dt">0.5</span><span class="er">,</span><span class="dt">0.75</span><span class="er">,</span><span class="dt">1.0</span></span>
+<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bezier</span> <span class="op">=</span> <span class="dt">quick</span><span class="er">,</span><span class="dt">0.15</span><span class="er">,</span><span class="dt">0</span><span class="er">,</span><span class="dt">0.1</span><span class="er">,</span><span class="dt">1</span></span>
+<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">global</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">10</span><span class="er">,</span> <span class="dt">default</span></span>
+<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">border</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">5.39</span><span class="er">,</span> <span class="dt">easeOutQuint</span></span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">windows</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">4.79</span><span class="er">,</span> <span class="dt">easeOutQuint</span></span>
+<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">windowsIn</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">4.1</span><span class="er">,</span> <span class="dt">easeOutQuint</span><span class="er">,</span> <span class="dt">popin</span> <span class="dt">87</span><span class="er">%</span></span>
+<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">windowsOut</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.49</span><span class="er">,</span> <span class="dt">linear</span><span class="er">,</span> <span class="dt">popin</span> <span class="dt">87</span><span class="er">%</span></span>
+<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">fadeIn</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.73</span><span class="er">,</span> <span class="dt">almostLinear</span></span>
+<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">fadeOut</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.46</span><span class="er">,</span> <span class="dt">almostLinear</span></span>
+<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">fade</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">3.03</span><span class="er">,</span> <span class="dt">quick</span></span>
+<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">layers</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">3.81</span><span class="er">,</span> <span class="dt">easeOutQuint</span></span>
+<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">layersIn</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">4</span><span class="er">,</span> <span class="dt">easeOutQuint</span><span class="er">,</span> <span class="dt">fade</span></span>
+<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">layersOut</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.5</span><span class="er">,</span> <span class="dt">linear</span><span class="er">,</span> <span class="dt">fade</span></span>
+<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">fadeLayersIn</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.79</span><span class="er">,</span> <span class="dt">almostLinear</span></span>
+<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">fadeLayersOut</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.39</span><span class="er">,</span> <span class="dt">almostLinear</span></span>
+<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">workspaces</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.94</span><span class="er">,</span> <span class="dt">almostLinear</span><span class="er">,</span> <span class="dt">fade</span></span>
+<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">workspacesIn</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.21</span><span class="er">,</span> <span class="dt">almostLinear</span><span class="er">,</span> <span class="dt">fade</span></span>
+<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a>    <span class="dt">animation</span> <span class="op">=</span> <span class="dt">workspacesOut</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">1.94</span><span class="er">,</span> <span class="dt">almostLinear</span><span class="er">,</span> <span class="dt">fade</span></span>
+<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Ref https://wiki.hypr.land/Configuring/Workspace-Rules/</span></span>
+<span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;Smart gaps&quot; / &quot;No gaps when only&quot;</span></span>
+<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a><span class="co"># uncomment all if you wish to use that.</span></span>
+<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a><span class="co"># workspace = w[tv1], gapsout:0, gapsin:0</span></span>
+<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a><span class="co"># workspace = f[1], gapsout:0, gapsin:0</span></span>
+<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="co"># windowrule = bordersize 0, floating:0, onworkspace:w[tv1]</span></span>
+<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a><span class="co"># windowrule = rounding 0, floating:0, onworkspace:w[tv1]</span></span>
+<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a><span class="co"># windowrule = bordersize 0, floating:0, onworkspace:f[1]</span></span>
+<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a><span class="co"># windowrule = rounding 0, floating:0, onworkspace:f[1]</span></span>
+<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Dwindle-Layout/ for more</span></span>
+<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a><span class="dt">dwindle</span> <span class="er">{</span></span>
+<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pseudotile</span> <span class="op">=</span> <span class="cn">true</span> <span class="co"># Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below</span></span>
+<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a>    <span class="dt">preserve_split</span> <span class="op">=</span> <span class="cn">true</span> <span class="co"># You probably want this</span></span>
+<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Master-Layout/ for more</span></span>
+<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a><span class="dt">master</span> <span class="er">{</span></span>
+<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a>    <span class="dt">new_status</span> <span class="op">=</span> <span class="dt">master</span></span>
+<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#misc</span></span>
+<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="dt">misc</span> <span class="er">{</span></span>
+<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a>    <span class="dt">force_default_wallpaper</span> <span class="op">=</span> <span class="dv">1</span> <span class="co"># Set to 0 or 1 to disable the anime mascot wallpapers</span></span>
+<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a>    <span class="dt">disable_hyprland_logo</span> <span class="op">=</span> <span class="cn">true</span> <span class="co"># If true disables the random hyprland logo / anime girl background. :(</span></span>
+<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a><span class="co">#############</span></span>
+<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a><span class="co">### INPUT </span><span class="al">###</span></span>
+<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a><span class="co">#############</span></span>
+<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#input</span></span>
+<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="dt">input</span> <span class="er">{</span></span>
+<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a>    <span class="dt">kb_layout</span> <span class="op">=</span> <span class="dt">us</span></span>
+<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a>    <span class="dt">kb_variant</span> <span class="op">=</span></span>
+<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a>    <span class="dt">kb_model</span> <span class="op">=</span></span>
+<span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a>    <span class="dt">kb_options</span> <span class="op">=</span></span>
+<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a>    <span class="dt">kb_rules</span> <span class="op">=</span></span>
+<span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-199"><a href="#cb34-199" aria-hidden="true" tabindex="-1"></a>    <span class="dt">follow_mouse</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-200"><a href="#cb34-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sensitivity</span> <span class="op">=</span> <span class="dv">0</span> <span class="co"># -1.0 - 1.0, 0 means no modification.</span></span>
+<span id="cb34-202"><a href="#cb34-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-203"><a href="#cb34-203" aria-hidden="true" tabindex="-1"></a>    <span class="dt">touchpad</span> <span class="er">{</span></span>
+<span id="cb34-204"><a href="#cb34-204" aria-hidden="true" tabindex="-1"></a>        <span class="dt">natural_scroll</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb34-205"><a href="#cb34-205" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb34-206"><a href="#cb34-206" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-207"><a href="#cb34-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-208"><a href="#cb34-208" aria-hidden="true" tabindex="-1"></a><span class="co"># https://wiki.hypr.land/Configuring/Variables/#gestures</span></span>
+<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a><span class="dt">gestures</span> <span class="er">{</span></span>
+<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a>    <span class="dt">workspace_swipe_forever</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a>    <span class="dt">workspace_swipe_touch</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb34-212"><a href="#cb34-212" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-213"><a href="#cb34-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-214"><a href="#cb34-214" aria-hidden="true" tabindex="-1"></a><span class="co"># Example per-device config</span></span>
+<span id="cb34-215"><a href="#cb34-215" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Keywords/#per-device-input-configs for more</span></span>
+<span id="cb34-216"><a href="#cb34-216" aria-hidden="true" tabindex="-1"></a><span class="dt">device</span> <span class="er">{</span></span>
+<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span> <span class="op">=</span> <span class="dt">epic-mouse-v1</span></span>
+<span id="cb34-218"><a href="#cb34-218" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sensitivity</span> <span class="op">=</span> <span class="fl">-0.5</span></span>
+<span id="cb34-219"><a href="#cb34-219" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-221"><a href="#cb34-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-222"><a href="#cb34-222" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-223"><a href="#cb34-223" aria-hidden="true" tabindex="-1"></a><span class="co">### KEYBINDINGS </span><span class="al">###</span></span>
+<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a><span class="co">###################</span></span>
+<span id="cb34-225"><a href="#cb34-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-226"><a href="#cb34-226" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://wiki.hypr.land/Configuring/Keywords/</span></span>
+<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a><span class="er">$</span><span class="dt">mainMod</span> <span class="op">=</span> <span class="dt">SUPER</span> <span class="co"># Sets &quot;Windows&quot; key as main modifier</span></span>
+<span id="cb34-228"><a href="#cb34-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-229"><a href="#cb34-229" aria-hidden="true" tabindex="-1"></a><span class="co"># Example binds, see https://wiki.hypr.land/Configuring/Binds/ for more</span></span>
+<span id="cb34-230"><a href="#cb34-230" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">Q</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="er">$</span><span class="dt">terminal</span></span>
+<span id="cb34-231"><a href="#cb34-231" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">C</span><span class="er">,</span> <span class="dt">killactive</span><span class="er">,</span></span>
+<span id="cb34-232"><a href="#cb34-232" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">M</span><span class="er">,</span> <span class="dt">exit</span><span class="er">,</span></span>
+<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">M</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">shutdown</span> <span class="dt">now</span><span class="er">,</span></span>
+<span id="cb34-234"><a href="#cb34-234" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">E</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="er">$</span><span class="dt">editor</span><span class="er">,</span></span>
+<span id="cb34-235"><a href="#cb34-235" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">V</span><span class="er">,</span> <span class="dt">togglefloating</span><span class="er">,</span></span>
+<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">R</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">wofi</span> <span class="dt">-b</span> <span class="dt">-n</span></span>
+<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">P</span><span class="er">,</span> <span class="dt">pseudo</span><span class="er">,</span> <span class="co"># dwindle</span></span>
+<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">J</span><span class="er">,</span> <span class="dt">togglesplit</span><span class="er">,</span> <span class="co"># dwindle</span></span>
+<span id="cb34-239"><a href="#cb34-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-240"><a href="#cb34-240" aria-hidden="true" tabindex="-1"></a><span class="co"># Move focus with mainMod + arrow keys</span></span>
+<span id="cb34-241"><a href="#cb34-241" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">left</span><span class="er">,</span> <span class="dt">movefocus</span><span class="er">,</span> <span class="dt">l</span></span>
+<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">right</span><span class="er">,</span> <span class="dt">movefocus</span><span class="er">,</span> <span class="dt">r</span></span>
+<span id="cb34-243"><a href="#cb34-243" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">up</span><span class="er">,</span> <span class="dt">movefocus</span><span class="er">,</span> <span class="dt">u</span></span>
+<span id="cb34-244"><a href="#cb34-244" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">down</span><span class="er">,</span> <span class="dt">movefocus</span><span class="er">,</span> <span class="dt">d</span></span>
+<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-246"><a href="#cb34-246" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch workspaces with mainMod + [0-9]</span></span>
+<span id="cb34-247"><a href="#cb34-247" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">1</span></span>
+<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">2</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">2</span></span>
+<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">3</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">3</span></span>
+<span id="cb34-250"><a href="#cb34-250" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">4</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">4</span></span>
+<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">5</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">5</span></span>
+<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">6</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">6</span></span>
+<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">7</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">7</span></span>
+<span id="cb34-254"><a href="#cb34-254" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">8</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">8</span></span>
+<span id="cb34-255"><a href="#cb34-255" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">9</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">9</span></span>
+<span id="cb34-256"><a href="#cb34-256" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">0</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">10</span></span>
+<span id="cb34-257"><a href="#cb34-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-258"><a href="#cb34-258" aria-hidden="true" tabindex="-1"></a><span class="co"># Move active window to a workspace with mainMod + SHIFT + [0-9]</span></span>
+<span id="cb34-259"><a href="#cb34-259" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">1</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">1</span></span>
+<span id="cb34-260"><a href="#cb34-260" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">2</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">2</span></span>
+<span id="cb34-261"><a href="#cb34-261" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">3</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">3</span></span>
+<span id="cb34-262"><a href="#cb34-262" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">4</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">4</span></span>
+<span id="cb34-263"><a href="#cb34-263" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">5</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">5</span></span>
+<span id="cb34-264"><a href="#cb34-264" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">6</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">6</span></span>
+<span id="cb34-265"><a href="#cb34-265" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">7</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">7</span></span>
+<span id="cb34-266"><a href="#cb34-266" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">8</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">8</span></span>
+<span id="cb34-267"><a href="#cb34-267" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">9</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">9</span></span>
+<span id="cb34-268"><a href="#cb34-268" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">0</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">10</span></span>
+<span id="cb34-269"><a href="#cb34-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-270"><a href="#cb34-270" aria-hidden="true" tabindex="-1"></a><span class="co"># Example special workspace (scratchpad)</span></span>
+<span id="cb34-271"><a href="#cb34-271" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">S</span><span class="er">,</span> <span class="dt">togglespecialworkspace</span><span class="er">,</span> <span class="dt">magic</span></span>
+<span id="cb34-272"><a href="#cb34-272" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">SHIFT</span><span class="er">,</span> <span class="dt">S</span><span class="er">,</span> <span class="dt">movetoworkspace</span><span class="er">,</span> <span class="dt">special</span><span class="er">:</span><span class="dt">magic</span></span>
+<span id="cb34-273"><a href="#cb34-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-274"><a href="#cb34-274" aria-hidden="true" tabindex="-1"></a><span class="co"># Scroll through existing workspaces with mainMod + scroll</span></span>
+<span id="cb34-275"><a href="#cb34-275" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">mouse_down</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">e</span><span class="er">+</span><span class="dt">1</span></span>
+<span id="cb34-276"><a href="#cb34-276" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">mouse_up</span><span class="er">,</span> <span class="dt">workspace</span><span class="er">,</span> <span class="dt">e-1</span></span>
+<span id="cb34-277"><a href="#cb34-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-278"><a href="#cb34-278" aria-hidden="true" tabindex="-1"></a><span class="co"># Move/resize windows with mainMod + LMB/RMB and dragging</span></span>
+<span id="cb34-279"><a href="#cb34-279" aria-hidden="true" tabindex="-1"></a><span class="dt">bindm</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">mouse</span><span class="er">:</span><span class="dt">272</span><span class="er">,</span> <span class="dt">movewindow</span></span>
+<span id="cb34-280"><a href="#cb34-280" aria-hidden="true" tabindex="-1"></a><span class="dt">bindm</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span><span class="er">,</span> <span class="dt">mouse</span><span class="er">:</span><span class="dt">273</span><span class="er">,</span> <span class="dt">resizewindow</span></span>
+<span id="cb34-281"><a href="#cb34-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-282"><a href="#cb34-282" aria-hidden="true" tabindex="-1"></a><span class="co"># Laptop multimedia keys for volume and LCD brightness</span></span>
+<span id="cb34-283"><a href="#cb34-283" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86AudioRaiseVolume</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">wpctl</span> <span class="dt">set-volume</span> <span class="dt">-l</span> <span class="dt">1</span> <span class="er">@</span><span class="dt">DEFAULT_AUDIO_SINK</span><span class="er">@</span> <span class="dt">5</span><span class="er">%+</span></span>
+<span id="cb34-284"><a href="#cb34-284" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86AudioLowerVolume</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">wpctl</span> <span class="dt">set-volume</span> <span class="er">@</span><span class="dt">DEFAULT_AUDIO_SINK</span><span class="er">@</span> <span class="dt">5</span><span class="er">%</span><span class="dt">-</span></span>
+<span id="cb34-285"><a href="#cb34-285" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86AudioMute</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">wpctl</span> <span class="dt">set-mute</span> <span class="er">@</span><span class="dt">DEFAULT_AUDIO_SINK</span><span class="er">@</span> <span class="dt">toggle</span></span>
+<span id="cb34-286"><a href="#cb34-286" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86AudioMicMute</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">wpctl</span> <span class="dt">set-mute</span> <span class="er">@</span><span class="dt">DEFAULT_AUDIO_SOURCE</span><span class="er">@</span> <span class="dt">toggle</span></span>
+<span id="cb34-287"><a href="#cb34-287" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86MonBrightnessUp</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">brightnessctl</span> <span class="dt">-e4</span> <span class="dt">-n2</span> <span class="dt">set</span> <span class="dt">5</span><span class="er">%+</span></span>
+<span id="cb34-288"><a href="#cb34-288" aria-hidden="true" tabindex="-1"></a><span class="dt">bindel</span> <span class="op">=</span> <span class="er">,</span><span class="dt">XF86MonBrightnessDown</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">brightnessctl</span> <span class="dt">-e4</span> <span class="dt">-n2</span> <span class="dt">set</span> <span class="dt">5</span><span class="er">%</span><span class="dt">-</span></span>
+<span id="cb34-289"><a href="#cb34-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-290"><a href="#cb34-290" aria-hidden="true" tabindex="-1"></a><span class="co"># Requires playerctl</span></span>
+<span id="cb34-291"><a href="#cb34-291" aria-hidden="true" tabindex="-1"></a><span class="dt">bindl</span> <span class="op">=</span> <span class="er">,</span> <span class="dt">XF86AudioNext</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">playerctl</span> <span class="dt">next</span></span>
+<span id="cb34-292"><a href="#cb34-292" aria-hidden="true" tabindex="-1"></a><span class="dt">bindl</span> <span class="op">=</span> <span class="er">,</span> <span class="dt">XF86AudioPause</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">playerctl</span> <span class="dt">play-pause</span></span>
+<span id="cb34-293"><a href="#cb34-293" aria-hidden="true" tabindex="-1"></a><span class="dt">bindl</span> <span class="op">=</span> <span class="er">,</span> <span class="dt">XF86AudioPlay</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">playerctl</span> <span class="dt">play-pause</span></span>
+<span id="cb34-294"><a href="#cb34-294" aria-hidden="true" tabindex="-1"></a><span class="dt">bindl</span> <span class="op">=</span> <span class="er">,</span> <span class="dt">XF86AudioPrev</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="dt">playerctl</span> <span class="dt">previous</span></span>
+<span id="cb34-295"><a href="#cb34-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-296"><a href="#cb34-296" aria-hidden="true" tabindex="-1"></a><span class="co">## Screenshot</span></span>
+<span id="cb34-297"><a href="#cb34-297" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="er">,</span> <span class="dt">Print</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="er">$</span><span class="dt">screenshot</span></span>
+<span id="cb34-298"><a href="#cb34-298" aria-hidden="true" tabindex="-1"></a><span class="dt">bind</span> <span class="op">=</span> <span class="er">$</span><span class="dt">mainMod</span> <span class="dt">Shift</span><span class="er">,</span> <span class="dt">P</span><span class="er">,</span> <span class="dt">exec</span><span class="er">,</span> <span class="er">$</span><span class="dt">screenshot</span></span>
+<span id="cb34-299"><a href="#cb34-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-300"><a href="#cb34-300" aria-hidden="true" tabindex="-1"></a><span class="co">##############################</span></span>
+<span id="cb34-301"><a href="#cb34-301" aria-hidden="true" tabindex="-1"></a><span class="co">### WINDOWS AND WORKSPACES </span><span class="al">###</span></span>
+<span id="cb34-302"><a href="#cb34-302" aria-hidden="true" tabindex="-1"></a><span class="co">##############################</span></span>
+<span id="cb34-303"><a href="#cb34-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-304"><a href="#cb34-304" aria-hidden="true" tabindex="-1"></a><span class="co"># ######## Window rules ########</span></span>
+<span id="cb34-305"><a href="#cb34-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-306"><a href="#cb34-306" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable blur for xwayland context menus</span></span>
+<span id="cb34-307"><a href="#cb34-307" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">class</span> <span class="er">^()$,</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^()$,</span> <span class="dt">no_blur</span> <span class="dt">on</span></span>
+<span id="cb34-308"><a href="#cb34-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-309"><a href="#cb34-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable blur for every window</span></span>
+<span id="cb34-310"><a href="#cb34-310" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">class</span> <span class="dt">.</span><span class="er">*,</span> <span class="dt">no_blur</span> <span class="dt">on</span></span>
+<span id="cb34-311"><a href="#cb34-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-312"><a href="#cb34-312" aria-hidden="true" tabindex="-1"></a><span class="co"># Floating</span></span>
+<span id="cb34-313"><a href="#cb34-313" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Open</span> <span class="dt">File</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-314"><a href="#cb34-314" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Open</span> <span class="dt">File</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-315"><a href="#cb34-315" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Select</span> <span class="dt">a</span> <span class="dt">File</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-316"><a href="#cb34-316" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Select</span> <span class="dt">a</span> <span class="dt">File</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-317"><a href="#cb34-317" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Choose</span> <span class="dt">wallpaper</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-318"><a href="#cb34-318" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Choose</span> <span class="dt">wallpaper</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-319"><a href="#cb34-319" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Choose</span> <span class="dt">wallpaper</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">size</span> <span class="er">(</span><span class="dt">monitor_w</span><span class="er">*</span><span class="dt">.60</span><span class="er">)</span> <span class="er">(</span><span class="dt">monitor_h</span><span class="er">*</span><span class="dt">.65</span><span class="er">)</span></span>
+<span id="cb34-320"><a href="#cb34-320" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Open</span> <span class="dt">Folder</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-321"><a href="#cb34-321" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Open</span> <span class="dt">Folder</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-322"><a href="#cb34-322" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Save</span> <span class="dt">As</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-323"><a href="#cb34-323" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Save</span> <span class="dt">As</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-324"><a href="#cb34-324" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Library</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-325"><a href="#cb34-325" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Library</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-326"><a href="#cb34-326" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">File</span> <span class="dt">Upload</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-327"><a href="#cb34-327" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">File</span> <span class="dt">Upload</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-328"><a href="#cb34-328" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">class</span> <span class="er">^(</span><span class="dt">nm-connection-editor</span><span class="er">)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-329"><a href="#cb34-329" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">class</span> <span class="er">^(</span><span class="dt">nm-connection-editor</span><span class="er">)$,</span> <span class="dt">size</span> <span class="er">(</span><span class="dt">monitor_w</span><span class="er">*</span><span class="dt">.45</span><span class="er">)</span> <span class="er">(</span><span class="dt">monitor_h</span><span class="er">*</span><span class="dt">.45</span><span class="er">)</span></span>
+<span id="cb34-330"><a href="#cb34-330" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">class</span> <span class="er">^(</span><span class="dt">nm-connection-editor</span><span class="er">)$,</span> <span class="dt">center</span> <span class="dt">on</span></span>
+<span id="cb34-331"><a href="#cb34-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-332"><a href="#cb34-332" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="dt">.</span><span class="er">*</span><span class="dt">Welcome</span><span class="er">,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-333"><a href="#cb34-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-334"><a href="#cb34-334" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="dt">Copying</span> <span class="er">—</span> <span class="dt">Dolphin</span><span class="er">)$,</span> <span class="dt">move</span> <span class="dt">40</span> <span class="dt">80</span></span>
+<span id="cb34-335"><a href="#cb34-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-336"><a href="#cb34-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-337"><a href="#cb34-337" aria-hidden="true" tabindex="-1"></a><span class="co"># Picture-in-Picture</span></span>
+<span id="cb34-338"><a href="#cb34-338" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-339"><a href="#cb34-339" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">keep_aspect_ratio</span> <span class="dt">on</span></span>
+<span id="cb34-340"><a href="#cb34-340" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">move</span> <span class="er">(</span><span class="dt">monitor_w</span><span class="er">*</span><span class="dt">.73</span><span class="er">)</span> <span class="er">(</span><span class="dt">monitor_h</span><span class="er">*</span><span class="dt">.72</span><span class="er">)</span></span>
+<span id="cb34-341"><a href="#cb34-341" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">size</span> <span class="er">(</span><span class="dt">monitor_w</span><span class="er">*</span><span class="dt">.25</span><span class="er">)</span> <span class="er">(</span><span class="dt">monitor_h</span><span class="er">*</span><span class="dt">.25</span><span class="er">)</span></span>
+<span id="cb34-342"><a href="#cb34-342" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">float</span> <span class="dt">on</span></span>
+<span id="cb34-343"><a href="#cb34-343" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">title</span> <span class="er">^(</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Ii]</span><span class="dt">n</span><span class="kw">[-</span><span class="er">\</span><span class="dt">s</span><span class="er">]?</span><span class="kw">[Pp]</span><span class="dt">icture</span><span class="er">)(</span><span class="dt">.</span><span class="er">*)$,</span> <span class="dt">pin</span> <span class="dt">on</span></span>
+<span id="cb34-344"><a href="#cb34-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-345"><a href="#cb34-345" aria-hidden="true" tabindex="-1"></a><span class="co"># No shadow for tiled windows (matches windows that are not floating).</span></span>
+<span id="cb34-346"><a href="#cb34-346" aria-hidden="true" tabindex="-1"></a><span class="dt">windowrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">float</span> <span class="dt">0</span><span class="er">,</span> <span class="dt">no_shadow</span> <span class="dt">on</span></span>
+<span id="cb34-347"><a href="#cb34-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-348"><a href="#cb34-348" aria-hidden="true" tabindex="-1"></a><span class="co"># ######## Workspace rules ########</span></span>
+<span id="cb34-349"><a href="#cb34-349" aria-hidden="true" tabindex="-1"></a><span class="dt">workspace</span> <span class="op">=</span> <span class="dt">special</span><span class="er">:</span><span class="dt">special</span><span class="er">,</span> <span class="dt">gapsout</span><span class="er">:</span><span class="dt">30</span></span>
+<span id="cb34-350"><a href="#cb34-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-351"><a href="#cb34-351" aria-hidden="true" tabindex="-1"></a><span class="co"># ######## Layer rules ########</span></span>
+<span id="cb34-352"><a href="#cb34-352" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">.</span><span class="er">*,</span> <span class="dt">xray</span> <span class="dt">on</span></span>
+<span id="cb34-353"><a href="#cb34-353" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">.</span><span class="er">*,</span> <span class="dt">no_anim</span> <span class="dt">on</span></span>
+<span id="cb34-354"><a href="#cb34-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-355"><a href="#cb34-355" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">kitty</span><span class="er">,</span> <span class="dt">blur</span> <span class="dt">on</span></span>
+<span id="cb34-356"><a href="#cb34-356" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">kitty</span><span class="er">,</span> <span class="dt">ignore_alpha</span> <span class="dt">0</span></span>
+<span id="cb34-357"><a href="#cb34-357" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">bemenu-run</span><span class="er">,</span> <span class="dt">blur</span> <span class="dt">on</span></span>
+<span id="cb34-358"><a href="#cb34-358" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">bemenu-run</span><span class="er">,</span> <span class="dt">ignore_alpha</span> <span class="dt">0.5</span></span>
+<span id="cb34-359"><a href="#cb34-359" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">notifications</span><span class="er">,</span> <span class="dt">blur</span> <span class="dt">on</span></span>
+<span id="cb34-360"><a href="#cb34-360" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">notifications</span><span class="er">,</span> <span class="dt">ignore_alpha</span> <span class="dt">0.69</span></span>
+<span id="cb34-361"><a href="#cb34-361" aria-hidden="true" tabindex="-1"></a><span class="dt">layerrule</span> <span class="op">=</span> <span class="dt">match</span><span class="er">:</span><span class="dt">namespace</span> <span class="dt">logout_dialog</span> <span class="co"># wlogout, blur on</span></span></code></pre></div>
+<h3 id="hyprpaper">hyprpaper</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode conf"><code class="sourceCode toml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dt">wallpaper</span> <span class="er">{</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">monitor</span> <span class="op">=</span> <span class="dt">eDP-1</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">path</span> <span class="op">=</span> <span class="er">~/</span><span class="dt">.config</span><span class="er">/</span><span class="dt">hypr</span><span class="er">/</span><span class="dt">hyprpaper</span><span class="er">/</span><span class="dt">121672.png</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fit_mode</span> <span class="op">=</span> <span class="dt">cover</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="dt">splash</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre></div>
+<h4 id="image">image</h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2 <span class="im">as</span> cv</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>hex_color <span class="op">=</span> (<span class="bu">input</span>(<span class="st">&quot;请输入十六位RGB值：&quot;</span>))</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="bu">int</span>(hex_color[<span class="dv">0</span>:<span class="dv">2</span>], <span class="dv">16</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> <span class="bu">int</span>(hex_color[<span class="dv">2</span>:<span class="dv">4</span>], <span class="dv">16</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="bu">int</span>(hex_color[<span class="dv">4</span>:<span class="dv">6</span>], <span class="dv">16</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;请输入width值：&quot;</span>))</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>height <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;请输入height值：&quot;</span>))</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建指定宽高、3通道、像素值都为0的图像</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> np.zeros((height, width, <span class="dv">3</span>), np.uint8)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>img_rgb <span class="op">=</span> img.copy()</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>img_rgb[:, :, :] <span class="op">=</span> [B, G, R]</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>cv.imwrite(<span class="st">&quot;img.png&quot;</span>, img_rgb)</span></code></pre></div>
+    </section>
+</article>
+
+      </div>
+    </main>
+  </body>
+  <footer>
+    <center>
+      <a href="../about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
+      <a href="../contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
+      <br>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
+      <br>
+      <br>
+      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
+  </center>
+  </footer>
+</html>

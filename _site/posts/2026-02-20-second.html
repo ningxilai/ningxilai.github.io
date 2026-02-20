@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light dark" name="color-scheme">
+    <title>Verse - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="../images/favicon.svg">
+    <article data-theme="light"></article>
+    <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
+    <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
+    <link href="../js/MathJax.js" />
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+    // Apply Zhuque Fangsong font only to Chinese characters in headings
+    // and fix heading counter logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function isChinese(char) {
+            const code = char.charCodeAt(0);
+            // CJK Unified Ideographs
+            return (code >= 0x4E00 && code <= 0x9FFF) ||
+                   // CJK Unified Ideographs Extension A
+                   (code >= 0x3400 && code <= 0x4DBF) ||
+                   // CJK Unified Ideographs Extension B
+                   (code >= 0x20000 && code <= 0x2A6DF) ||
+                   // CJK Unified Ideographs Extension C
+                   (code >= 0x2A700 && code <= 0x2B73F) ||
+                   // CJK Unified Ideographs Extension D
+                   (code >= 0x2B740 && code <= 0x2B81F) ||
+                   // CJK Compatibility Ideographs
+                   (code >= 0xF900 && code <= 0xFAFF) ||
+                   // CJK Compatibility Ideographs Supplement
+                   (code >= 0x2F800 && code <= 0x2FA1F) ||
+                   // Full-width ASCII and half-width Katakana
+                   (code >= 0xFF01 && code <= 0xFF5E) ||
+                   // CJK Symbols and Punctuation
+                   (code >= 0x3000 && code <= 0x303F) ||
+                   // Hiragana
+                   (code >= 0x3040 && code <= 0x309F) ||
+                   // Katakana
+                   (code >= 0x30A0 && code <= 0x30FF);
+        }
+
+        function processTextNode(node) {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+
+            const text = node.textContent;
+            if (!text) return;
+
+            const fragment = document.createDocumentFragment();
+            let currentText = '';
+            let isCurrentChinese = null;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charIsChinese = isChinese(char);
+
+                if (isCurrentChinese !== charIsChinese && currentText !== '') {
+                    // Create span for previous segment
+                    const span = document.createElement('span');
+                    span.textContent = currentText;
+                    if (isCurrentChinese) {
+                        span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                    }
+                    fragment.appendChild(span);
+                    currentText = '';
+                }
+
+                isCurrentChinese = charIsChinese;
+                currentText += char;
+            }
+
+            // Process remaining text
+            if (currentText !== '') {
+                const span = document.createElement('span');
+                span.textContent = currentText;
+                if (isCurrentChinese) {
+                    span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                }
+                fragment.appendChild(span);
+            }
+
+            node.parentNode.replaceChild(fragment, node);
+        }
+
+        // Fix heading counters - hierarchical counting
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        // Array to store counters for each level [h1, h2, h3, h4, h5, h6]
+        const counters = [0, 0, 0, 0, 0, 0];
+
+        headings.forEach(function(heading) {
+            const level = parseInt(heading.tagName.charAt(1));
+            const index = level - 1; // Convert to 0-based index
+
+            // Increment current level counter
+            counters[index]++;
+
+            // Reset all lower level counters to 0
+            for (let i = index + 1; i < 6; i++) {
+                counters[i] = 0;
+            }
+
+            // Build counter display
+            let counterText = '';
+            if (level === 1) {
+                counterText = 'Chapter ' + counters[0] + ': ';
+            } else {
+                // Build hierarchical counter from h1 to current level
+                const parts = [];
+                for (let i = 0; i <= index; i++) {
+                    if (counters[i] > 0) {
+                        parts.push(counters[i]);
+                    }
+                }
+                counterText = parts.join('.') + ' ';
+            }
+
+            // Insert counter before heading content
+            const counterSpan = document.createElement('span');
+            counterSpan.className = 'heading-counter';
+            counterSpan.textContent = counterText;
+            counterSpan.style.color = level === 1 ? '#708080' :
+                                      level === 2 ? '#507080' :
+                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.fontSize = level === 1 ? '100%' :
+                                         level === 2 ? '80%' :
+                                         level === 3 ? '60%' : '50%';
+
+            heading.insertBefore(counterSpan, heading.firstChild);
+
+            // Process text nodes for Chinese font
+            const walker = document.createTreeWalker(
+                heading,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Process in reverse order to avoid index issues
+            textNodes.reverse().forEach(processTextNode);
+        });
+    });
+    </script>
+    <style>
+     /* Basic styles for Mimas site */
+
+     * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+     }
+
+      body {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          color: #333;
+          background: #f5f5f5;
+      }
+
+     div {
+         font-family:
+             "Times New Roman",
+             "LXGW WenKai GB Screen",
+             "Noto Serif SC",
+             sans-serif;
+         font-variant-ligatures: common-ligatures;
+     }
+
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 2rem;
+     }
+
+     /* Header */
+     .site-header {
+         background: #fff;
+         border-bottom: 1px solid #e0e0e0;
+         padding: 1rem 0;
+         margin-bottom: 2rem;
+     }
+
+     .site-header nav {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 0 2rem;
+         display: flex;
+         gap: 2rem;
+     }
+
+     .site-header a {
+         color: #333;
+         text-decoration: none;
+         font-weight: 500;
+     }
+
+     .site-header a:hover {
+         color: #0066cc;
+     }
+
+     /* Main content */
+     main {
+         background: #fff;
+         border-radius: 8px;
+         padding: 2rem;
+         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     }
+
+     /* Typography */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: #708080;
+          margin-top: 1.2rem;
+          margin-bottom: 0.3rem;
+          line-height: 1.15;
+      }
+
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+     p {
+         margin-bottom: 1.1rem;
+         color: #7080A3;
+         word-wrap:break-word;
+         white-space:pre-wrap;
+         word-break:break-all;
+     }
+
+     li::marker {
+         color: #609090;
+     }
+
+     li {
+         color: #6060A3
+     }
+
+     strong {
+         color: #705081;
+     }
+
+     code {
+         background: #f0f0f0;
+         padding: 0.2rem 0.4rem;
+         border-radius: 3px;
+         font-family: 'IBM Plex Mono', sans-serif;
+         font-size: 0.9em;
+     }
+
+     pre code {
+         display: block;
+         padding: 0.9rem;
+         overflow-x: auto;
+     }
+
+     footer {
+         text-align: center;
+         padding: 5px;
+     }
+
+     /* Card component */
+     .card {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         padding: 1.5rem;
+         margin-bottom: 1rem;
+     }
+
+     .card-header {
+         margin-bottom: 1rem;
+     }
+
+     .card-title {
+         margin: 0 0 0.5rem 0;
+     }
+
+     .card-description {
+         color: #666;
+         margin: 0;
+     }
+
+     .card-body {
+         margin-bottom: 1rem;
+     }
+
+     .card-footer {
+         border-top: 1px solid #e0e0e0;
+         padding-top: 1rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+
+     /* Footer */
+     .site-footer {
+         text-align: center;
+         padding: 2rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+    </style>
+  </head>
+  <body>
+     <main class="container" style="flex: 1;">
+       <div class="content">
+
+        <header>
+          <div style="text-align:right">
+            <a href="../archive.html">Archives</a>
+            <a href="../">SiteMap</a>
+          </div>
+        </header>
+        <br>
+          <hr>
+        <p style="font-size: 1.6m; color:#A0AFB7">Verse: Posted on February 20, 2026, by Iris Lennon.</p>
+        <article>
+    <section>
+        <h1 id="verse">Verse</h1>
+<p>对于将上一步的原料制成品进行再加工，或者说包装以及分销，要借助许多工具。这里的工具可能包括<code>SSG</code>以及版本控制系统<code>git/jujutsu</code>。</p>
+<h2 id="mdbook">mdbook</h2>
+<pre><code>cargo install mdbook</code></pre>
+<h3 id="book.toml"><code>./book.toml</code></h3>
+<pre><code>[book]
+authors = [&quot;ningxilai&quot;]
+language = &quot;zh_CN&quot;
+multilingual = false
+src = &quot;src&quot;
+title = &quot;Iris's Note Book&quot;
+
+[output.html]
+mathjax-support = true
+git-repository-url = &quot;https://github.com/ningxilai/ningxilai.github.io&quot;
+git-repository-icon = &quot;fa-github&quot;
+no-section-label = true
+
+[output.html.playground]
+editable = true
+line-numbers = true
+
+[output.html.search]
+limit-results = 20
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 2
+boost-paragraph = 1
+expand = true
+heading-split-level = 2</code></pre>
+<h3 id="themeindex.hbs"><code>./theme/index.hbs</code></h3>
+<pre><code>...
+&lt;head&gt;
+...
+&lt;!-- Addons --&gt;
+
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://www.cdnfonts.com/garamond.font&quot; /&gt;
+
+&lt;style&gt; body {
+            font-family: font-family: &quot;Garamond&quot;,&quot;朱雀仿宋&quot; ;
+            font-weight: normal;
+            font-variant-ligatures: historical-ligatures normal;
+        }
+&lt;/style&gt;
+...
+&lt;/head&gt;
+...</code></pre>
+<h3 id="themefontsfonts.css"><code>./theme/fonts/fonts.css</code></h3>
+<pre><code>@font-face {
+    font-family: '朱雀仿宋';
+    font-style: &quot;regular&quot;;
+    font-weight: normal;
+    src: url('{{ resource &quot;fonts/ZhuqueFangsong-Regular.ttf&quot; }}') format('truetype');
+    }</code></pre>
+<h4 id="font-css">Font &amp;&amp; CSS</h4>
+<p><a href="%22https://github.com/TrionesType/zhuque%22">朱雀仿宋</a> &amp;&amp; <a href="%22https://webzhao.me/posts/ligature%22">Ligture</a></p>
+<h2 id="hakyll-deprecated">Hakyll \deprecated\</h2>
+<pre><code>hakyll-init -f ./</code></pre>
+<h3 id="css">CSS</h3>
+<pre><code>html,body {
+    background: white;
+    scroll-behavior: smooth;
+    color: black;
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 1.4;
+    min-height: 100%;
+    overflow-wrap: break-word;
+    font-family: &quot;Fira Code&quot;,&quot;LXGW WenKai&quot;,sans-serif
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45%;
+    margin: 0;
+    padding: 0;
+    text-align: left
+}
+
+.post-meta {
+    text-align: right
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal
+}
+
+h2,h3 {
+    margin-top: 3rem
+}
+
+h4,h5 {
+    margin-top: 1.8rem
+}
+
+h6 {
+    margin-top: 0.8rem
+}
+
+hr {
+    margin: 2rem 0
+}
+
+p {
+    margin: 1rem 0
+}
+
+li {
+    margin: 0.4rem 0
+}
+
+*:target {
+    background: yellow
+}
+
+.w {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 2rem
+}
+
+hr {
+    text-align: center;
+    border: 0
+}
+
+hr:before {
+    content: &quot;/////&quot;
+}
+
+hr:after {
+    content: attr(data-content) &quot;/////&quot;
+}
+
+table {
+    width: 40%;
+    border: 0px
+}
+
+table,th,td {
+    border-collapse: collapse;
+    padding: 0.4rem
+}
+
+code {
+    color: white;
+    background: black
+}
+
+div.highlighter-rouge code {
+    display: block;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    padding: 1rem
+}
+
+blockquote {
+    font-style: italic;
+    border: thin solid black;
+    padding: 1rem
+}
+
+blockquote p {
+    margin: 0
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto
+}</code></pre>
+<p>…and <code>HTML</code></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;Home&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/default.css&quot; /&gt;
+        &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/firacode/6.2.0/ttf/FiraCode-Bold.ttf&quot; rel=&quot;stylesheet&quot;&gt;
+        &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/files/lxgwwenkai-bold-subset-100.woff2&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;main role=&quot;main&quot;&gt;
+            &lt;h1&gt;Home&lt;/h1&gt;
+            &lt;header&gt;
+  &lt;div class=&quot;logo&quot;&gt;
+    &lt;a href=&quot;./&quot;&gt;Iris's Blog&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;body&gt; body  &lt;/body&gt;
+
+&lt;footer&gt;
+  Site proudly generated by
+  &lt;a href=&quot;http://jaspervdj.be/hakyll&quot;&gt;Hakyll&lt;/a&gt;,
+  Site &lt;code&gt;.css&lt;/code&gt; file generated from the &lt;code&gt;.sass&lt;/code&gt; files of &lt;a href=&quot;https://github.com/riggraz/no-style-please&quot;&gt;riggraz/no-style-please&lt;/a&gt;.
+&lt;/footer&gt;
+
+        &lt;/main&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2 id="ssg-and-git"><code>SSG</code> and <code>git</code></h2>
+<h3 id="ssl_error_syscall"><code>SSL_ERROR_SYSCALL</code></h3>
+<p>在提交分支时报出了 <code>OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0</code> 的错误。</p>
+<p>根据 <em>正宗咸豆花 at CSDN</em> 的方案，可以使用SSH绕过HTTPS的OpenSSL延迟，在实际使用中，<code>git remote set-url origin git@github.com:username/repo.git</code>，就像这样。</p>
+<p>另外的，附上当时的最小实例：</p>
+<pre><code>git clone --depth=1 git@github.com:username/repo.git
+cd repo
+// git remote add origin git@github.com:username/repo.git
+// git push origin master
+git add .
+git commit -m &quot;last commit&quot;
+git push origin master ## git push -u origin master（设置上游仓库）</code></pre>
+<h3 id="remote">remote</h3>
+<p>对于凭证登陆，选择 <code>cache</code> 则有 <code>git config --global credential.credentialStore cache</code>。（<code>dotnet tool install -g git-credential-manager</code>）</p>
+<h3 id="rsync">rsync</h3>
+<p>同步：<code>cp -rp book/* repo</code> or <code>rsync -a ./book/* repo</code>。
+<br>
+<code>! [rejected] master -&gt; master (non-fast-forward)</code> 时，可用<code>git push -f</code></p>
+<p>在本地创建副本：<code>git init &amp;&amp; git remote add upstream [URL]</code>。</p>
+<h3 id="cname-file"><code>CNAME</code> file</h3>
+<p><code>gh-page</code>需要一<code>CNAME file</code>以重定向，其内容为定向到的域名。</p>
+<h3 id="add-submodule">add submodule</h3>
+<p><em>like this</em></p>
+<p><code>git submodule add "https://github.com/manateelazycat/lsp-bridge" site-lisp/lsp-bridge</code></p>
+<h3 id="patch">patch</h3>
+<p>作为独立命令的<code>patch</code>，使用时可以这样：<code>patch -p[0/1] &lt; [patch file] ## 0/1代表当前目录的工作深度。</code></p>
+    </section>
+</article>
+
+      </div>
+    </main>
+  </body>
+  <footer>
+    <center>
+      <a href="../about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
+      <a href="../contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
+      <br>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
+      <br>
+      <br>
+      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
+  </center>
+  </footer>
+</html>

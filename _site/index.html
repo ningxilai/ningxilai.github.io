@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light dark" name="color-scheme">
+    <title>MainPage - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="./images/favicon.svg">
+    <article data-theme="light"></article>
+    <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
+    <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
+    <link href="./js/MathJax.js" />
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+    // Apply Zhuque Fangsong font only to Chinese characters in headings
+    // and fix heading counter logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function isChinese(char) {
+            const code = char.charCodeAt(0);
+            // CJK Unified Ideographs
+            return (code >= 0x4E00 && code <= 0x9FFF) ||
+                   // CJK Unified Ideographs Extension A
+                   (code >= 0x3400 && code <= 0x4DBF) ||
+                   // CJK Unified Ideographs Extension B
+                   (code >= 0x20000 && code <= 0x2A6DF) ||
+                   // CJK Unified Ideographs Extension C
+                   (code >= 0x2A700 && code <= 0x2B73F) ||
+                   // CJK Unified Ideographs Extension D
+                   (code >= 0x2B740 && code <= 0x2B81F) ||
+                   // CJK Compatibility Ideographs
+                   (code >= 0xF900 && code <= 0xFAFF) ||
+                   // CJK Compatibility Ideographs Supplement
+                   (code >= 0x2F800 && code <= 0x2FA1F) ||
+                   // Full-width ASCII and half-width Katakana
+                   (code >= 0xFF01 && code <= 0xFF5E) ||
+                   // CJK Symbols and Punctuation
+                   (code >= 0x3000 && code <= 0x303F) ||
+                   // Hiragana
+                   (code >= 0x3040 && code <= 0x309F) ||
+                   // Katakana
+                   (code >= 0x30A0 && code <= 0x30FF);
+        }
+
+        function processTextNode(node) {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+
+            const text = node.textContent;
+            if (!text) return;
+
+            const fragment = document.createDocumentFragment();
+            let currentText = '';
+            let isCurrentChinese = null;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charIsChinese = isChinese(char);
+
+                if (isCurrentChinese !== charIsChinese && currentText !== '') {
+                    // Create span for previous segment
+                    const span = document.createElement('span');
+                    span.textContent = currentText;
+                    if (isCurrentChinese) {
+                        span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                    }
+                    fragment.appendChild(span);
+                    currentText = '';
+                }
+
+                isCurrentChinese = charIsChinese;
+                currentText += char;
+            }
+
+            // Process remaining text
+            if (currentText !== '') {
+                const span = document.createElement('span');
+                span.textContent = currentText;
+                if (isCurrentChinese) {
+                    span.style.fontFamily = "'Zhuque Fangsong (technical preview)', serif";
+                }
+                fragment.appendChild(span);
+            }
+
+            node.parentNode.replaceChild(fragment, node);
+        }
+
+        // Fix heading counters - hierarchical counting
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        // Array to store counters for each level [h1, h2, h3, h4, h5, h6]
+        const counters = [0, 0, 0, 0, 0, 0];
+
+        headings.forEach(function(heading) {
+            const level = parseInt(heading.tagName.charAt(1));
+            const index = level - 1; // Convert to 0-based index
+
+            // Increment current level counter
+            counters[index]++;
+
+            // Reset all lower level counters to 0
+            for (let i = index + 1; i < 6; i++) {
+                counters[i] = 0;
+            }
+
+            // Build counter display
+            let counterText = '';
+            if (level === 1) {
+                counterText = 'Chapter ' + counters[0] + ': ';
+            } else {
+                // Build hierarchical counter from h1 to current level
+                const parts = [];
+                for (let i = 0; i <= index; i++) {
+                    if (counters[i] > 0) {
+                        parts.push(counters[i]);
+                    }
+                }
+                counterText = parts.join('.') + ' ';
+            }
+
+            // Insert counter before heading content
+            const counterSpan = document.createElement('span');
+            counterSpan.className = 'heading-counter';
+            counterSpan.textContent = counterText;
+            counterSpan.style.color = level === 1 ? '#708080' :
+                                      level === 2 ? '#507080' :
+                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.fontSize = level === 1 ? '100%' :
+                                         level === 2 ? '80%' :
+                                         level === 3 ? '60%' : '50%';
+
+            heading.insertBefore(counterSpan, heading.firstChild);
+
+            // Process text nodes for Chinese font
+            const walker = document.createTreeWalker(
+                heading,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Process in reverse order to avoid index issues
+            textNodes.reverse().forEach(processTextNode);
+        });
+    });
+    </script>
+    <style>
+     /* Basic styles for Mimas site */
+
+     * {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+     }
+
+      body {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          color: #333;
+          background: #f5f5f5;
+      }
+
+     div {
+         font-family:
+             "Times New Roman",
+             "LXGW WenKai GB Screen",
+             "Noto Serif SC",
+             sans-serif;
+         font-variant-ligatures: common-ligatures;
+     }
+
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 2rem;
+     }
+
+     /* Header */
+     .site-header {
+         background: #fff;
+         border-bottom: 1px solid #e0e0e0;
+         padding: 1rem 0;
+         margin-bottom: 2rem;
+     }
+
+     .site-header nav {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 0 2rem;
+         display: flex;
+         gap: 2rem;
+     }
+
+     .site-header a {
+         color: #333;
+         text-decoration: none;
+         font-weight: 500;
+     }
+
+     .site-header a:hover {
+         color: #0066cc;
+     }
+
+     /* Main content */
+     main {
+         background: #fff;
+         border-radius: 8px;
+         padding: 2rem;
+         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     }
+
+     /* Typography */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: #708080;
+          margin-top: 1.2rem;
+          margin-bottom: 0.3rem;
+          line-height: 1.15;
+      }
+
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-family: 'Baskerville BT', sans-serif;
+        }
+
+     p {
+         margin-bottom: 1.1rem;
+         color: #7080A3;
+         word-wrap:break-word;
+         white-space:pre-wrap;
+         word-break:break-all;
+     }
+
+     li::marker {
+         color: #609090;
+     }
+
+     li {
+         color: #6060A3
+     }
+
+     strong {
+         color: #705081;
+     }
+
+     code {
+         background: #f0f0f0;
+         padding: 0.2rem 0.4rem;
+         border-radius: 3px;
+         font-family: 'IBM Plex Mono', sans-serif;
+         font-size: 0.9em;
+     }
+
+     pre code {
+         display: block;
+         padding: 0.9rem;
+         overflow-x: auto;
+     }
+
+     footer {
+         text-align: center;
+         padding: 5px;
+     }
+
+     /* Card component */
+     .card {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         padding: 1.5rem;
+         margin-bottom: 1rem;
+     }
+
+     .card-header {
+         margin-bottom: 1rem;
+     }
+
+     .card-title {
+         margin: 0 0 0.5rem 0;
+     }
+
+     .card-description {
+         color: #666;
+         margin: 0;
+     }
+
+     .card-body {
+         margin-bottom: 1rem;
+     }
+
+     .card-footer {
+         border-top: 1px solid #e0e0e0;
+         padding-top: 1rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+
+     /* Footer */
+     .site-footer {
+         text-align: center;
+         padding: 2rem;
+         color: #666;
+         font-size: 0.9em;
+     }
+    </style>
+  </head>
+  <body>
+     <main class="container" style="flex: 1;">
+       <div class="content">
+
+        <header>
+          <div style="text-align:right">
+            <a href="./archive.html">Archives</a>
+            <a href="./">SiteMap</a>
+          </div>
+        </header>
+        <br>
+          <hr>
+        <p style="font-size: 1.6m; color:#A0AFB7">MainPage: Posted on 2026-02-09, by Iris Lennon.</p>
+        <h2>Index</h2>
+
+<p>
+    以S-Expression形式表达XML/HTML的语法在其诞生的最初便已经存在，譬如CommonLisp上的CL-HTTP，现代也存在着类似的库，例如Clojure的krell/hiccup/hiccups/reagent，Racket/Pollen的的X-Expression，还是CommonLisp上的S-XML，以及elisp上的xml-print/dom.el/pp-html/esxml/xmlgen。
+    对于结构化数据，S-Expression非常合适，其缺点是不够语义化，并不够人类可读，对于markdown/html，却又由于过于语义化又无法做到如同S-Expression这种结构化数据格式一样的迅捷处理，知识管理系统也存在着于此类似的平衡：
+    表达能力上抽象高的系统，其能力往往反而不是最强的，因为其能力要受其本身抽象模式的约束；表达能力强的知识管理系统，反而又因为赋予了用户过多的管理权而使得抽象层次变得模糊。<a href="https://xanadu.net/">Project Xanadu ®</a>的发展史作为一个不是很合适的例子反而能够说明一些这类系统固有的问题——二者之间应如何保持平衡？
+    我的知识储备还并不足以让我去思考这个问题，但我想，这应该反映了人类注意力系统的某种固有缺陷，也正是这个缺陷赋予了我们区别于计算机与动物和其他智能体的知能，这个前提应当是可以确定的。
+</p>
+
+<h2>Posts</h2>
+
+<p>
+    以时间倒序排列的文章列表见此：
+</p>
+
+<ul>
+  
+  <a href="./posts/2026-02-20-second.html"><p style="font-size: 1.1em; color:#A0AFB7; text-align:right">Verse:Posted on February 20, 2026,by Iris Lennon.</p></a>
+  
+  <a href="./posts/2026-02-20-forth.html"><p style="font-size: 1.1em; color:#A0AFB7; text-align:right">Languages:Posted on February 20, 2026,by Iris Lennon.</p></a>
+  
+  <a href="./posts/2026-02-20-fifth.html"><p style="font-size: 1.1em; color:#A0AFB7; text-align:right">Office:Posted on February 20, 2026,by Iris Lennon.</p></a>
+  
+  <a href="./posts/2026-02-08-first.html"><p style="font-size: 1.1em; color:#A0AFB7; text-align:right">Prelude:Posted on February  8, 2026,by Iris Lennon.</p></a>
+  
+</ul>
+
+
+<div style="display:none">
+
+    「なにって……なんで？」
+
+    『え？』<br>
+    「なんでなの、あの子はだれ？　なんであの子と行くの？　どうして教えてくれなかったの？　確かにその子とは友達じゃないけど、私はしまむらのこと知りたいもの。しまむらのこと一番知りたいの、しまむらの側にいたいの、それも一番がいいし一番以外だと嫌なの。仲良くなりたいのにどうして？」<br>
+    『ちょっと、安達、』<br>
+    「私は！　しまむらが知らないとこで笑っているとか！　嫌で、他の子と手を繫ぐのも！　私だけがよくて！　私と一緒にいてほしくて！　祭りだって、行きたかったし！　しまむらが楽しそうにしていると、笑っていると、その側に私がいて！　そういうのがよくて！　頭が痛いの、苦しいの！　しまむらのことばっかり考えて、どうかしそうに、なって……しまむらが電話してくれるのも待っているの！　たまには話してよ、私に話しかけてよ、私ばっかりじゃやだ、しまむらも、少しぐらい……少しは私のこと気にならない？　ちょっとも？　まったく？　なんでもないの？　友達だけ？　普通の友達なの？　普通じゃなくなりたいの、普通より一個でもいいから、普通じゃないのが、いい……ねぇ、しまむら、どうすればいいかな、ねぇ。しまむら聞いてる？　聞いて。私の声を聞いてなにか思う？　思ってくれる？　安心でもいいよなんでもいい、なにか思って。そういうのがほしい、そういうの求めちゃだめ？　しまむら！　しまむらなんだよぉ、私ね、しまむらがいいの。しまむら以外いらないし、いらない……しまむらだけでいいから。わがまま言ってないよ、一個だから、一個じゃん。みんななんてどうでもいいしいらないしあっちいっててほしいのになんでしまむらはそっちいくの、こっち来て、こっちに来て、側にいて、離れないで。嫌だ、しまむらの隣にいるのは私、私がいい、私がいたい、いさせて……だれあの子、私知らないよ。知らないしまむらになるのはやだ、しまむらのこと全部知っていたいし、知りたくないことあるのも嫌だし、でも知らないのはもっと嫌だし苦しいの。苦しい、痛い、痛い……しまむらぁ。しまむらと遊びに行こうって、言いたいのにお祭りだって行こうと思ってたんだよ、行きたいよ、でもしまむらあの子と行くの、遊んでいるの？　今どこにいるのしまむら、誰かといるの、しまむら、しまむらぁ……ねぇ聞いてる？　さっきから私ばっかりだよ喋ってるの。いつものしまむらはもっと喋ってくれるよね、ねぇなんで？　いつもみたいじゃない？　私おかしい？　おかしいよね、それは分かるんだよでも、知りたくて、しまむらのこと知りたくて、変になるの。しまむらと離れたくないのいつも一緒にいたいのどこでもいいの一緒ならどこでもいいから、しまむらと会ってないよ、会いたいよでも今会ったら泣きそうだし、泣いてるし、あの子とどうなんだろうなんなんだろうってそればかり気になっているしねぇ聞いてる？　私と一緒にいるよりあの子の方がいいの？　私だめ？　どこがだめ？　直すから言ってよ、直す絶対に直すだからお願い教えて、聞きたいの。しまむらはね、私、しまむらだから……しまむらだからっていうのがあるの、他の人がしまむらそっくりでも関係ないのいるはずないけど、ねぇそういうのじゃなくて、しまむらじゃないとダメなの。だから仲良くなりたいのに、なんか……こういうのじゃなくてもっと違う話したいけど、気になって……だってしまむら、笑顔だったよ？　私以外に笑うの、嫌だよ。嫌じゃない？　そうじゃない？　しまむらそういうのない？　しまむらって誰が好き？　好きな人いる？　好きになれる？　好きってなにか分かる？　時々ね、怖いの。しまむらはなんで隣にいてくれるんだろうって。しまむらと私ってそもそも友達だよね？　友達ぐらいにはなっているよね。友達と思ってくれてる？　しまむらは、そういうの……うぅう、ぇえ、しまむら、声聞かせて。声聞きたい、私のこと話して。しまむらが一番、私のこと分かって……分かってほしい。分かりたいし分かってほしい。一番になってほしい、なりたいの。なって、でも……ちょっと嫌なことがあるとくじけそうで……だってしまむらは、なんか、私を大事にしている感じがないから……大事、大事って変だけど、でも大事にしてほしい。大事がいいの！　他のと一緒にされるのやなの、本当に少しで、いいから……しまむら私のこと考えたことある？　夏休みに、ずっと会ってないけど、一回ぐらいは考えてくれた？　私ね、ずっと考えてた。しまむらのことしか考えてなかったよ。全部しまむら。だから、しまむらも！　私のこと、けっこう、考えて……しまむらと私は違うよ？　違うよね、分かってる、でも！　期待はするし、しちゃうし、こうしてうらぎ、られても……しまむらに電話したいって思うの。でも電話したってこうなって、どうにもならなくて、どうすればいいかな。ねぇ、しまむら、しまむら？　電話、繫がってるよね？　しまむらと繫がってるよね？　でも遠い、遠くて、会いたい。しまむらに直接会いたいの。笑ってほしいの、しまむらに頭を撫でてね、大丈夫って言ってほしいの。今どこにいるの？　どこ？　誰かといる？　あの子？　あの子だれ？　さっきから何回も聞いたよね、答えられないような相手なの？　どんな仲？　私より？　やだ、そんなのやだ、私よりなんて、やだって。やだ……違うって、違うって言って！　私、しまむらのこといっぱい考えてるよ！　足りない？　それじゃだめ？　もっと？　なにすればいい？　分かんないし、いつも考えても失敗するし、どういう私がいいのか教えて、教えてくれたら、私がんばるよ。絶対がんばるよ、だから、そんな子ほんとは、どっちでもいい。私が会いたいしまむらはもっと、別で、私が変わればいいだけって、わかってるけど……しまむら、ねぇ、しまむら。今なに考えてる？　私おかしい？　私へん？　しまむらの話をして。しまむらから私に声をかけて、しまむらから近づいて。いつも私ばっかり、ばっかり、ばっかり……一方通行じゃあ、こうなっちゃうよ！　こういうふうになっちゃうから、しまむらもこっち、に来て。しまむらは私嫌い？　違うよね？　やだよ、嫌いにならないで。嫌いいやだ。嫌いなのいやだ……好きに、好きになってほしい。だれか、好きになって。違うしまむらが好きに……嫌いなの？　お母さんみたいに私のこと嫌いなの？　声かけなくなるの？　知らない顔されるの？　私なんて言えばいいの？　なにすればいいの、飛べばいいの、跳ねればいいの、手を繫げばいいの、みんなやろうとしてでもやったら見てなくて……どうすればよかったの。どうすれば、誰も……しまむら、声、聞きたい……なにか言って、安心させて、でも他の人に笑うのやだ、私に笑って、笑って……頭痛い、お腹も、痛い……気になってたのになんで連絡、してくれなかったの。私に教えてよ、私知りたいの。しまむらのこと知りたいの、さっきからなんか、もう、気持ちぐるぐるで……同じこと言ってるけど、仕方ないよ、仕方ないじゃん、しまむらのことしか考えてないんだから……しまむらのことだけだから、ずっと、しまむらになっても……しまむらが、大事で、大事にしたくて、大事じゃないとやで、だから、私を見て。しまむら、見てないとやだ……他の子、なんてやだぁ……やなの。また行くの？　どこか行くの？　一緒に町行くの？　私と遊んだとこに、他の子と！　そんなの、やだよ。上書きしないでよ！　私、ずっと覚えてるのに、上書きされて……また行ったら、今度は違うの？　同じとこ見て違うもの見るの？　そんなのやだ、やだ、やだ。しまむらと一緒に、一緒のもの、分けて、分かって……おかしいよそんなの。違うよね私おかしいの、おかしいの分かるよ、でもおかしくなって……しまむらのこと、頭から離れなくて……今も……しまむら、しまむら、しま、むら……うぇう、う、うううう、しまむら、しまむら……っほ、げ、うぅ……しまむらの、しまむら？　しまむら、しまむら、しまむら……しまむらがいい、私は、いいから、だからしまむらも……ねぇお願い、しまむら……しまむらも、しまむら……」<br>
+    　止まらなかった。自然と流れる涙が口に入らなかったら、いつまでも喋り続けていそうだった。坂を転げ落ちたらもう止まれない。上でしまむらが待っていたとしても、戻れない。<br>
+    　逆恨みだって、頭のどこかで諫める声を聞いた。<br>
+    　分かっている、ただの嫉妬だって。<br>
+    　そう私は嫉妬しているんだ。ヤキモチ妬いているんだ。<br>
+    　しまむらに怒るのはお門違いで、でもじゃあ、この気持ちをどこにぶつければいいのか。<br>
+    　整理のつかない混乱に陥り、むせび泣く。<br>
+    　だって、だってだって、だって。<br>
+    『………………………………………はぁ』<br>
+    　溜息が、聞こえた。<br>
+    顔を静かに、縦に両断してくるような深々とした吐息。<br>
+    　そして。
+
+
+    『……めんどくさいなぁ……』
+
+
+    「………………………………………え」
+
+</div>
+
+      </div>
+    </main>
+  </body>
+  <footer>
+    <center>
+      <a href="./about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
+      <a href="./contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
+      <br>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
+      <br>
+      <br>
+      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
+  </center>
+  </footer>
+</html>
