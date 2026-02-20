@@ -1,0 +1,1366 @@
+---
+title: Office
+author: Iris Lennon
+---
+
+# Useful Tools
+
+关于在linux上办公以及创作…诸如此类。
+
+## EasyOCR
+
+    pip install -U huggingface_hub
+    pip install easyocr
+
+    ## export HF_ENDPOINT=https://hf-mirror.com
+
+    easyocr -l en -f $PATH --gpu=True --detail=0 --output_format=standard
+
+## mupdf
+
+    git clone --recursive git://git.ghostscript.com/mupdf.git && cd mupdf &&  make && cp ./build/release/mutool ~/.local/bin/mutool
+
+     # install to .local
+     vi Makefile
+
+     profile ?= /usr/local/ => profile ?= /home/iris/.local/
+
+> 关于`mupdf`库，可以使用`pacman`也可以如此安装，最终通过`emacs`的`reader`工作。
+
+## Env
+
+### Go
+
+`go env -w GO111MODULE=on`
+
+`go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct`
+
+### Python
+
+`python -m venv ~/.local/` xor `uv venv ~/uv/`
+
+    # cat .zshrc => export PATH=$PATH:~/.local/bin
+
+    pip install -i https://mirrors.ustc.edu.cn/pypi/simple pip -U
+    pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+
+`uv` config `~/.config/uv/uv.toml`
+
+    [[index]]
+    url = "https://mirrors.ustc.edu.cn/pypi/simple"
+    default = true
+
+### TS/JS
+
+`npm config set prefix '$PATH'` =>
+`.zshrc`:`export PATH="$HOME/node_global/bin:$PATH"`
+
+    npm install -g nrm
+    nrm ls
+    nrm use taobao
+    nrm test
+
+## ShellTools
+
+`cargo install starship`
+
+[issue 5985:timeout setting](https://github.com/starship/starship/issues/5985#issuecomment-2126457753) =>
+
+`starship config command_timeout <some value>`
+
+### tmux
+```
+set -g base-index         0
+set -g display-panes-time 10000
+set -g mouse              on
+set -g pane-base-index    0
+set -g renumber-windows   on
+
+setw -g allow-rename      off
+setw -g automatic-rename  off
+setw -g mode-keys         vi
+
+set -g @resurrect-dir '~/.tmux/resurrect'
+
+set -g status-right '#{prefix_highlight} #H | %a %Y-%m-%d %H:%M'
+set -g @prefix_highlight_show_copy_mode 'on'
+
+
+setenv -g TMUX_PLUGIN_MANAGER_PATH '~/.tmux/plugins'
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin "nordtheme/tmux"
+
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?\.?(view|n?vim?x?)(-wrapped)?(diff)?$'"
+
+bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
+bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
+bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
+bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
+
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+bind -n 'M-h' if-shell "$is_vim" 'send-keys M-h' 'resize-pane -L 1'
+bind -n 'M-j' if-shell "$is_vim" 'send-keys M-j' 'resize-pane -D 1'
+bind -n 'M-k' if-shell "$is_vim" 'send-keys M-k' 'resize-pane -U 1'
+bind -n 'M-l' if-shell "$is_vim" 'send-keys M-l' 'resize-pane -R 1'
+
+bind-key -T copy-mode-vi M-h resize-pane -L 1
+bind-key -T copy-mode-vi M-j resize-pane -D 1
+bind-key -T copy-mode-vi M-k resize-pane -U 1
+bind-key -T copy-mode-vi M-l resize-pane -R 1
+
+run '~/.tmux/plugins/tpm/tpm'
+
+```
+
+```
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+sh ~/.tmux/plugins/tpm/bin/install_plugins
+```
+
+`C-b :source-file ~/.tmux.conf`
+
+#### lvim `config.lua`
+```
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-h>",
+  [[<cmd>lua require("tmux").move_left()<CR>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-j>",
+  [[<cmd>lua require("tmux").move_bottom()<CR>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-k>",
+  [[<cmd>lua require("tmux").move_top()<CR>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap("n",
+  "<C-l>",
+  [[<cmd>lua require("tmux").move_right()<CR>]],
+  { noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap("n",
+  "<M-h>",
+  [[<cmd>lua require("tmux").resize_left()<cr>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+    "n",
+    "<M-j>",
+    [[<cmd>lua require("tmux").resize_bottom()<cr>]],
+    { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<M-k>",
+  [[<cmd>lua require("tmux").resize_top()<cr>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+    "n",
+    "<M-l>",
+    [[<cmd>lua require("tmux").resize_right()<cr>]],
+    { noremap = true, silent = true }
+)
+```
+
+### ImageView
+
+    cargo install viu
+    ## viu $PATH/$NAME
+
+### fish
+
+    cargo install --git https://github.com/fish-shell/fish-shell --locked
+
+#### fisher
+
+    git clone --depth=1 https://github.com/jorgebucaran/fisher.git && cd fisher/functions
+
+    source
+    fisher install ../
+    fisher install IlanCosman/tide@v6
+
+#### starship
+
+`starship init fish | source` => `config.fish`
+
+`cat $__fish_config_dir/config.fish` =>
+
+    alias cat=bat
+    alias ls=eza
+    alias grep=rg
+    alias vi=lvim
+
+### zsh
+
+`pacman -S zsh zsh-completions`
+
+[zsh-syntax-higtlighting/issue/812](https://github.com/zsh-users/zsh-syntax-highlighting/issues/812)
+
+*Do not define functions in the namespace except as specifically permitted in the z-sy-h documentation. **zsh highlight** *
+
+#### `.zshrc`:PackageManager and p10k/starship \\deprecated\\
+
+    HISTFILE="$HOME/.zsh_history"
+    HISTSIZE=10000
+    SAVEHIST=10000
+    setopt SHARE_HISTORY
+
+    git clone --depth=1 https://github.com/zdharma-continuum/zinit ~/.local/share/zinit/zinit.git
+    zsh ~/.local/share/zinit/zinit.git/scripts/install.sh
+    source ~/.zshrc
+
+    zinit ice depth"1" # git clone depth
+    zinit snippet OMZ::* # use OMZ
+
+    zinit light zsh-users/zsh-completions
+    zinit light zsh-users/zsh-syntax-highlighting
+    zinit light zsh-users/zsh-history-substring-search
+    zinit light zsh-users/zsh-autosuggestions
+    zinit light zdharma-continuum/fast-syntax-highlighting
+
+    #starship Scheme
+
+    starship preset nerd-font-symbols -o ~/.config/starship.toml
+    eval "$(starship init zsh)"
+
+    #OMZ Scheme
+
+    zinit light romkatv/powerlevel10k #p10k
+
+    plugins=(git
+            zsh-syntax-highlighting
+            zsh-autosuggestions
+            zsh-completions)
+
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+
+`zim`:
+
+`wget2 -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh`
+
+`.zimrc` =>
+
+    ++ zmodule zdharma-continuum/fast-syntax-highlighting
+    -- zmodule asciiship
+    ++ zmodule romkatv/powerlevel10k
+
+`.zshrc` =>
+
+    # Promat
+    ## Copy by https://emacs-china.org/u/blindingdark/summary
+
+    autoload -Uz vcs_info
+    precmd() { vcs_info }
+    zstyle ':vcs_info:git:*' formats '%b '
+
+    NEWLINE=$'\n'
+    setopt PROMPT_SUBST
+    PROMPT='%F{blue}%~%f %F{red}${vcs_info_msg_0_}%f${NEWLINE}%(?..%F{red}%?%f )%F{green}❯%f '
+
+### `.zshrc`
+
+```
+#!/usr/bin/env zsh
+
+# if [[ "$(tty)" == "/dev/tty1" ]]; then
+#     exec start-hyprland &>/dev/null
+# fi
+
+##### .zshrc
+
+if (( EUID != 0 )); then
+  path=(
+    $HOME/bin
+    $HOME/.local/bin
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/local/sbin
+    /usr/sbin
+    /sbin
+    /usr/local/games
+    /usr/games
+    "${ADDONS}"
+    "${path[@]}"
+  )
+else
+  path=(
+    $HOME/bin
+    $HOME/.local/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /sbin
+    /bin
+    /usr/sbin
+    /usr/bin
+    "${ADDONS}"
+    "${path[@]}"
+  )
+fi
+
+path=( "${path[@]:#}" )
+
+typeset -U path
+
+export RUSTUP_UPDATE_ROOT=https://mirrors.aliyun.com/rustup/rustup
+export RUSTUP_DIST_SERVER=https://mirrors.aliyun.com/rustup
+export PATH=$HOME/.cargo/bin/:$PATH
+
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"
+
+export PATH=$HOME/.ghcup/bin/:$PATH
+export PATH=$HOME/.cabal/bin/:$PATH
+
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+export PATH=$HOME/.npm/bin/:$PATH
+
+export PATH=$HOME/.uv/bin/:$PATH
+
+export PLAN9=/home/iris/.local/plan9 export PLAN9
+export PATH=$PATH:$PLAN9/bin export PATH
+
+PS1="Ready > "
+RPS1="%F{240}Loading...%f"
+
+############
+### Environment
+############
+
+ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+ZSCRIPTDIR="${ZDOTDIR}/scripts"
+ZDATADIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh.d"
+ZPLUGINDIR="${ZDATADIR}/plugins"
+ZCACHEDIR="${ZDATADIR}/cache"
+[ -d "${ZCACHEDIR}" ] || mkdir -p "${ZCACHEDIR}"
+
+#[[ ":$PATH:" == *":$HOME/bin:"* ]] || export PATH="${HOME}/bin:$PATH"
+
+if [[ $(tty) == /dev/tty* ]] ; then
+  export LANG=C.UTF-8
+elif [[ $(tty) == /dev/pts/* ]] ; then
+  export LANG=en_US.UTF-8
+fi
+
+if (( ${+commands[gpg]} )); then
+  export GPG_TTY=$(tty)
+fi
+
+if [[ -z "${EDITOR}" ]]; then
+  for _editor in helix hx nvim vim nano; do
+    if (( ${+commands[${_editor}]} )); then
+      export EDITOR="${_editor}"
+      break
+    fi
+  done
+fi
+
+if (( ${+commands[fd]} )); then
+  export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+elif (( ${+commands[fdfind]} )); then
+  export FZF_DEFAULT_COMMAND="fdfind --hidden --follow --exclude '.git' --exclude 'node_modules'"
+elif (( ${+commands[rg]} )); then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/**"'
+else
+  export FZF_DEFAULT_COMMAND='find . -type f -not \( -path "*/.git/*" -o -path "./node_modules/*" \)'
+fi
+
+# wl-clipboard
+
+# 复制选区到 wl-clipboard (不删除)
+wl-copy-region-as-kill() {
+        zle copy-region-as-kill
+        print -rn -- "$CUTBUFFER" | wl-copy --trim-newline
+}
+zle -N wl-copy-region-as-kill
+
+# 剪切选区到 wl-clipboard
+wl-kill-region() {
+        zle kill-region
+        print -rn -- "$CUTBUFFER" | wl-copy --trim-newline
+}
+zle -N wl-kill-region
+
+# 剪切到行尾
+wl-kill-line() {
+        zle kill-line
+        print -rn -- "$CUTBUFFER" | wl-copy --trim-newline
+}
+zle -N wl-kill-line
+
+# 后向删除单词
+wl-backward-kill-word() {
+        zle backward-kill-word
+        print -rn -- "$CUTBUFFER" | wl-copy --trim-newline
+}
+zle -N wl-backward-kill-word
+
+# 从 wl-clipboard 粘贴
+wl-yank() {
+        CUTBUFFER=$(wl-paste --no-newline)
+        zle yank
+}
+zle -N wl-yank
+
+# 绑定 Emacs 风格快捷键
+bindkey '^[w' wl-copy-region-as-kill    # Alt+W: 复制
+bindkey '^W' wl-kill-region              # Ctrl+W: 剪切
+bindkey '^K' wl-kill-line                # Ctrl+K: 剪切到行尾
+bindkey '^Y' wl-yank                     # Ctrl+Y: 粘贴
+bindkey '^[^?' wl-backward-kill-word     # Alt+Backspace: 删除单词
+
+# ssh
+
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+#
+### End of Environment
+#
+
+############
+### Features
+############
+
+# Basic
+setopt always_to_end
+setopt extended_glob
+setopt no_beep
+setopt no_flow_control
+setopt no_nomatch
+setopt prompt_subst
+
+# Directory
+setopt auto_cd
+DIRSTACKSIZE=16
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_minus
+
+# Job Control
+setopt long_list_jobs
+setopt no_bg_nice
+setopt no_check_jobs
+setopt no_hup
+
+# I/O
+setopt interactive_comments
+setopt no_clobber
+setopt rc_quotes
+
+# History
+HISTFILE="${ZCACHEDIR}/zsh_history"
+HISTSIZE='261120'
+SAVEHIST='261120'
+setopt inc_append_history
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt share_history
+
+#
+### End of Features
+#
+
+############
+### Aliases
+############
+
+alias cp='cp -iv --reflink=auto'
+alias rcp='rsync -v --progress'
+alias rmv='rsync -v --progress --remove-source-files'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias rmdir='rmdir -v'
+alias ln='ln -v'
+alias chmod="chmod -c"
+alias chown="chown -c"
+alias mkdir="mkdir -v"
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+
+if (( ${+commands[bat]} )); then
+  alias cat='bat'
+elif (( ${+commands[batcat]} )); then
+  alias cat='batcat'
+  alias bat='batcat'
+fi
+
+if (( ${+commands[eza]} )); then
+  alias ls='command eza --color=auto --sort=Name --classify --group-directories-first --time-style=long-iso --group'
+  alias l='ls'
+  alias la='ls -a'
+  alias lh='ls --all --header --long'
+  alias ll='lh'
+  xtree () {
+    eza -T --color=always "$@" | cat
+  }
+else
+  alias ls='command ls -C --color=auto --human-readable --classify --group-directories-first --time-style=+%Y-%m-%d\ %H:%M --quoting-style=literal'
+  alias l='ls'
+  alias la='ls -A'
+  alias lh='la -l'
+  alias ll='lh'
+fi
+
+if (( ${+commands[fd]} )); then
+  alias fd='fd'
+elif (( ${+commands[fdfind]} )); then
+  alias fd='fdfind'
+fi
+
+if (( ${+commands[doas]} )) ; then
+  alias s="doas"
+elif (( ${+commands[sudo]} )); then
+  alias s="sudo"
+fi
+
+if (( ${+commands[systemctl]} )) ; then
+  alias sdctl="systemctl"
+fi
+
+# https://github.com/lilydjwg/dotzsh/blob/master/zshrc
+alias -g NN="*(oc[1])"
+alias -g NNF="*(oc[1].)"
+alias -g NND="*(oc[1]/)"
+alias -g NUL="/dev/null"
+
+#
+### End of Aliases
+#
+
+############
+### Func
+############
+
+## Modified based on MamoruDS/history-fuzzy-search
+history-fuzzy-search() {
+  local preview_extra_cmd='_fetch() { setopt extended_glob && HISTFILE='"$HISTFILE"' && fc -R && print -rNC1 -- ${(v)history[$((${(M)${*}## #<->}))]} } && _fetch {}'
+  local fuzzy_history=$(fc -lr 0 | fzf +s +m -x --with-nth 2.. --scheme=history --layout=reverse --height=50% --preview-window='bottom:3:wrap' --preview $preview_extra_cmd --query="$BUFFER")
+  if [ -n "$fuzzy_history" ]; then
+    BUFFER="${fuzzy_history[@]}"
+    zle vi-fetch-history -n $BUFFER
+  fi
+  zle reset-prompt
+}
+
+## file find
+file-fuzzy-find() {
+  local fuzzy_filefind cmd keyword
+  if [[ "${BUFFER}" == *" "* ]]; then
+    cmd=${${BUFFER}[(w)1]}
+    keyword=${BUFFER#"${cmd} "}
+    fuzzy_filefind="$cmd $(eval ${FZF_DEFAULT_COMMAND} | sk --height=50% --layout=reverse --query="${keyword}" -1)"
+  else
+    fuzzy_filefind="$(eval ${FZF_DEFAULT_COMMAND} | sk --height=50% --layout=reverse --query="${BUFFER}" -1)"
+  fi
+  if [ -n "$fuzzy_filefind" ]; then
+    BUFFER="${fuzzy_filefind[@]}"
+  fi
+  zle end-of-line
+  zle reset-prompt
+}
+
+## sudo or doas will be inserted before the command
+sudo-command-line() {
+  local cmd
+  [[ -z ${BUFFER} ]] && zle up-history
+  if (( ${+commands[doas]} )) ; then
+    cmd="doas "
+  elif (( ${+commands[sudo]} )) ; then
+    cmd="sudo "
+  else
+    cmd="su - root -c "
+  fi
+  if [[ ${BUFFER} == ${cmd}* ]]; then
+    CURSOR=$(( CURSOR-${#cmd} ))
+    BUFFER="${BUFFER#$cmd}"
+  else
+    BUFFER="${cmd}${BUFFER}"
+    CURSOR=$(( CURSOR+${#cmd} ))
+  fi
+  zle reset-prompt
+}
+
+## File Download
+xget() {
+  local uri="$1"
+  local save="$2"
+  if [[ -z "$save" ]]; then
+    save=$(basename "${uri%%\?*}")
+  fi
+  if (( ${+commands[aria2c]} )); then
+    aria2c --max-connection-per-server=4 --continue "$uri" -o "$save"
+  elif (( ${+commands[axel]} )); then
+    axel --num-connections=4 --alternate "$uri" -o "$save"
+  elif (( ${+commands[wget]} )); then
+    wget --continue --progress=bar -O "$save" "$uri"
+  elif (( ${+commands[curl]} )); then
+    curl --continue-at - --location --progress-bar --remote-name --remote-time "$uri" -o "$save"
+  else
+    printf "No suitable download tool found.\n"
+  fi
+}
+
+## smart cd function, allows switching to /etc when running 'cd /etc/fstab'
+cd() {
+  if (( ${#argv} == 1 )) && [[ -f ${1} ]]; then
+    [[ ! -e ${1:h} ]] && return 1
+    print "Correcting ${1} to ${1:h}"
+    builtin cd ${1:h}
+  else
+    builtin cd "$@"
+  fi
+}
+
+reload() {
+  # clear
+  exec "${SHELL}" "$@"
+}
+
+mkdcd() {
+  [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
+}
+
+#
+### End of Func
+#
+
+############
+### Keybindings
+############
+
+# Modified based on jirutka/alpine-zsh-config
+# Use emacs key bindings.
+bindkey -e
+
+# Load widgets that are not loaded by default.
+autoload -U up-line-or-beginning-search
+zle -N up-line-or-beginning-search
+
+autoload -U down-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ ${TERM} != dumb ]] && () {
+  emulate -L zsh -o no_aliases
+
+  # Make sure that the terminal is in application mode when zle is active,
+  # since only then values from $terminfo are valid.
+  if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+    autoload -U add-zle-hook-widget
+
+    function .zshrc::term-application-mode() {
+      echoti smkx
+    }
+    add-zle-hook-widget zle-line-init .zshrc::term-application-mode
+
+    function .zshrc::term-normal-mode() {
+      echoti rmkx
+    }
+    add-zle-hook-widget zle-line-finish .zshrc::term-normal-mode
+  fi
+
+  # `seq` is a fallback for the case when terminfo is not available.
+  local kcap seq widget
+  for  kcap   seq        widget (                       # key name
+    khome  '^[[H'     beginning-of-line              # Home
+    khome  '^[OH'     beginning-of-line              # Home (in app mode)
+    kend   '^[[F'     end-of-line                    # End
+    kend   '^[OF'     end-of-line                    # End (in app mode)
+    kdch1  '^[[3~'    delete-char                    # Delete
+    kpp    '^[[5~'    up-line-or-history             # PageUp
+    knp    '^[[6~'    down-line-or-history           # PageDown
+    kcuu1  '^[[A'     up-line-or-beginning-search    # UpArrow - fuzzy find history backward
+    kcuu1  '^[OA'     up-line-or-beginning-search    # UpArrow - fuzzy find history backward (in app mode)
+    kcud1  '^[[B'     down-line-or-beginning-search  # DownArrow - fuzzy find history forward
+    kcud1  '^[OB'     down-line-or-beginning-search  # DownArrow - fuzzy find history forward (in app mode)
+    kcbt   '^[[Z'     reverse-menu-complete          # Shift + Tab
+    x      '^[[2;5~'  copy-region-as-kill            # Ctrl + Insert
+    kDC5   '^[[3;5~'  kill-word                      # Ctrl + Delete
+    kRIT5  '^[[1;5C'  forward-word                   # Ctrl + RightArrow
+    kLFT5  '^[[1;5D'  backward-word                  # Ctrl + LeftArrow
+  ); do
+    bindkey -M emacs ${terminfo[$kcap]:-$seq} $widget
+    bindkey -M viins ${terminfo[$kcap]:-$seq} $widget
+    bindkey -M vicmd ${terminfo[$kcap]:-$seq} $widget
+  done
+}
+
+# Expandpace.
+bindkey ' ' magic-space
+
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+
+# <Ctrl-e> to edit command-line in EDITOR
+autoload -Uz edit-command-line && zle -N edit-command-line && \
+  bindkey "^E" edit-command-line
+
+# [Esc] [Esc] to sudo-command-line
+zle -N sudo-command-line && \
+  bindkey "\e\e" sudo-command-line
+
+if (( ${+commands[fzf]} )) ; then
+# <Ctrl-r> to history-fuzzy-search
+  zle -N history-fuzzy-search && \
+    bindkey "^R" history-fuzzy-search
+# <Ctrl-t> to file-fuzzy-find
+  zle -N file-fuzzy-find && \
+    bindkey "^T" file-fuzzy-find
+fi
+
+_exit_zsh() { exit; }
+zle -N _exit_zsh && \
+  bindkey "^D" _exit_zsh
+
+#
+### End of Keybindings
+#
+
+#
+#Plugins
+#
+
+# Clone zcomet if necessary
+if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
+  command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
+  fi
+
+  source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
+
+# It is good to load these popular plugins last, and in this order:
+
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+zcomet load zdharma/fast-syntax-highlighting
+
+zcomet load zsh-users/zsh-autosuggestions
+zcomet load zsh-users/zsh-completions
+
+export TYPEWRITTEN_PROMPT_LAYOUT="pure_verbose"
+
+zcomet load reobin/typewritten
+
+zcomet compinit
+
+#
+### End of Plugins
+#
+
+## END OF FILE #################################################################
+# vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
+# Local variables:
+# mode: sh
+# End:
+
+PATH="/home/iris/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/iris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/iris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/iris/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/iris/perl5"; export PERL_MM_OPT;
+```
+
+## Terminal
+
+[hotkey](https://sw.kovidgoyal.net/kitty/overview/#overview)
+
+`sudo pacman -S kitty`
+
+### Kitty
+
+`kitty +kitten themes --reload-in=all [theme name]` *Doom Vibrant*
+
+    git clone --depth 1 https://github.com/dexpota/kitty-themes ~/.config/kitty/kitty-themes/ && ln -s  ~/.config/kitty/kitty-themes/ ~/.config/kitty/themes
+
+`cat ~/.config/kitty/kitty.conf` =&gt;
+
+    # BEGIN_KITTY_THEME
+    # Spacemacs
+    include current-theme.conf
+    # END_KITTY_THEME
+    font_family      FiraCode Nerd Font
+
+    symbol_map U+4E00-U+9FA5 LxgwWenKai
+
+*deprecated*
+
+    kitty +kitten themes --dump-theme
+    ## xor
+    cd ~/.config/kitty
+    ln -s ./kitty-themes/themes/[name].conf ~/.config/kitty/theme.conf
+
+`cat ~/.config/kitty/kitty.conf` =>
+
+    # ...
+    # include ./theme.conf
+    # ...
+
+### Fetch
+
+`cargo install --git "https://github.com/kamui-fin/rfetch" --features=battery`
+
+#### Config
+
+    # cat .config/rfetch/config.toml
+
+    modules = ["user_host", "shell", "distro", "packages", "uptime", "memory", "kernel", "ip", "cpu", "disk_usage", "process_num", "arch", "temp", "locale", "device_name", "time", "date", "battery"]
+    delimiter = "~>"
+    title_color = "pink"
+
+    [user_host]
+    line = true
+    line_symbol = "━"
+    line_color = "magenta"
+
+    [colors]
+    enabled = true
+    show_bg_colors = false
+
+    [ip]
+    public = true
+
+## PackageManager
+
+### pacman
+
+[upgrade-requires-manual-intervention](https://www.archlinuxcn.org/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/)
+
+`sudo pacman -Qo /usr/lib/firmware/nvidia/ad103` =>
+`/usr/lib/firmware/nvidia/ad103/ is owned by linux-firmware 20250508.788aadc8-2`
+
+```
+> error: failed to commit transaction (conflicting files)
+> linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad103 exists in
+> filesystem
+> linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad104 exists in
+> filesystem
+> linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad106 exists in
+> filesystem
+> linux-firmware-nvidia: /usr/lib/firmware/nvidia/ad107 exists in
+> filesystem
+```
+
+[break change](https://archlinux.org/news/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention/)
+
+    cd lib/firmware/nvidia
+
+     sudo mv ad103 ad103.bak
+     sudo mv ad104 ad104.bak
+     sudo mv ad106 ad106.bak
+     sudo mv ad107 ad107.bak
+
+    sudo pacman -Syu
+    sudo rm -r *.bak # nil!
+
+or
+
+    sudo pacman -Rcn linux-firmware-nvidia && sudo pacman -Syu linux-firmware
+
+### aura
+
+    ## aura check
+
+    sudo pacman -S pacman-contrib graphviz
+    pip install shellcheck-py
+
+    ## install
+
+    cargo install aura
+
+    ## Deps Graph
+
+    aura deps [package-name] --open
+
+    # cat ~/.config/mimeapps.list => image/png=emacs.desktop
+
+### Reflector
+
+    sudo pacman -S reflector
+    sudo systemctl [enable/start] reflector.[timer/service]
+
+    sudo vim /etc/xdg/reflector/reflector.conf
+    # -- --country France,Germany
+    # -- --protocol https
+    # ...
+    # ++ --country China
+    # ++ --protocol https
+
+    sudo vim /etc/pacman.conf
+    # -- #NoExtract   =
+    # ++ NoExtract   = true
+
+## Fonts
+
+Global TeX Font and
+`git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts/`.
+
+## LinuxTools
+
+### UEFI Shell
+
+by [giteeajake](https://forum.archlinuxcn.org/t/topic/13438/3)
+
+    pacman -S edk2-shell && sudo cp /usr/share/edk2-shell/x64/Shell_Full.efi /boot/shellx64.efi
+
+### OOM
+
+    sudo pacman -S earlyoom
+    sudo systemctl enable --now earlyoom
+
+### Trash
+
+    cargo install cargo install czkawka_[gui/cli]
+
+### Browser
+
+    sudo pacman -S nyxt
+
+#### Clipboard
+
+    sudo pacman -S wl-clipboard
+
+#### `config file`
+
+=&gt; `.config/nyxt/config.lisp`
+
+    ;; emacs keybinds
+    (define-configuration buffer
+      ((default-modes
+        (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))
+
+### FileManager
+
+*install*
+
+    sudo pacman -S yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick
+    paru -S resvg
+
+    cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
+
+### `iwctl`
+
+退出时使用`exit`会断开连接状态，使用`C-d`则不会断联。
+
+## Hyprland
+
+### hyprland
+
+``` conf
+################
+### MONITORS ###
+################
+
+# See https://wiki.hypr.land/Configuring/Monitors/
+monitor=eDP-1,2240x1400@60,0x0,1
+
+###################
+### MY PROGRAMS ###
+###################
+
+# See https://wiki.hypr.land/Configuring/Keywords/
+
+# Set programs that you use
+$terminal = kitty
+$editor = emacsclient --alternate-editor= --create-frame %F
+$fileManager = dolphin
+$screenshot = grim -g "$(slurp)" "$HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png" ## && xdg-open "$HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+#################
+### AUTOSTART ###
+#################
+
+# Autostart necessary processes (like notifications daemons, status bars, etc.)
+# Or execute your favorite apps at launch like this:
+
+# exec-once = $terminal
+exec-once = waybar
+exec-once = hyprpaper
+exec-once = fcitx5 --replace -d
+exec-once = echo 'Xft.dpi:144' | xrdb -merge
+exec-once = systemctl --user start dunst.service
+
+exec-once = dbus-update-activation-environment --all
+exec-once = sleep 1 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+#############################
+### ENVIRONMENT VARIABLES ###
+#############################
+
+# See https://wiki.hypr.land/Configuring/Environment-variables/
+env = XDG_DATA_DIRS,$HOME/.local/share:/usr/local/share:/usr/share
+
+env = XCURSOR_SIZE,24
+env = HYPRCURSOR_SIZE,24
+
+env = ELECTRON_OZONE_PLATFORM_HINT,auto
+
+env = QT_IM_MODULE, fcitx
+env = XMODIFIERS, @im=fcitx
+env = SDL_IM_MODULE, fcitx
+env = GLFW_IM_MODULE, ibus
+env = INPUT_METHOD, fcitx
+
+env = QT_QPA_PLATFORM, wayland
+env = QT_QPA_PLATFORMTHEME, qt6ct
+env = XDG_MENU_PREFIX, plasma-
+
+env = TERMINAL,kitty -1
+###################
+### PERMISSIONS ###
+###################
+
+# See https://wiki.hypr.land/Configuring/Permissions/
+# Please note permission changes here require a Hyprland restart and are not applied on-the-fly
+# for security reasons
+
+ecosystem {
+  enforce_permissions = 1
+}
+
+permission = /usr/(bin|local/bin)/grim, screencopy, allow
+permission = /usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow
+permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
+
+
+#####################
+### LOOK AND FEEL ###
+#####################
+
+# Refer to https://wiki.hypr.land/Configuring/Variables/
+
+# https://wiki.hypr.land/Configuring/Variables/#general
+general {
+    gaps_in = 0
+    gaps_out = 0
+
+    border_size = 1
+
+    # https://wiki.hypr.land/Configuring/Variables/#variable-types for info about colors
+    col.active_border = rgba(8fBcbbee) rgba(dce0e8ee) 45deg
+    col.inactive_border = rgba(ecececaa)
+
+    # Set to true enable resizing windows by clicking and dragging on borders and gaps
+    resize_on_border = true
+
+    # Please see https://wiki.hypr.land/Configuring/Tearing/ before you turn this on
+    allow_tearing = true
+
+    layout = master #dwindle
+}
+
+# https://wiki.hypr.land/Configuring/Variables/#decoration
+decoration {
+    rounding = 0
+    rounding_power = 0
+
+    # Change transparency of focused and unfocused windows
+    active_opacity = 0.9
+    inactive_opacity = 1.0
+
+    shadow {
+        enabled = 0
+        range = 4
+        render_power = 3
+        color = rgba(1a1a1aee)
+    }
+
+    # https://wiki.hypr.land/Configuring/Variables/#blur
+    blur {
+        enabled = 0
+        size = 0
+        passes = 1
+
+        vibrancy = 0.1696
+    }
+}
+
+# https://wiki.hypr.land/Configuring/Variables/#animations
+animations {
+    enabled = no # , please :)
+
+    # Default animations, see https://wiki.hypr.land/Configuring/Animations/ for more
+
+    bezier = easeOutQuint,0.23,1,0.32,1
+    bezier = easeInOutCubic,0.65,0.05,0.36,1
+    bezier = linear,0,0,1,1
+    bezier = almostLinear,0.5,0.5,0.75,1.0
+    bezier = quick,0.15,0,0.1,1
+
+    animation = global, 1, 10, default
+    animation = border, 1, 5.39, easeOutQuint
+    animation = windows, 1, 4.79, easeOutQuint
+    animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
+    animation = windowsOut, 1, 1.49, linear, popin 87%
+    animation = fadeIn, 1, 1.73, almostLinear
+    animation = fadeOut, 1, 1.46, almostLinear
+    animation = fade, 1, 3.03, quick
+    animation = layers, 1, 3.81, easeOutQuint
+    animation = layersIn, 1, 4, easeOutQuint, fade
+    animation = layersOut, 1, 1.5, linear, fade
+    animation = fadeLayersIn, 1, 1.79, almostLinear
+    animation = fadeLayersOut, 1, 1.39, almostLinear
+    animation = workspaces, 1, 1.94, almostLinear, fade
+    animation = workspacesIn, 1, 1.21, almostLinear, fade
+    animation = workspacesOut, 1, 1.94, almostLinear, fade
+}
+
+# Ref https://wiki.hypr.land/Configuring/Workspace-Rules/
+# "Smart gaps" / "No gaps when only"
+# uncomment all if you wish to use that.
+# workspace = w[tv1], gapsout:0, gapsin:0
+# workspace = f[1], gapsout:0, gapsin:0
+# windowrule = bordersize 0, floating:0, onworkspace:w[tv1]
+# windowrule = rounding 0, floating:0, onworkspace:w[tv1]
+# windowrule = bordersize 0, floating:0, onworkspace:f[1]
+# windowrule = rounding 0, floating:0, onworkspace:f[1]
+
+# See https://wiki.hypr.land/Configuring/Dwindle-Layout/ for more
+dwindle {
+    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = true # You probably want this
+}
+
+# See https://wiki.hypr.land/Configuring/Master-Layout/ for more
+master {
+    new_status = master
+}
+
+# https://wiki.hypr.land/Configuring/Variables/#misc
+misc {
+    force_default_wallpaper = 1 # Set to 0 or 1 to disable the anime mascot wallpapers
+    disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+}
+
+
+#############
+### INPUT ###
+#############
+
+# https://wiki.hypr.land/Configuring/Variables/#input
+input {
+    kb_layout = us
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+    follow_mouse = 1
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+
+    touchpad {
+        natural_scroll = true
+    }
+}
+
+# https://wiki.hypr.land/Configuring/Variables/#gestures
+gestures {
+    workspace_swipe_forever = true
+    workspace_swipe_touch = true
+}
+
+# Example per-device config
+# See https://wiki.hypr.land/Configuring/Keywords/#per-device-input-configs for more
+device {
+    name = epic-mouse-v1
+    sensitivity = -0.5
+}
+
+
+###################
+### KEYBINDINGS ###
+###################
+
+# See https://wiki.hypr.land/Configuring/Keywords/
+$mainMod = SUPER # Sets "Windows" key as main modifier
+
+# Example binds, see https://wiki.hypr.land/Configuring/Binds/ for more
+bind = $mainMod, Q, exec, $terminal
+bind = $mainMod, C, killactive,
+bind = $mainMod, M, exit,
+bind = $mainMod SHIFT, M, exec, shutdown now,
+bind = $mainMod, E, exec, $editor,
+bind = $mainMod, V, togglefloating,
+bind = $mainMod, R, exec, wofi -b -n
+bind = $mainMod, P, pseudo, # dwindle
+bind = $mainMod, J, togglesplit, # dwindle
+
+# Move focus with mainMod + arrow keys
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+
+# Switch workspaces with mainMod + [0-9]
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
+
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind = $mainMod SHIFT, 1, movetoworkspace, 1
+bind = $mainMod SHIFT, 2, movetoworkspace, 2
+bind = $mainMod SHIFT, 3, movetoworkspace, 3
+bind = $mainMod SHIFT, 4, movetoworkspace, 4
+bind = $mainMod SHIFT, 5, movetoworkspace, 5
+bind = $mainMod SHIFT, 6, movetoworkspace, 6
+bind = $mainMod SHIFT, 7, movetoworkspace, 7
+bind = $mainMod SHIFT, 8, movetoworkspace, 8
+bind = $mainMod SHIFT, 9, movetoworkspace, 9
+bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+# Example special workspace (scratchpad)
+bind = $mainMod, S, togglespecialworkspace, magic
+bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+
+# Scroll through existing workspaces with mainMod + scroll
+bind = $mainMod, mouse_down, workspace, e+1
+bind = $mainMod, mouse_up, workspace, e-1
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+# Laptop multimedia keys for volume and LCD brightness
+bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindel = ,XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+
+bindel = ,XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-
+
+# Requires playerctl
+bindl = , XF86AudioNext, exec, playerctl next
+bindl = , XF86AudioPause, exec, playerctl play-pause
+bindl = , XF86AudioPlay, exec, playerctl play-pause
+bindl = , XF86AudioPrev, exec, playerctl previous
+
+## Screenshot
+bind = $mainMod , Print, exec, $screenshot
+bind = $mainMod Shift, P, exec, $screenshot
+
+##############################
+### WINDOWS AND WORKSPACES ###
+##############################
+
+# ######## Window rules ########
+
+# Disable blur for xwayland context menus
+windowrule = match:class ^()$, match:title ^()$, no_blur on
+
+# Disable blur for every window
+windowrule = match:class .*, no_blur on
+
+# Floating
+windowrule = match:title ^(Open File)(.*)$, center on
+windowrule = match:title ^(Open File)(.*)$, float on
+windowrule = match:title ^(Select a File)(.*)$, center on
+windowrule = match:title ^(Select a File)(.*)$, float on
+windowrule = match:title ^(Choose wallpaper)(.*)$, center on
+windowrule = match:title ^(Choose wallpaper)(.*)$, float on
+windowrule = match:title ^(Choose wallpaper)(.*)$, size (monitor_w*.60) (monitor_h*.65)
+windowrule = match:title ^(Open Folder)(.*)$, center on
+windowrule = match:title ^(Open Folder)(.*)$, float on
+windowrule = match:title ^(Save As)(.*)$, center on
+windowrule = match:title ^(Save As)(.*)$, float on
+windowrule = match:title ^(Library)(.*)$, center on
+windowrule = match:title ^(Library)(.*)$, float on
+windowrule = match:title ^(File Upload)(.*)$, center on
+windowrule = match:title ^(File Upload)(.*)$, float on
+windowrule = match:class ^(nm-connection-editor)$, float on
+windowrule = match:class ^(nm-connection-editor)$, size (monitor_w*.45) (monitor_h*.45)
+windowrule = match:class ^(nm-connection-editor)$, center on
+
+windowrule = match:title .*Welcome, float on
+
+windowrule = match:title ^(Copying — Dolphin)$, move 40 80
+
+
+# Picture-in-Picture
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, float on
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, keep_aspect_ratio on
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, move (monitor_w*.73) (monitor_h*.72)
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, size (monitor_w*.25) (monitor_h*.25)
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, float on
+windowrule = match:title ^([Pp]icture[-\s]?[Ii]n[-\s]?[Pp]icture)(.*)$, pin on
+
+# No shadow for tiled windows (matches windows that are not floating).
+windowrule = match:float 0, no_shadow on
+
+# ######## Workspace rules ########
+workspace = special:special, gapsout:30
+
+# ######## Layer rules ########
+layerrule = match:namespace .*, xray on
+layerrule = match:namespace .*, no_anim on
+
+layerrule = match:namespace kitty, blur on
+layerrule = match:namespace kitty, ignore_alpha 0
+layerrule = match:namespace bemenu-run, blur on
+layerrule = match:namespace bemenu-run, ignore_alpha 0.5
+layerrule = match:namespace notifications, blur on
+layerrule = match:namespace notifications, ignore_alpha 0.69
+layerrule = match:namespace logout_dialog # wlogout, blur on
+```
+
+
+### hyprpaper
+
+``` conf
+wallpaper {
+    monitor = eDP-1
+    path = ~/.config/hypr/hyprpaper/121672.png
+    fit_mode = cover
+}
+
+splash = false
+```
+
+#### image
+
+``` python
+import numpy as np
+import cv2 as cv
+
+hex_color = (input("请输入十六位RGB值："))
+
+R = int(hex_color[0:2], 16)
+G = int(hex_color[2:4], 16)
+B = int(hex_color[4:6], 16)
+
+width = int(input("请输入width值："))
+height = int(input("请输入height值："))
+
+# 创建指定宽高、3通道、像素值都为0的图像
+img = np.zeros((height, width, 3), np.uint8)
+img_rgb = img.copy()
+img_rgb[:, :, :] = [B, G, R]
+cv.imwrite("img.png", img_rgb)
+```

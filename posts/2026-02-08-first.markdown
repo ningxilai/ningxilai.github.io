@@ -1,0 +1,158 @@
+---
+title: Prelude
+author: Iris Lennon
+---
+
+# Prelude
+
+***Colorless green ideas sleep furiously,Furiously sleep ideas green colorless.***   *--- Chomsky*
+
+关于思想的流通，有一种`|`风格的描述，或者可以这样表述出来：
+
+从生活中不成形的语料开始收集原料与催化剂，脑海中的思想作为某种工厂式的措施开始对其进行初步处理，也就是筛选并分离作为原型前体的各组分，这就是所谓的 ***Prelude*** 阶段。姑且称之为预处理，这个过程包含了许多工具的协作，关于编辑器、文本搜索与批处理、搜索引擎与搜索引擎的再生产，最终的结果是一批预兆着最终产物的思想原料。
+
+接下来是 ***[Editor](https://www.gnu.org/software/emacs/ "emacs")*** 的阶段。
+
+## Emacs,Vim,Pandoc and find.
+
+- **Emacs**: EMACS Makes A Computer Slow.
+- **Vim**: Vi IMproved.
+- **Pandoc**: "a universal document converter"
+- **find**: "search for files in a directory hierarchy"
+
+### `.emacs.d` or `$XDG_CONFIG_HOME/emacs`
+
+Create a new `init.el` in the `~/.emacs.d` directory and start `emacs`:
+
+    emacs
+
+### build and install /`igc branch`/
+
+*master*
+
+    ./configure --prefix=$HOME/.local --with-native-compilation=aot --with-sound=yes --with-pgtk
+
+*igc*
+
+    git clone -b feature/igc --depth=1 'https://github.com/emacs-mirror/emacs.git' emacs-igc
+
+    CC=clang CXX=clang++ CPP="clang -E" LD=ld.lld ./configure --prefix=$HOME/.local --with-pgtk --with-native-compilation=aot --with-modules --with-sound=alsa
+
+### `configure`
+
+[ningxilai/.emacs.d](https://github.com/ningxilai/.emacs.d)
+
+#### fonts
+
+    git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.local/share/fonts
+
+`C-h v system-configuration-options` =&gt;
+`"--prefix=/home/iris/.local --with-native-compilation=aot --with-sound=yes --with-pgtk --with-mps=yes"`
+
+#### treesit
+
+Manual installation of `libtree-sitter-[languages].so` support.
+
+*using* `typst` *as an example*
+
+    git clone --depth 1 https://github.com/uben0/tree-sitter-typst
+    cd tree-sitter-typst/src
+
+    cc -fPIC -std=c99 -c parser.c
+    cc -fPIC -std=c99 -c scanner.c
+    cc -shared parser.o scanner.o -o libtree-sitter-typst.so
+
+    # to emacs
+    mkdir tree-sitter && cd tree-sitter
+    mv libtree-sitter-typst ./
+
+
+#### Programming \\deprecated\\
+
+`Haskell`:
+
+    (use-package haskell-mode
+      :ensure t
+      :hook
+      (haskell-mode . interactive-haskell-mode)
+      (haskell-mode . haskell-indentation-mode))
+
+    (use-package lsp-haskell
+      :ensure t
+      :after haskell-mode
+      :hook
+      (haskell-mode . lsp-mode)
+      (haskell-literate-mode . lsp-mode))
+
+
+#### Programming
+
+`Haskell`:
+
+    (setup (:elpaca haskell-mode)
+      (:custom haskell-process-suggest-remove-import-lines t  ; warnings for redundant imports etc
+               haskell-process-auto-import-loaded-modules t
+               haskell-process-show-overlays t)
+      (:hooks haskell-mode-hook haskell-collapse-mode
+              haskell-mode-hook interactive-haskell-mode
+              haskell-mode-hook (lambda()(setq-local yas-indent-line 'fixed))
+              haskell-mode-local-vars lsp-haskell
+              haskell-literate-mode-local-vars lsp-haskell))
+
+    (setup (:elpaca haskell-ts-mode :repos "https://codeberg.org/pranshu/haskell-ts-mode")
+      (:custom haskell-ts-font-lock-level 4
+               haskell-ts-use-indent t
+               haskell-ts-ghci "ghci"
+               haskell-ts-use-indent t))
+
+    (setup (:elpaca haskell-snippets)
+      (:custom haskell-snippets-dir "elpaca/builds/haskell-snippets/snippets/haskell-mode"))
+
+    (setup (:elpaca lsp-haskell :host github :repo "emacs-lsp/lsp-haskell")
+      (:custom lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-wrapper"))
+
+### LunarVim
+
+> Have `git`, `make`, `pip`, `python`, `npm`, `node`, `cargo` and `ripgrep` installed on your system.
+<br>
+> *Optional* : `lazygit`
+
+    ## Cargo
+    cargo install --git https://github.com/sharkdp/fd
+    cargo install ripgrep
+    ## Pacman
+    sudo pacman -S nodejs tree-sitter-cli
+    ## Install
+    git clone --depth=1 https://github.com/lunarvim/lunarvim.git ~/.local/share/lunarvim/lvim
+    cd ~/.local/share/lunarvim/lvim/
+    sh utils/installer/install.sh
+
+If in the Termux environment:
+
+The `shebang` of `lvim` : `#!/usr/bin/env sh` => `#!/data/data/com.termux/files/usr/bin/env zsh`
+
+### Pandoc,md,html and find.
+
+Pandoc转化`.md`到`html`后序列化残留的问题，可以使用`pandoc -f html URL -t commonmark-raw_html -o name.md`的方法解决，对于代码块标记导出后被覆盖的问题，可用`find -type f -name "*.md" | xargs sed 's#sourceCode#bash#g' -i`替换。
+<br>
+反之，Pandoc转化`.html`到`.md`后序列化残留的问题，可以使用`pandoc -s name.html -t markdown_strict -o name.md`的方法解决。
+
+### Code Snippet
+
+#### Reader \\deprecated\\
+
+下载一DjVu文档后，使用emacs的nov插件无法查看其内容，查看配置注释发现nov是一个 `.epub` 查看器，遂安装djvu，但仍无法查看内容，查询ArchWiki后断定是缺少依赖。安装依赖后仍不显示内容但各命令工作正常，推测是由于djvu插件缺省不显示图片所致，`(setq djvu-image-mode t)` 后正常显示。
+
+`sudo pacman -S djvulibre`
+
+`(use-package djvu :ensure t)`
+
+**to PDF**:
+
+    sudo pacman -S libtiff
+
+    ddjvu -format=tiff name(1).djvu name(2).tiff && tiff2pdf -j -o name(3).pdf name(2).tiff
+
+#### Reader
+
+    (setup (:elpaca reader :host codeberg :repo "MonadicSheep/emacs-reader" :files ("*.el" "render-core.so") :pre-build ("make" "all")))
