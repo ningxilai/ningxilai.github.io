@@ -155,6 +155,7 @@
         });
     });
     </script>
+    <script src="/js/sidenotes.js" defer></script>
     <style>
      /* Basic styles for Mimas site */
 
@@ -326,9 +327,72 @@
      .site-footer {
          text-align: center;
          padding: 2rem;
-         color: #666;
-         font-size: 0.9em;
-     }
+          color: #666;
+          font-size: 0.9em;
+      }
+
+      /* Sidenotes (Tufte CSS style) */
+      .sidenote-wrapper {
+          position: relative;
+          display: inline;
+      }
+
+      .margin-toggle {
+          cursor: pointer;
+      }
+
+      .sidenote-number {
+          display: inline-block;
+          font-size: 0.7em;
+          vertical-align: super;
+          color: #888;
+      }
+
+      .sidenote {
+          display: none;
+      }
+
+      /* Number inside sidenote content */
+      .sidenote .sidenote-number {
+          font-weight: bold;
+          margin-right: 0.3em;
+      }
+
+      @media (min-width: 1600px) {
+          .margin-toggle {
+              display: none;
+          }
+
+          .sidenote {
+              display: block;
+              float: right;
+              clear: right;
+              position: relative;
+              width: 195px;
+              margin-right: -235px;
+              margin-top: 0.3rem;
+              margin-bottom: 1rem;
+              font-size: 0.8em;
+              line-height: 1.4;
+              color: #666;
+          }
+
+          .sidenote-number {
+              display: inline;
+          }
+      }
+
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem;
+          position: relative;
+      }
+
+      .content {
+          max-width: 750px;
+          margin: 0 auto;
+      }
     </style>
   </head>
   <body>

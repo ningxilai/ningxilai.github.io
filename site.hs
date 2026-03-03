@@ -1,11 +1,10 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
 import           Data.Time.Clock (getCurrentTime)
 import           Data.Time.Format (formatTime, defaultTimeLocale)
 import           System.Process (readProcess)
-import           System.FilePath (takeBaseName, takeFileName, dropExtension, (</>), takeDirectory)
+import           System.FilePath (takeBaseName, takeFileName, dropExtension, takeDirectory, (</>))
 import           System.IO.Temp (withTempDirectory)
 import           Control.Monad (void)
 import           Data.List (isInfixOf)
@@ -14,6 +13,7 @@ import qualified Data.Text.IO as TIO
 import           System.Environment (lookupEnv)
 import           System.Directory (removeDirectoryRecursive)
 import           Control.Exception (try, SomeException)
+import           Text.Pandoc.SideNote (usingSideNotes)
 
 
 --------------------------------------------------------------------------------
@@ -136,13 +136,21 @@ main = do
                 >>= loadAndApplyTemplate "templates/default.html" defaultContext
                 >>= relativizeUrls
 
+        --------------------------------------------------------------------------------
+        -- | Custom pandoc compiler with sidenotes support
+        let myPandocCompiler :: Compiler (Item String)
+            myPandocCompiler = pandocCompilerWithTransformM
+                defaultHakyllReaderOptions
+                defaultHakyllWriterOptions
+                (\pandoc -> return $ usingSideNotes pandoc)
+
         -- Build tags first
         tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
         -- Regular markdown posts
         match "posts/*.markdown" $ do
             route $ setExtension "html"
-            compile $ pandocCompiler
+            compile $ myPandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
                 >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
                 >>= relativizeUrls
