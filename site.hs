@@ -5,7 +5,7 @@ import           Hakyll
 import           Data.Time.Clock (getCurrentTime)
 import           Data.Time.Format (formatTime, defaultTimeLocale)
 import           System.Process (readProcess)
-import           System.FilePath (takeBaseName, takeFileName, dropExtension, (</>))
+import           System.FilePath (takeBaseName, takeFileName, dropExtension, (</>), takeDirectory)
 import           System.IO.Temp (withTempDirectory)
 import           Control.Monad (void)
 import           Data.List (isInfixOf)
@@ -136,24 +136,26 @@ main = do
                 >>= loadAndApplyTemplate "templates/default.html" defaultContext
                 >>= relativizeUrls
 
+        -- Build tags first
+        tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+
         -- Regular markdown posts
         match "posts/*.markdown" $ do
             route $ setExtension "html"
             compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
-                >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
                 >>= relativizeUrls
 
         -- Pollen x-expressions posts
         match "posts/*.html.pm" $ do
             route $ customRoute $ \ident ->
                 let path = toFilePath ident
-                    -- Drop both .pm and .html extensions
                     base = dropExtension (dropExtension path)
                 in base ++ ".html"
             compile $ pollenCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
-                >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
                 >>= relativizeUrls
 
         create ["archive.html"] $ do
@@ -164,8 +166,9 @@ main = do
                         now <- getCurrentTime
                         return $ formatTime defaultTimeLocale "%B %e, %Y" now
                     archiveCtx =
-                        listField "posts" postCtx (return posts) `mappend`
+                        listField "posts" (postCtx tags) (return posts) `mappend`
                         constField "title" "Archives"            `mappend`
+                        constField "author" "Hakyll"            `mappend`
                         functionField "currentDate" dateFunc     `mappend`
                         defaultContext
                 makeItem ""
@@ -173,13 +176,33 @@ main = do
                     >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                     >>= relativizeUrls
 
+        -- Tags index page
+        create ["tags.html"] $ do
+            route idRoute
+            compile $ do
+                let dateFunc _ _ = unsafeCompiler $ do
+                        now <- getCurrentTime
+                        return $ formatTime defaultTimeLocale "%B %e, %Y" now
+                    tagsCtx = constField "title" "All Tags" `mappend`
+                              constField "author" "Hakyll" `mappend`
+                              functionField "currentDate" dateFunc `mappend`
+                              defaultContext
+                makeItem ""
+                    >>= loadAndApplyTemplate "templates/tags.html" tagsCtx
+                    >>= loadAndApplyTemplate "templates/default.html" tagsCtx
+                    >>= relativizeUrls
+
 
         match "index.html" $ do
             route idRoute
             compile $ do
                 posts <- recentFirst =<< loadAll ("posts/*.markdown" .||. "posts/*.html.pm")
-                let indexCtx =
-                        listField "posts" postCtx (return posts) `mappend`
+                let dateFunc _ _ = unsafeCompiler $ do
+                        now <- getCurrentTime
+                        return $ formatTime defaultTimeLocale "%B %e, %Y" now
+                    indexCtx =
+                        listField "posts" (postCtx tags) (return posts) `mappend`
+                        functionField "currentDate" dateFunc `mappend`
                         defaultContext
 
                 getResourceBody
@@ -189,9 +212,38 @@ main = do
 
         match "templates/*" $ compile templateBodyCompiler
 
+        -- Create tag pages
+        tagsRules tags $ \tag pattern -> do
+            route idRoute
+            compile $ do
+                posts <- recentFirst =<< loadAll pattern
+                let title = "Posts tagged \"" ++ tag ++ "\""
+                    ctx = constField "title" title `mappend`
+                          constField "date" "" `mappend`
+                          listField "posts" (postCtx tags) (return posts) `mappend`
+                          defaultContext
+                makeItem ""
+                    >>= loadAndApplyTemplate "templates/archive.html" ctx
+                    >>= loadAndApplyTemplate "templates/default.html" ctx
+                    >>= relativizeUrls
+
 
 --------------------------------------------------------------------------------
-postCtx :: Context String
-postCtx =
+-- | Post context with tags
+postCtx :: Tags -> Context String
+postCtx tags =
     dateField "date" "%B %e, %Y" `mappend`
+    field "author" (\item -> do
+        mAuthor <- getMetadataField (itemIdentifier item) "author"
+        return $ maybe "Unknown" id mAuthor) `mappend`
+    tagsField "tags" tags `mappend`
+    defaultContext
+
+-- | Post context without date (for tag pages)
+postCtxNoDate :: Tags -> Context String
+postCtxNoDate tags =
+    field "author" (\item -> do
+        mAuthor <- getMetadataField (itemIdentifier item) "author"
+        return $ maybe "Unknown" id mAuthor) `mappend`
+    tagsField "tags" tags `mappend`
     defaultContext
