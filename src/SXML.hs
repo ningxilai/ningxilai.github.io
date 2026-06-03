@@ -4,9 +4,7 @@ module SXML (sxmlToHtml) where
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
-import Lucid.Base (Html (), Attribute, With (..), makeAttribute, makeElement, renderText, toHtml)
-
-import Prelude
+import Lucid (Html (), Attributes, makeAttributes, makeElement, renderText, toHtml)
 
 --------------------------------------------------------------------------------
 -- Lexer
@@ -80,11 +78,11 @@ sExprToSXML (SList (SSymbol tag : rest)) = case rest of
         children <- mapM sExprToSXML rest
         Right (Element tag [] children)
 sExprToSXML (SList (other : _)) = Left $ "Expected tag name, got: "
-    <> T.pack (Prelude.show other)
+    <> T.pack (show other)
 
 parseAttr :: SExpr -> Either Text (Text, Text)
 parseAttr (SList [SSymbol k, SString v]) = Right (k, v)
-parseAttr other = Left $ "Invalid attribute: " <> T.pack (Prelude.show other)
+parseAttr other = Left $ "Invalid attribute: " <> T.pack (show other)
 
 --------------------------------------------------------------------------------
 -- Lucid rendering
@@ -93,7 +91,7 @@ parseAttr other = Left $ "Invalid attribute: " <> T.pack (Prelude.show other)
 renderSXML :: SXML -> Html ()
 renderSXML (TextNode t)        = toHtml t
 renderSXML (Element tag as cs) =
-    with (makeElement tag (foldMap renderSXML cs)) (map (uncurry makeAttribute) as)
+    makeElement tag (map (uncurry makeAttributes) as) (foldMap renderSXML cs)
 
 --------------------------------------------------------------------------------
 -- Public API
@@ -103,8 +101,8 @@ sxmlToHtml :: Text -> Either Text Text
 sxmlToHtml input = do
     tokens  <- tokenize input
     (sexprs, rest) <- parseSExprs tokens
-    if Prelude.null rest
+    if null rest
         then do
             sxmes <- mapM sExprToSXML sexprs
             Right $ TL.toStrict $ renderText $ foldMap renderSXML sxmes
-        else Left $ "Extra tokens: " <> T.pack (Prelude.show (take 5 rest))
+        else Left $ "Extra tokens: " <> T.pack (show (take 5 rest))

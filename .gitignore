@@ -1,2 +1,4 @@
 _cache/
 dist-newstyle/
+*.hi
+*.o

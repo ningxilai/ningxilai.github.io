@@ -14,7 +14,7 @@ sxmlCompiler = do
     let body = T.pack $ itemBody item
     case sxmlToHtml body of
         Left err -> fail $ T.unpack err
-        Right html -> return $ fmap (const html) item
+        Right html -> return $ fmap (const $ T.unpack html) item
 
 
 --------------------------------------------------------------------------------
