@@ -3,6 +3,18 @@ import           Data.Monoid (mappend)
 import           Hakyll
 import           Data.Time.Clock (getCurrentTime)
 import           Data.Time.Format (formatTime, defaultTimeLocale)
+import           SXML (sxmlToHtml)
+import qualified Data.Text as T
+
+
+--------------------------------------------------------------------------------
+sxmlCompiler :: Compiler (Item String)
+sxmlCompiler = do
+    item <- getResourceBody
+    let body = T.pack $ itemBody item
+    case sxmlToHtml body of
+        Left err -> fail $ T.unpack err
+        Right html -> return $ fmap (const html) item
 
 
 --------------------------------------------------------------------------------
@@ -22,9 +34,16 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
-    match "posts/*" $ do
+    match "posts/*.markdown" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "posts/*.sxml" $ do
+        route $ setExtension "html"
+        compile $ sxmlCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
