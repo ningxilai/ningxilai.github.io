@@ -274,17 +274,20 @@ vim.api.nvim_set_keymap(
     setopt PROMPT_SUBST
     PROMPT='%F{blue}%~%f %F{red}${vcs_info_msg_0_}%f${NEWLINE}%(?..%F{red}%?%f )%F{green}❯%f '
 
-### `.zshrc`
+#### `.zshrc/hyprland`
 
-```
+``` sh
 #!/usr/bin/env zsh
 
 # if [[ "$(tty)" == "/dev/tty1" ]]; then
 #     exec start-hyprland &>/dev/null
 # fi
 
-##### .zshrc
+```
 
+#### .zshenv
+
+``` sh
 if (( EUID != 0 )); then
   path=(
     $HOME/bin
@@ -319,13 +322,9 @@ path=( "${path[@]:#}" )
 
 typeset -U path
 
-export RUSTUP_UPDATE_ROOT=https://mirrors.aliyun.com/rustup/rustup
-export RUSTUP_DIST_SERVER=https://mirrors.aliyun.com/rustup
+export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 export PATH=$HOME/.cargo/bin/:$PATH
-
-export ZVM_INSTALL="$HOME/.zvm/self"
-export PATH="$PATH:$HOME/.zvm/bin"
-export PATH="$PATH:$ZVM_INSTALL/"
 
 export PATH=$HOME/.ghcup/bin/:$PATH
 export PATH=$HOME/.cabal/bin/:$PATH
@@ -333,12 +332,48 @@ export PATH=$HOME/.cabal/bin/:$PATH
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"
+
 export PATH=$HOME/.npm/bin/:$PATH
 
 export PATH=$HOME/.uv/bin/:$PATH
 
-export PLAN9=/home/iris/.local/plan9 export PLAN9
-export PATH=$PATH:$PLAN9/bin export PATH
+PLAN9=/home/iris/.local/plan9
+export PLAN9
+PATH=$PATH:$PLAN9/bin
+export PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/bash_completion" ] && [[ -n "$BASH_VERSION" ]] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+## nvm 注入 .zshrc 的脚本会引发副作用，使得无效的补全文件被插入到.zshrc中，这会让zsh的初始化变慢。
+
+export zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+typeset -g _comp_dumpfile="$zcompdump"
+zstyle ':zcomet:compinit' dump-file "$zcompdump"
+
+## 作为补救，在zsh上使用zsh-nvm-x，这就是为什么在.zshrc上有着zcomet load seebeen/zsh-nvm-x的一行。
+
+PATH="/home/iris/perl5/bin${PATH:+:${PATH}}";
+export PATH;
+PERL5LIB="/home/iris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}";
+export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/iris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}";
+export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/iris/perl5\"";
+export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/iris/perl5";
+export PERL_MM_OPT;
+```
+
+#### .zshrc
+
+``` sh
+#!/usr/bin/env zsh
+
+##### .zshrc
 
 PS1="Ready > "
 RPS1="%F{240}Loading...%f"
@@ -354,7 +389,7 @@ ZPLUGINDIR="${ZDATADIR}/plugins"
 ZCACHEDIR="${ZDATADIR}/cache"
 [ -d "${ZCACHEDIR}" ] || mkdir -p "${ZCACHEDIR}"
 
-#[[ ":$PATH:" == *":$HOME/bin:"* ]] || export PATH="${HOME}/bin:$PATH"
+#[[ ":$PATH:" == *":$HOME/.local/bin:"* ]] || export PATH="${HOME}/.local/bin:$PATH"
 
 if [[ $(tty) == /dev/tty* ]] ; then
   export LANG=C.UTF-8
@@ -747,9 +782,9 @@ if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
   command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
   fi
 
-  source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
+source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
-# It is good to load these popular plugins last, and in this order:
+ # It is good to load these popular plugins last, and in this order:
 
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
@@ -758,27 +793,31 @@ zcomet load zdharma/fast-syntax-highlighting
 zcomet load zsh-users/zsh-autosuggestions
 zcomet load zsh-users/zsh-completions
 
+export ZSHZ_DATA="$ZCACHEDIR/.z"
+
+zcomet load agkozak/zsh-z
+
+zcomet load seebeen/zsh-nvm-x
+
+# zcomet load agkozak/polyglot
+
 export TYPEWRITTEN_PROMPT_LAYOUT="pure_verbose"
 
 zcomet load reobin/typewritten
 
-zcomet compinit
+zcomet compinit -C
 
 #
 ### End of Plugins
 #
+
+# [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && source "$EAT_SHELL_INTEGRATION_DIR/zsh"
 
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:
 # mode: sh
 # End:
-
-PATH="/home/iris/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/iris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/iris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/iris/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/iris/perl5"; export PERL_MM_OPT;
 ```
 
 ## Terminal

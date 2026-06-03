@@ -5,7 +5,6 @@
     <meta content="light dark" name="color-scheme">
     <title>Contact - All You Need is Love!</title>
     <link rel="icon" type="image/svg" href="./images/favicon.svg">
-    <article data-theme="light"></article>
     <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
     <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -127,9 +126,9 @@
             const counterSpan = document.createElement('span');
             counterSpan.className = 'heading-counter';
             counterSpan.textContent = counterText;
-            counterSpan.style.color = level === 1 ? '#708080' :
-                                      level === 2 ? '#507080' :
-                                      level === 3 ? '#607080' : '#508090';
+            counterSpan.style.color = level === 1 ? 'var(--color-text-soft)' :
+                                      level === 2 ? 'var(--color-text-soft)' :
+                                      level === 3 ? 'var(--color-muted)' : 'var(--color-muted)';
             counterSpan.style.fontSize = level === 1 ? '100%' :
                                          level === 2 ? '80%' :
                                          level === 3 ? '60%' : '50%';
@@ -157,273 +156,141 @@
     </script>
     <script src="./js/sidenotes.js" defer></script>
     <style>
-     /* Basic styles for Mimas site */
+     /* ── Neomacs-inspired theme · HSLUV perceptually uniform palette ── */
+     :root {
+       --h: 335;
+       --color-bg:         hsl(40, 8%, 94%);  /* warm edge */
+       --color-surface:    hsl(40, 10%, 99%); /* card */
+       --color-text:       hsl(335, 8%, 35%); /* slightly lighter than Neomacs */
+       --color-text-soft:  hsl(335, 6%, 50%);
+       --color-muted:      hsl(335, 5%, 65%);
+       --color-border:     hsl(40, 10%, 88%);
+       --color-code-bg:    hsl(40, 6%, 95%);
+       --color-accent:     hsl(346, 33%, 72%);
+       --color-link:       hsl(340, 25%, 50%);
+       --color-link-hover: hsl(340, 35%, 40%);
 
-     * {
-         box-sizing: border-box;
-         margin: 0;
-         padding: 0;
+       --max-content: 48rem;
+       --font-serif: "Baskerville BT", "Times New Roman", "LXGW WenKai GB Screen",
+                     "Noto Serif SC", serif;
+       --font-mono:  "IBM Plex Mono", "Space Mono", "DejaVu Sans Mono", monospace;
      }
+
+     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          line-height: 1.2;
-          color: #333;
-          background: #f5f5f5;
+        min-height: 100vh;
+        line-height: 1.5;
+        color: var(--color-text);
+        background: var(--color-bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: var(--font-serif);
+        font-variant-ligatures: common-ligatures;
       }
 
-     div {
-         font-family:
-             "Times New Roman",
-             "LXGW WenKai GB Screen",
-             "Noto Serif SC",
-             sans-serif;
-         font-variant-ligatures: common-ligatures;
-     }
+      /* Center wrapper: white card with edge shadow */
+      main.container {
+        width: 100%;
+        max-width: var(--max-content);
+        margin: 0 auto;
+        background: var(--color-surface);
+        border-radius: 4px;
+        box-shadow: 0 1px 4px hsla(0, 0%, 0%, 0.06);
+        padding: 1.5rem;
+      }
 
-     .container {
-         max-width: 800px;
-         margin: 0 auto;
-         padding: 2rem;
-     }
+     /* Footer: centered, same max-width as content */
+      footer {
+        width: 100%;
+        max-width: var(--max-content);
+        margin: 0 auto;
+        text-align: center;
+        padding: 1rem;
+      }
 
-     /* Header */
-     .site-header {
-         background: #fff;
-         border-bottom: 1px solid #e0e0e0;
-         padding: 1rem 0;
-         margin-bottom: 2rem;
-     }
+      .footer-nav {
+        text-align: center;
+      }
+      .footer-nav a { color: var(--color-muted); }
+      .footer-text  { font-size: 0.8em; color: var(--color-muted); text-align: center; }
+      .post-entry   { font-size: 1.1em; color: var(--color-muted); text-align: right; }
+      .meta-line    { font-size: 1rem; color: var(--color-muted); text-align: left; }
 
-     .site-header nav {
-         max-width: 800px;
-         margin: 0 auto;
-         padding: 0 2rem;
-         display: flex;
-         gap: 2rem;
-     }
-
-     .site-header a {
-         color: #333;
-         text-decoration: none;
-         font-weight: 500;
-     }
-
-     .site-header a:hover {
-         color: #0066cc;
-     }
-
-     /* Main content */
-     main {
-         background: #fff;
-         border-radius: 8px;
-         padding: 2rem;
-         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-     }
+      .breadcrumb { font-size: 0.9rem; color: var(--color-muted); }
+      .breadcrumb a { color: var(--color-link); }
+      .breadcrumb-sep { margin: 0 0.3rem; }
+      .breadcrumb-current { color: var(--color-text-soft); }
+      article[data-theme="light"] { width: 100%; max-width: var(--max-content); }
+      .article-nav { text-align: right; }
+      .article-nav a { color: var(--color-muted); }
 
      /* Typography */
-
       h1, h2, h3, h4, h5, h6 {
-          color: #708080;
-          margin-top: 1.2rem;
-          margin-bottom: 0.3rem;
-          line-height: 1.15;
+        font-family: inherit;
+        color: var(--color-text-soft);
+        margin-top: 1.4rem;
+        margin-bottom: 0.4rem;
+        line-height: 1.25;
+      }
+     h1 { font-size: 2.2rem; }
+     h2 { font-size: 1.7rem; }
+     h3 { font-size: 1.3rem; }
+     h4 { font-size: 1.1rem; }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--color-text);
+        text-align: left;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        word-spacing: -0.06em;
       }
 
-        h1 {
-            font-size: 2.5rem !important;
-            font-family: 'Baskerville BT', sans-serif;
-        }
+     li::marker { color: var(--color-accent); }
+     li { color: var(--color-text); }
+     strong { color: var(--color-text-soft); }
+     :link { color: var(--color-link); }
+     :link:hover { color: var(--color-link-hover); }
 
-        h2 {
-            font-size: 2rem;
-            font-family: 'Baskerville BT', sans-serif;
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            font-family: 'Baskerville BT', sans-serif;
-        }
-
-        h4 {
-            font-size: 1.2rem;
-            font-family: 'Baskerville BT', sans-serif;
-        }
-
-     p {
-         margin-bottom: 1.1rem;
-         color: #7080A3;
-         word-wrap:break-word;
-         white-space:pre-wrap;
-         word-break:break-all;
-     }
-
-     li::marker {
-         color: #609090;
-     }
-
-     li {
-         color: #6060A3
-     }
-
-     strong {
-         color: #705081;
-     }
-
-     code {
-         background: #f0f0f0;
-         padding: 0.2rem 0.4rem;
-         border-radius: 3px;
-         font-family: 'IBM Plex Mono', sans-serif;
-         font-size: 0.9em;
-     }
-
-     pre code {
-         display: block;
-         padding: 0.9rem;
-         overflow-x: auto;
-     }
-
-     footer {
-         text-align: center;
-         padding: 5px;
-     }
-
-     /* Card component */
-     .card {
-         border: 1px solid #e0e0e0;
-         border-radius: 8px;
-         padding: 1.5rem;
-         margin-bottom: 1rem;
-     }
-
-     .card-header {
-         margin-bottom: 1rem;
-     }
-
-     .card-title {
-         margin: 0 0 0.5rem 0;
-     }
-
-     .card-description {
-         color: #666;
-         margin: 0;
-     }
-
-     .card-body {
-         margin-bottom: 1rem;
-     }
-
-     .card-footer {
-         border-top: 1px solid #e0e0e0;
-         padding-top: 1rem;
-         color: #666;
-         font-size: 0.9em;
-     }
-
-     /* Footer */
-     .site-footer {
-         text-align: center;
-         padding: 2rem;
-          color: #666;
-          font-size: 0.9em;
+      code {
+        background: var(--color-code-bg);
+        padding: 0.15rem 0.35rem;
+        border-radius: 3px;
+        font-family: var(--font-mono);
+        font-size: 0.88em;
+        font-variant-ligatures: discretionary-ligatures;
       }
-
-      /* Sidenotes (Tufte CSS style) */
-      .sidenote-wrapper {
-          position: relative;
-          display: inline;
-      }
-
-      .margin-toggle {
-          cursor: pointer;
-      }
-
-      .sidenote-number {
-          display: inline-block;
-          font-size: 0.7em;
-          vertical-align: super;
-          color: #888;
-      }
-
-      .sidenote {
-          display: none;
-      }
-
-      /* Number inside sidenote content */
-      .sidenote .sidenote-number {
-          font-weight: bold;
-          margin-right: 0.3em;
-      }
-
-      @media (min-width: 1600px) {
-          .margin-toggle {
-              display: none;
-          }
-
-          .sidenote {
-              display: block;
-              float: right;
-              clear: right;
-              position: relative;
-              width: 195px;
-              margin-right: -235px;
-              margin-top: 0.3rem;
-              margin-bottom: 1rem;
-              font-size: 0.8em;
-              line-height: 1.4;
-              color: #666;
-          }
-
-          .sidenote-number {
-              display: inline;
-          }
-      }
-
-      .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem;
-          position: relative;
-      }
-
-      .content {
-          max-width: 750px;
-          margin: 0 auto;
-      }
+     pre code { display: block; padding: 0.8rem; overflow-x: auto; }
     </style>
   </head>
-  <body>
-     <main class="container" style="flex: 1;">
-       <div class="content">
+   <body>
+      <article data-theme="light">
+        <nav class="breadcrumb">
+          <a href="./">SiteMap</a>
+          <span class="breadcrumb-sep">›</span>
+          <span class="breadcrumb-current">Contact</span>
+        </nav>
+      </article>
+      <main class="container">
+        <div class="content">
 
-        <header>
-          <div style="text-align:right">
-            <a href="./archive.html">Archives</a>
-            <a href="./tags.html"></a>
-            <a href="./">SiteMap</a>
-          </div>
-        </header>
-        <br>
-          <hr>
-        <p style="font-size: 1.6m; color:#A0AFB7">Contact: Posted on 2026-02-20, by Iris Lennon.</p>
+         <div class="article-nav"><a href="./about.html">About</a> <a href="./contact.html">Contact</a></div>
+         <hr>
+        <p class="meta-line">Contact: Posted on 2026-02-20, by Iris Lennon.</p>
         <p>常居中国辽宁地区，如需联系，参见 <a href="./about.html">About</a> 页面。</p>
       </div>
     </main>
-  </body>
-  <footer>
-    <center>
-      <a href="./about.html"><p style="font-size: 1.2em; color:#A0AFB7">About,</p></a>
-      <a href="./contact.html"><p style="font-size: 1.2em; color:#A0AFB7">Contact.</p></a>
+
+    <footer>
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img height="15" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" width="55"></a>
       <br>
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International.</a>
-      <br>
-      <br>
-      <p style="font-size: 0.8em; color:#A0AFB7">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
-      <p style="font-size: 0.8em; color:#A0AFB7">Built with Hakyll,Powered by Haskell.</p>
-  </center>
-  </footer>
+      <br><br>
+      <p class="footer-text">Copyright © 2026 Iris Lennon,All Rights Reserved.</p>
+      <p class="footer-text">Built with Hakyll,Powered by Haskell.</p>
+    </footer>
+  </body>
 </html>
