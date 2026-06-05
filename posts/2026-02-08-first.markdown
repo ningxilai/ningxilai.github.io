@@ -1,6 +1,7 @@
 ---
 title: Prelude
 author: Iris Lennon
+tags: haskell, hakyll, tutorial
 ---
 
 # Prelude

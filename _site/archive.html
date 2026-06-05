@@ -7,14 +7,11 @@
     <link rel="icon" type="image/svg" href="./images/favicon.svg">
     <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
-    <link herf="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-serif-sc-vf-regular/font.css">
     <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/baskerville" rel="stylesheet">
     <link href="https://fontsapi.zeoseven.com/7/main/result.css" rel="stylesheet">
-    <link href="./js/MathJax.js" />
-    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
-    <script async="async" defer="defer" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
@@ -154,7 +151,7 @@
         });
     });
     </script>
-    <script src="./js/sidenotes.js" defer></script>
+
     <style>
      /* ── Neomacs-inspired theme · HSLUV perceptually uniform palette ── */
      :root {
@@ -171,8 +168,8 @@
        --color-link-hover: hsl(340, 35%, 40%);
 
        --max-content: 48rem;
-       --font-serif: "Baskerville BT", "Times New Roman", "LXGW WenKai GB Screen",
-                     "Noto Serif SC", serif;
+        --font-serif: "Baskerville BT", "Times New Roman", "LXGW WenKai GB Screen",
+                      "Source Han Serif SC VF", serif;
        --font-mono:  "IBM Plex Mono", "Space Mono", "DejaVu Sans Mono", monospace;
      }
 
@@ -215,15 +212,15 @@
       }
       .footer-nav a { color: var(--color-muted); }
       .footer-text  { font-size: 0.8em; color: var(--color-muted); text-align: center; }
-      .post-entry   { font-size: 1.1em; color: var(--color-muted); text-align: right; }
+       .post-entry   { font-size: 1.1em; color: var(--color-muted); text-align: right; }
       .meta-line    { font-size: 1rem; color: var(--color-muted); text-align: left; }
+      .article-nav { display: flex; justify-content: space-between; align-items: center; }
 
       .breadcrumb { font-size: 0.9rem; color: var(--color-muted); }
       .breadcrumb a { color: var(--color-link); }
       .breadcrumb-sep { margin: 0 0.3rem; }
       .breadcrumb-current { color: var(--color-text-soft); }
       article[data-theme="light"] { width: 100%; max-width: var(--max-content); }
-      .article-nav { text-align: right; }
       .article-nav a { color: var(--color-muted); }
 
      /* Typography */
@@ -263,7 +260,7 @@
         font-size: 0.88em;
         font-variant-ligatures: discretionary-ligatures;
       }
-     pre code { display: block; padding: 0.8rem; overflow-x: auto; }
+      pre code { display: block; padding: 0.8rem; overflow-x: auto; }
     </style>
   </head>
    <body>
@@ -277,14 +274,21 @@
       <main class="container">
         <div class="content">
 
-         <div class="article-nav"><a href="./about.html">About</a> <a href="./contact.html">Contact</a></div>
+          <div class="article-nav">
+           <span></span>
+           <span><a href="./about.html">About</a> <a href="./contact.html">Contact</a></span>
+         </div>
          <hr>
-        <p class="meta-line">Archives: Posted on May 24, 2026, by Hakyll.</p>
+        
         <p>All entries under Archives are as follows:</p>
 <br>
 <img src="./images/haskell-logo.png" style="float: left; margin-right: 10px;" />
 
 <ul>
+  
+  <a href="./posts/2026-06-04-mathjax-test.html"><p class="post-entry">TeXMath with SHTML:Posted on June  4, 2026,by Iris Lennon.</p></a>
+  
+  <a href="./posts/2026-06-03-hello-sxml.html"><p class="post-entry">Hello SXML:Posted on June  3, 2026,by Iris Lennon.</p></a>
   
   <a href="./posts/2026-02-20-third.html"><p class="post-entry">Tools:Posted on February 20, 2026,by Iris Lennon.</p></a>
   

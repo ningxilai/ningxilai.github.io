@@ -1,6 +1,7 @@
 ---
 title: Office
 author: Iris Lennon
+tags: vim, tmux, zsh, terminal
 ---
 
 # Useful Tools

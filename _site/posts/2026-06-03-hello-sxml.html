@@ -3,8 +3,8 @@
   <head><meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="light dark" name="color-scheme">
-    <title>$title$ - All You Need is Love!</title>
-    <link rel="icon" type="image/svg" href="/images/favicon.svg">
+    <title>Hello SXML - All You Need is Love!</title>
+    <link rel="icon" type="image/svg" href="../images/favicon.svg">
     <link href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-serif-sc-vf-regular/font.css">
@@ -266,21 +266,26 @@
    <body>
       <article data-theme="light">
         <nav class="breadcrumb">
-          <a href="/">SiteMap</a>
+          <a href="../">SiteMap</a>
           <span class="breadcrumb-sep">›</span>
-          <span class="breadcrumb-current">$title$</span>
+          <span class="breadcrumb-current">Hello SXML</span>
         </nav>
       </article>
       <main class="container">
         <div class="content">
 
           <div class="article-nav">
-           <span>$if(tags-nav)$$tags-nav$$endif$</span>
-           <span><a href="/about.html">About</a> <a href="/contact.html">Contact</a></span>
+           <span>Tags: <a href="../tags/haskell.html">haskell</a>, <a href="../tags/shtml.html">shtml</a>, <a href="../tags/sxml.html">sxml</a></span>
+           <span><a href="../about.html">About</a> <a href="../contact.html">Contact</a></span>
          </div>
          <hr>
-        $if(date)$<p class="meta-line">$title$: Posted on $if(currentDate)$$currentDate$$else$$date$$endif$,$if(author)$ by $author$$endif$.</p>$endif$
-        $body$
+        <p class="meta-line">Hello SXML: Posted on June  3, 2026, by Iris Lennon.</p>
+        <article>
+    <section>
+        <h1>Hello from SXML</h1><p>This post was written using <em>SXML</em> syntax and rendered via <em>Lucid</em>.</p><p class="highlight">It supports attributes too.</p>
+    </section>
+</article>
+
       </div>
     </main>
 
