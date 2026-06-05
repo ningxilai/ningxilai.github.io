@@ -70,7 +70,7 @@ main = hakyll $ do
             >>= relativizeUrls
 
     tagsRules tags $ \tag pattern -> do
-        let title = "Posts tagged \"" ++ tag ++ "\""
+        let title = "Posts tagged \x201C" ++ tag ++ "\x201D"
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll pattern
@@ -114,21 +114,6 @@ main = hakyll $ do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
-
-    create ["tags.html"] $ do
-        route idRoute
-        compile $ do
-            let tagList = sort (tagsMap tags)
-                renderTag (tag, ids) =
-                    "<li><a href=\"/tags/" ++ tag ++ ".html\">" ++ tag ++ " (" ++ show (length ids) ++ ")</a></li>"
-                tagsCtx = constField "title" "Tags"
-                       `mappend` constField "tags-html" (concatMap renderTag tagList)
-                       `mappend` tagsNavField "tags-nav" tags
-                       `mappend` defaultContext
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/tags.html" tagsCtx
-                >>= loadAndApplyTemplate "templates/default.html" tagsCtx
                 >>= relativizeUrls
 
     match "index.html" $ do
