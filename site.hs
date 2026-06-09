@@ -22,9 +22,20 @@ shtmlCompiler :: Compiler (Item String)
 shtmlCompiler = do
     item <- getResourceBody
     let body = T.pack $ itemBody item
-    case shtmlToHtml body of
+        body' = stripYaml body
+    case shtmlToHtml body' of
         Left err -> fail $ T.unpack err
         Right html -> makeItem (T.unpack html)
+
+stripYaml :: T.Text -> T.Text
+stripYaml t =
+    case T.stripPrefix "---" (T.stripStart t) of
+        Nothing -> t
+        Just afterFirst
+            | (_, fromSecond) <- T.breakOn "---" (T.stripStart afterFirst)
+            , not (T.null fromSecond)
+            -> T.strip $ T.drop 3 fromSecond
+            | otherwise -> t
 
 
 --------------------------------------------------------------------------------
